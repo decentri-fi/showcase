@@ -1,9 +1,6 @@
-import React, {useEffect} from 'react';
-import {ReactComponent as TwitterIcon} from "../../images/twitter-icon.svg";
+import React from 'react';
 import {ReactComponent as WebsiteIcon} from "../../images/globe.svg";
 import {ReactComponent as ArrowIcon} from "../../images/arrow-right-icon.svg";
-import {ReactComponent as LinkedinIcon} from "../../images/linkedin-icon.svg";
-import {ReactComponent as GithubIcon} from "../../images/github-icon.svg";
 import ProtocolsThreeColGrid from "../../components/cards/ProtocolsThreeColGrid";
 import useProtocolsviewHooks from "./hooks/protocolsview-hooks";
 

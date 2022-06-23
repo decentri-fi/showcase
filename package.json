@@ -1,8 +1,9 @@
 {
-  "name": "treact",
+  "name": "@defitrack/showcase",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@defitrack/js-client": "^1.0.3",
     "@emotion/react": "^11.6.0",
     "@emotion/styled": "^11.6.0",
     "@ethersproject/address": "^5.4.0",
@@ -10,7 +11,6 @@
     "@ethersproject/constants": "^5.4.0",
     "@ethersproject/contracts": "^5.4.1",
     "@ethersproject/providers": "^5.4.3",
-    "ethers": "^5.5.1",
     "@headlessui/react": "^1.4.2",
     "@heroicons/react": "^1.0.5",
     "@mui/material": "^5.2.0",
@@ -24,6 +24,7 @@
     "@web3-react/injected-connector": "^6.0.7",
     "axios": "^0.24.0",
     "ethereum-blockies-base64": "^1.0.2",
+    "ethers": "^5.5.1",
     "feather-icons": "^4.28.0",
     "framer-motion": "^4.1.5",
     "react": "^17.0.2",
@@ -47,11 +48,9 @@
     "web3": "^1.5.0"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject",
-    "deploy": "yarn build && netlify deploy --prod --dir=build"
+    "start": "npx react-scripts start",
+    "build": "npx react-scripts build",
+    "test": "npx react-scripts test"
   },
   "eslintConfig": {
     "extends": "react-app",

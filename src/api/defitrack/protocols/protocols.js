@@ -1,6 +1,5 @@
-import axios from 'axios';
+import defitrack from '@defitrack/js-client'
 
 export const fetchProtocols = async () => {
-    const response = await axios.get('https://api.defitrack.io/protocols');
-    return response.data
+    return await defitrack.protocols().list()
 }

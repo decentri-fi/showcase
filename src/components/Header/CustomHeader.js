@@ -133,11 +133,13 @@ export default function CustomHeader({expanded = false, showUserLink = true}) {
         </NavLinks>,
     ];
 
-    const userLinks = showUserLink ? [
+    const userLink = showUserLink ? <UserLink web3={web3}/> : <></>
+
+    const userLinks = [
         <NavLinks key={2}>
-            <UserLink web3={web3}/>
+            {userLink}
         </NavLinks>
-    ]: []
+    ]
 
     return (
         <Container>

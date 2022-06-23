@@ -2,29 +2,37 @@ import React from 'react';
 import DollarLabel from "../../../components/Label/DollarLabel";
 import FallbackImage from "../../../components/Image/FallbackImage";
 import tw from "twin.macro"
-import {Step, StepLabel, Stepper} from "@mui/material";
 
 const StatTitle = tw.span`text-gray-600`
 const StatDescription = tw.span`text-gray-400`
+const StatName = tw.span`text-primary-300 font-bold text-4xl`
+
+
+const FarmingMarketBox = tw.div`w-full flex flex-nowrap shadow p-2 mb-4`
+
+const FarmingMarketLeft = tw.div`w-9/12 flex flex-col`
+const FarmingMarketRight = tw.div`text-primary-300 w-3/12 text-center items-center grid justify-items-center`
+const Logo = tw.div`w-12 h-12`
+const ThinGreen = tw.span`text-green-500`
 
 function FarmingMarketInfo({farmingElement}) {
 
     return (
-        <div tw="w-full flex flex-nowrap shadow p-2">
-            <div tw="w-9/12 flex flex-col">
+        <FarmingMarketBox>
+            <FarmingMarketLeft>
                 <StatTitle>{farmingElement.name} on {farmingElement.network.name}</StatTitle>
-                <div tw="text-primary-300 font-bold text-4xl">{farmingElement.name}</div>
-                <StatDescription>{farmingElement.name} has a market size of <span tw="text-green-500">
+                <StatName>{farmingElement.name}</StatName>
+                <StatDescription>{farmingElement.name} has a market size of <ThinGreen>
                     <DollarLabel
                         amount={farmingElement.marketSize}/>
-                </span></StatDescription>
-            </div>
-            <div tw="text-primary-300 w-3/12 text-center items-center grid justify-items-center">
-                <div tw="w-12 h-12">
+                </ThinGreen></StatDescription>
+            </FarmingMarketLeft>
+            <FarmingMarketRight>
+                <Logo>
                     <FallbackImage src={farmingElement.protocol.logo}/>
-                </div>
-            </div>
-        </div>
+                </Logo>
+            </FarmingMarketRight>
+        </FarmingMarketBox>
     );
 }
 
@@ -57,53 +65,52 @@ function BalanceInformation({
 
     return (
         <FarmStats>
-            <div tw="w-full flex flex-nowrap shadow p-2">
-                <div tw="w-9/12 flex flex-col">
+            <FarmingMarketBox>
+                <FarmingMarketLeft>
                     <StatTitle>Wallet Balance</StatTitle>
-                    <div tw="text-primary-300 font-bold text-4xl">{farmingViewHooks.getWantBalance()}</div>
-                    <StatDescription>That's around <span tw="text-green-500 font-medium"><DollarLabel
-                        amount={getWalletDollarBalance()}/> </span> in {farmingElement.stakedToken.symbol}
+                    <StatName>{farmingViewHooks.getWantBalance()}</StatName>
+                    <StatDescription>That's around <ThinGreen><DollarLabel
+                        amount={getWalletDollarBalance()}/> </ThinGreen> in {farmingElement.stakedToken.symbol}
                     </StatDescription>
-                </div>
-                <div tw="text-primary-300 w-3/12 text-center items-center grid justify-items-center">
-                    <div tw="w-12 h-12">
+                </FarmingMarketLeft>
+                <FarmingMarketRight>
+                    <Logo>
                         <FallbackImage src={farmingElement.protocol.logo}/>
-                    </div>
-                </div>
-            </div>
+                    </Logo>
+                </FarmingMarketRight>
+            </FarmingMarketBox>
 
-            <div tw="w-full flex flex-nowrap shadow p-2">
-                <div tw="w-9/12 flex flex-col">
+            <FarmingMarketBox>
+                <FarmingMarketLeft>
                     <StatTitle>Farming Balance</StatTitle>
-                    <div tw="text-primary-300 font-bold text-4xl">{farmingViewHooks.getWantBalance()}</div>
-                    <StatDescription>That's around <span tw="text-green-500 font-medium"><DollarLabel
-                        amount={getStakingDollarBalance()}/> </span> in {farmingElement.stakedToken.symbol}
+                    <StatName>{farmingViewHooks.getWantBalance()}</StatName>
+                    <StatDescription>That's around <ThinGreen><DollarLabel
+                        amount={getStakingDollarBalance()}/> </ThinGreen> in {farmingElement.stakedToken.symbol}
                     </StatDescription>
-                </div>
-                <div tw="text-primary-300 w-3/12 text-center items-center grid justify-items-center">
-                    <div tw="w-12 h-12">
+                </FarmingMarketLeft>
+                <FarmingMarketRight>
+                    <Logo>
                         <FallbackImage src={farmingElement.protocol.logo}/>
-                    </div>
-                </div>
-            </div>
+                    </Logo>
+                </FarmingMarketRight>
+            </FarmingMarketBox>
 
 
-            <div tw="w-full flex flex-nowrap shadow p-2">
-                <div tw="w-9/12 flex flex-col">
+            <FarmingMarketBox>
+                <FarmingMarketLeft>
                     <StatTitle>Staking Power</StatTitle>
-                    <div tw="text-primary-300 font-bold text-4xl">{getPercentage()}%</div>
+                    <StatName>{getPercentage()}%</StatName>
                     <StatDescription>
-                        <div
-                            tw="text-blue-300">{farmingViewHooks.getWantBalance()} {farmingElement.stakedToken.symbol} left
-                        </div>
+                        <ThinGreen>{farmingViewHooks.getWantBalance()} {farmingElement.stakedToken.symbol} left
+                        </ThinGreen>
                     </StatDescription>
-                </div>
-                <div tw="text-primary-300 w-3/12 text-center items-center grid justify-items-center">
-                    <div tw="w-12 h-12">
+                </FarmingMarketLeft>
+                <FarmingMarketRight>
+                    <Logo>
                         <FallbackImage src={farmingElement.protocol.logo}/>
-                    </div>
-                </div>
-            </div>
+                    </Logo>
+                </FarmingMarketRight>
+            </FarmingMarketBox>
         </FarmStats>
     )
 }

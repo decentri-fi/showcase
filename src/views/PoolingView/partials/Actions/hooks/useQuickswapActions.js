@@ -18,7 +18,7 @@ export default function useQuickswapActions(poolingMarket, chosenToken) {
     const erc20 = useERC20(web3.web3React);
     const contractExceptions = useContractExceptions();
 
-    const token = chosenToken || poolingMarket.token[0]
+    const token = chosenToken || poolingMarket.tokens[0]
 
     const [allowed, setAllowed] = useState(false);
     const [approving, setApproving] = useState(false);

@@ -11,6 +11,10 @@ import tw from "twin.macro";
 const ButtonContainer = tw.div`grid h-20 place-items-center`
 const DepositAndWithdrawContainer = tw.div`flex flex-col w-full`
 
+const ApprovalContainer = tw.div`w-full grid justify-items-center mt-10`
+
+const Center = tw.div`flex w-full grid justify-items-center`
+
 function DepositOrWithdraw({farmingViewHooks}) {
 
     const canWithdraw = () => {
@@ -19,24 +23,22 @@ function DepositOrWithdraw({farmingViewHooks}) {
 
     return (
         <>
-            <div tw="w-full grid justify-items-center mt-10">
-                <DepositAndWithdrawContainer>
-                    {
-                        canWithdraw() && <ButtonContainer>
+            <DepositAndWithdrawContainer>
+                {
+                    canWithdraw() && <ButtonContainer>
 
-                            <Button variant={"contained"} color="warning"
-                                    onClick={farmingViewHooks.withdrawAll}>Withdraw</Button>
-                            <OrDivider/>
-                        </ButtonContainer>
-                    }
-                    <ButtonContainer>
-                        <Button variant={"contained"} color="success" onClick={farmingViewHooks.depositAll}>Deposit
-                            Everything
-                        </Button>
+                        <Button variant={"contained"} color="warning"
+                                onClick={farmingViewHooks.withdrawAll}>Withdraw</Button>
+                        <OrDivider/>
                     </ButtonContainer>
-                </DepositAndWithdrawContainer>
-                <HasApprovalInformation/>
-            </div>
+                }
+                <ButtonContainer>
+                    <Button variant={"contained"} color="success" onClick={farmingViewHooks.depositAll}>Deposit
+                        Everything
+                    </Button>
+                </ButtonContainer>
+            </DepositAndWithdrawContainer>
+            <HasApprovalInformation/>
         </>
     );
 }
@@ -44,13 +46,13 @@ function DepositOrWithdraw({farmingViewHooks}) {
 function ApprovalSection({farmingViewHooks}) {
 
     return (
-        <div tw="w-full grid justify-items-center mt-10">
+        <ApprovalContainer>
             <Button onClick={farmingViewHooks.approve} color="secondary"
                     variant={"contained"}>
                 Approve
             </Button>
             <RequiresApprovalInformation/>
-        </div>
+        </ApprovalContainer>
     );
 }
 
@@ -61,15 +63,13 @@ function StatusHeader({farmingViewHooks}) {
         'deposit',
     ];
     return (
-        <div tw="w-full mt-8">
-            <Stepper activeStep={farmingViewHooks.approved ? 2 : 1} alternativeLabel>
-                {steps.map((label) => (
-                    <Step key={label}>
-                        <StepLabel>{label}</StepLabel>
-                    </Step>
-                ))}
-            </Stepper>
-        </div>
+        <Stepper activeStep={farmingViewHooks.approved ? 2 : 1} alternativeLabel>
+            {steps.map((label) => (
+                <Step key={label}>
+                    <StepLabel>{label}</StepLabel>
+                </Step>
+            ))}
+        </Stepper>
     );
 }
 
@@ -144,23 +144,23 @@ export default function Actions({farmingViewHooks, token, farmingElement}) {
 
     return (
         <>
-            <div tw="flex w-full grid justify-items-center">
+            <Center>
                 <Box sx={{borderBottom: 1, borderColor: 'divider'}}>
                     <Tabs value={value} onChange={handleChange} aria-label="farm actions">
                         <Tab label="Default Actions"/>
                         <Tab label="Farm Specific Actions"/>
                     </Tabs>
                 </Box>
-            </div>
+            </Center>
 
-            <div tw="w-full mt-8">
+            <Center>
                 <TabPanel value={value} index={0}>
                     <DefaultActions farmingViewHooks={farmingViewHooks}/>
                 </TabPanel>
                 <TabPanel value={value} index={1}>
                     <FarmSpecificActions token={token} farmingElement={farmingElement}/>
                 </TabPanel>
-            </div>
+            </Center>
         </>
     )
 };

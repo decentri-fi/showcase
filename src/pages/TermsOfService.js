@@ -46,7 +46,7 @@ export default ({ headingText = "Terms And Condition" }) => {
           </HeadingRow>
           <Text>
 
-            <p>Last updated: April 21, 2020</p>
+            <p>Last updated: June 23, 2022</p>
 
             <p>Please read these terms and conditions carefully before using Our Service.</p>
 
@@ -70,13 +70,13 @@ export default ({ headingText = "Terms And Condition" }) => {
               </li>
               <li>
                 <strong>Company</strong> (referred to as either "the Company", "We", "Us" or "Our" in this Agreement)
-                refers to Treact Inc., Navi Mumbai.
+                refers to Defitrack DAO.
               </li>
               <li>
-                <strong>Country</strong> refers to: Maharashtra, India
+                <strong>Country</strong> refers to: any country in the world
               </li>
               <li>
-                <strong>Service</strong> refers to the Website.
+                <strong>Service</strong> refers to the Website, APIs and all of its code.
               </li>
               <li>
                 <strong>Terms and Conditions</strong> (also referred as "Terms") mean these Terms and Conditions that
@@ -88,7 +88,7 @@ export default ({ headingText = "Terms And Condition" }) => {
                 available by the Service.
               </li>
               <li>
-                <strong>Website</strong> refers to Treact, accessible from https://treact.com
+                <strong>Website</strong> refers to https://defitrack.io and any of its subdomains.
               </li>
               <li>
                 <strong>You</strong> means the individual accessing or using the Service, or the company, or other legal

@@ -49,53 +49,62 @@ export default function DashboardHeader({dashboardHooks}) {
     const ShortAddress = tw.span`lg:hidden block font-bold text-base text-black dark:text-white ml-2 border-b`
     const ENS = tw.span`text-sm text-gray-500 dark:text-white ml-2`
     const Blockie = tw.span`hidden lg:block rounded-xl relative p-2 w-32 `;
-    const AddressInformation = tw.div`flex items-center mb-6 flex-col lg:flex-row`
+    const GeneralInfo = tw.div`flex items-center mb-6 flex-col lg:flex-row`
 
     const LeftColumn = tw.div` w-full m-4 shadow-md p-4 bg-white dark:bg-gray-700`
     const RightColumn = tw.div`lg:w-3/12 lg:block hidden  m-4  p-4 bg-white dark:bg-gray-700`
 
+    const AddressInfo = tw.div`flex items-center`
+    const AddressText = tw.div`flex flex-col`
+    const Wrapper = tw.div`flex w-full flex-wrap lg:flex-nowrap`;
+
+    const PortfolioValue = tw.div`lg:justify-self-end`
+    const PortfolioValueContainer = tw.div`w-full grid`
+
+    const ScanningContainer = tw.div`block m-auto`;
+    const ProgressText = tw.span`text-sm inline-block text-gray-500 dark:text-gray-100`
+    const DoneScanningText = tw.span`text-gray-700 dark:text-white font-bold`
+
+    const PercentageContainer = tw.div`w-full h-2 bg-gray-200 rounded-full mt-2`;
+    const Percentage = tw.div`h-full text-center text-xs text-white bg-purple-500 rounded-full`
+
+    const DetailCardIcon = tw(CurrencyDollarIcon)`text-purple-400 h-8 w-8`
+
     return (
-        <>
-            <div tw="flex w-full flex-wrap lg:flex-nowrap">
+            <Wrapper>
                 <LeftColumn>
-                    <AddressInformation>
-                        <div tw="flex items-center">
+                    <GeneralInfo>
+                        <AddressInfo>
                             <Blockie><FallbackImage src={makeABlockie(address)}/></Blockie>
-                            <div tw="flex flex-col">
+                            <AddressText>
                                 <Address>{address}</Address>
                                 <ShortAddress>{sliceAccount(address)}</ShortAddress>
                                 {/*<ENS>No ENS name linked.</ENS>*/}
-                            </div>
-                        </div>
+                            </AddressText>
+                        </AddressInfo>
 
-                        <div tw="w-full grid">
-                            <div tw=" lg:justify-self-end">
+                        <PortfolioValueContainer>
+                            <PortfolioValue>
                                 <DetailCard
                                     icon={
-                                        <CurrencyDollarIcon tw="text-purple-400 h-8 w-8"/>
+                                        <DetailCardIcon />
                                     }
                                     centerHtml={<DollarLabel amount={dashboardHooks.totalBalance}/>}
                                     title={"Portfolio Value"} />
-                            </div>
-                        </div>
-                    </AddressInformation>
-                    <div tw="block m-auto">
-                        <div>
-            <span tw="text-sm inline-block text-gray-500 dark:text-gray-100">
-                Progress :<span
-                tw="text-gray-700 dark:text-white font-bold"> {doneScanning}</span> / {totalScanning}
-            </span>
-                        </div>
-                        <div tw="w-full h-2 bg-gray-200 rounded-full mt-2">
-                            <div style={{
+                            </PortfolioValue>
+                        </PortfolioValueContainer>
+                    </GeneralInfo>
+                    <ScanningContainer>
+                        <ProgressText>
+                            Progress :<DoneScanningText> {doneScanning}</DoneScanningText> / {totalScanning}
+                        </ProgressText>
+                        <PercentageContainer>
+                            <Percentage style={{
                                 width: percentageDone
-                            }}
-                                 tw="h-full text-center text-xs text-white bg-purple-500 rounded-full">
-                            </div>
-                        </div>
-                    </div>
+                            }}></Percentage>
+                        </PercentageContainer>
+                    </ScanningContainer>
                 </LeftColumn>
-            </div>
-        </>
+            </Wrapper>
     )
 };

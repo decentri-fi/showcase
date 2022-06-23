@@ -31,6 +31,8 @@ import ProtocolsView from "./views/ProtocolsView/ProtocolsView";
 import ServiceLandingPage from "./demos/ServiceLandingPage";
 import ProtocolView from "./views/ProtocolsView/ProtocolView";
 import useProtocolsviewHooks from "./views/ProtocolsView/hooks/protocolsview-hooks";
+import TermsOfService from "./pages/TermsOfService";
+import TermsOfServiceView from "./views/TermsOfServiceView/TermsOfServiceView";
 
 function getLibrary(provider) {
     const library = new Web3Provider(
@@ -80,10 +82,15 @@ export default function App() {
                             <ProtocolView/>
                             <FooterV2/>
                         </Route>
-                        <Route path="/connect">
-                            <CustomHeader/>
+                        <Route path="/defi-hub">
+                            <CustomHeader showUserLink={false}/>
                             <ConnectView/>
                             <FooterV2/>
+                        </Route>
+                        <Route path="/terms-of-service">
+                            <CustomHeader showUserLink={false} />
+                            <TermsOfServiceView  />
+                            <FooterV2 />
                         </Route>
                         <Route path="/test">
                             <ServiceLandingPage/>
@@ -109,7 +116,7 @@ export default function App() {
                             <FooterV2/>
                         </Route>
                         <Route>
-                            <CustomHeader expanded={true}/>
+                            <CustomHeader expanded={true} showUserLink={false}/>
                             <LandingView/>
                             <FooterV2/>
                         </Route>

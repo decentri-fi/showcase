@@ -4,57 +4,30 @@ import {CurrencyDollarIcon} from "@heroicons/react/outline";
 import DetailCard from "../../../../components/Card/DetailCard"; //eslint-disable-line
 import tw from 'twin.macro';
 
-function Networks({networks, dashboardHooks}) {
-    const title = function () {
-        if (networks.length === 0) {
-            return (
-                <p tw="text-gray-600 font-light dark:text-white text-xl text-center font-medium">
-                    No networks were found for this address.
-                </p>
-            )
-        } else {
-            return (
-                <p tw="text-gray-600 font-light dark:text-white text-xl text-center font-medium mb-6">
-                    Active networks
-                </p>
-            )
-        }
-    }();
+const Container = tw.div`w-full flex flex-wrap`
+const Header = tw.h3`text-lg font-medium mb-2 px-4 `
+const Table = tw.div`mb-8 flex flex-wrap grid grid-cols-2 lg:grid-cols-6`
 
-    return (
-        <>
-            {title}
-            <div tw="grid grid-cols-3 gap-2">
-                {networks.map(network => {
-                    return <NetworkElement network={network} key={network.name}/>
-                })}
-            </div>
-        </>
-    )
-}
+const GreenDollarIcon = tw(CurrencyDollarIcon)`text-green-400 h-8 w-8`
+const YellowDollarIcon = tw(CurrencyDollarIcon)`text-yellow-400 h-8 w-8`
+const BlueDollarIcon = tw(CurrencyDollarIcon)`text-blue-400 h-8 w-8`
+const OrangeDollarIcon = tw(CurrencyDollarIcon)`text-orange-400 h-8 w-8`
+const RedDollarIcon = tw(CurrencyDollarIcon)`text-red-400 h-8 w-8`
 
-function NetworkElement({network}) {
-    return (
-        <>
-            <div tw="flex flex-col items-center">
-                <div tw="relative">
-                    <a onClick={() => {
-                    }} href="#" tw="block relative">
-                        <img alt="logo" src={network.logo}
-                             tw="mx-auto object-cover rounded-full h-16 w-10 "/>
-                    </a>
-                </div>
-            </div>
-        </>
-    )
-}
+const ProgressBar = tw.div`text-xs leading-none h-1 text-center text-white rounded`
+const BlueProgressBar = tw(ProgressBar)`bg-blue-500`
+const YellowProgressBar = tw(ProgressBar)`bg-yellow-500`
+const GreenProgressBar = tw(ProgressBar)`bg-green-500`
+const OrangeProgressBar = tw(ProgressBar)`bg-orange-500`
+
+const Logo = tw.img`h-8 w-8`
 
 function Protocols({dashboardHooks}) {
     return (
         <>
-                { dashboardHooks.usedProtocols.map(protocol => {
-                    return <ProtocolElement dashboardHooks={dashboardHooks} protocol={protocol} key={protocol.name}/>
-                })}
+            {dashboardHooks.usedProtocols.map(protocol => {
+                return <ProtocolElement dashboardHooks={dashboardHooks} protocol={protocol} key={protocol.name}/>
+            })}
         </>
     )
 }
@@ -62,9 +35,9 @@ function Protocols({dashboardHooks}) {
 function ProtocolElement({protocol}) {
     return (
         <DetailCard title={protocol.name}
-                    centerHtml={<DollarLabel amount={protocol.totalDollarValue} />}
+                    centerHtml={<DollarLabel amount={protocol.totalDollarValue}/>}
                     icon={
-                        <img alt="logo" src={protocol.logo} tw="h-8 w-8"/>
+                        <Logo alt="logo" src={protocol.logo}/>
                     }/>
     )
 }
@@ -113,61 +86,61 @@ export default function OverviewDetails(
 
     return (
         <>
-            <div tw="w-full flex flex-wrap">
-                <div tw="w-full">
-                    <h3 tw="text-lg font-medium mb-2 px-4 ">Account Overview</h3>
-                    <div tw="mb-8 flex flex-wrap grid grid-cols-2 lg:grid-cols-6">
-                        {totalWalletBalance > 0 &&
-                            <DetailCard title="Wallet"
-                                        centerHtml={ <DollarLabel amount={totalWalletBalance}/>}
-                                        bottomHtml={
-                                            <div tw="bg-green-300 text-xs leading-none h-1 text-center text-white rounded"
-                                                 style={{
-                                                     width: assetAllocation.balance + '%'
-                                                 }}></div>
-                                        }
-                                        icon={<CurrencyDollarIcon tw="text-green-400 h-8 w-8"/>}
-                            />
-                        }
-                        {totalLending > 0 &&
+            <Container>
+                <Header>Account Overview</Header>
+                <Table>
+                    {totalWalletBalance > 0 &&
+                        <DetailCard title="Wallet"
+                                    centerHtml={<DollarLabel amount={totalWalletBalance}/>}
+                                    bottomHtml={
+                                        <GreenProgressBar
+                                            style={{
+                                                width: assetAllocation.balance + '%'
+                                            }}>
+                                        </GreenProgressBar>
+                                    }
+                                    icon={<GreenDollarIcon/>}
+                        />
+                    }
+                    {totalLending > 0 &&
                         <DetailCard title="Lending"
                                     centerHtml={<DollarLabel amount={totalLending}/>}
                                     bottomHtml={
-                                        <div tw="bg-yellow-600 text-xs leading-none h-1 text-center text-white rounded"
-                                             style={{
-                                                 width: assetAllocation.lending + '%'
-                                             }}></div>
+                                        <YellowProgressBar
+                                            style={{
+                                                width: assetAllocation.lending + '%'
+                                            }}>
+                                        </YellowProgressBar>
                                     }
-                                    icon={<CurrencyDollarIcon tw="text-yellow-400 h-8 w-8"/>}
+                                    icon={<YellowDollarIcon/>}
                         />
-                        }
-                        {totalBorrowing > 0 && <DetailCard title="Borrowing"
-                                                           centerHtml={<DollarLabel amount={totalBorrowing}/>}
-                                                           icon={<CurrencyDollarIcon tw="text-red-400 h-8 w-8"/>}/>}
-                        {totalPooling > 0 && <DetailCard title="Pooling"
-                                                         icon={<CurrencyDollarIcon tw="text-orange-400 h-8 w-8"/>}
-                                                         centerHtml={<DollarLabel amount={totalPooling}/>}
-                                                         bottomHtml={<div
-                                                             tw="bg-orange-500 text-xs leading-none h-1 text-center text-white rounded"
-                                                             style={{
-                                                                 width: assetAllocation.pooling + '%'
-                                                             }}></div>}/>
-                        }
-                        {totalStaking > 0 &&
+                    }
+                    {totalBorrowing > 0 && <DetailCard title="Borrowing"
+                                                       centerHtml={<DollarLabel amount={totalBorrowing}/>}
+                                                       icon={<RedDollarIcon/>}/>}
+                    {totalPooling > 0 && <DetailCard title="Pooling"
+                                                     icon={<OrangeDollarIcon/>}
+                                                     centerHtml={<DollarLabel amount={totalPooling}/>}
+                                                     bottomHtml={<OrangeProgressBar
+                                                         style={{
+                                                             width: assetAllocation.pooling + '%'
+                                                         }}></OrangeProgressBar>}/>
+                    }
+                    {totalStaking > 0 &&
                         <DetailCard title="Farming"
-                                    icon={<CurrencyDollarIcon tw="text-blue-400 h-8 w-8"/>}
+                                    icon={<BlueDollarIcon/>}
                                     centerHtml={<DollarLabel amount={totalStaking}/>}
-                                    bottomHtml={<div
-                                        tw="bg-blue-500 text-xs leading-none h-1 text-center text-white rounded"
-                                        style={{
-                                            width: assetAllocation.staking + '%'
-                                        }}></div>}
+                                    bottomHtml={
+                                        <BlueProgressBar
+                                            style={{
+                                                width: assetAllocation.staking + '%'
+                                            }}>
+                                        </BlueProgressBar>}
                         />}
 
-                        <Protocols dashboardHooks={dashboardHooks}/>
-                    </div>
-                </div>
-            </div>
+                    <Protocols dashboardHooks={dashboardHooks}/>
+                </Table>
+            </Container>
         </>
     );
 }

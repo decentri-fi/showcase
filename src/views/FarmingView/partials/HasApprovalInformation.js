@@ -8,6 +8,8 @@ const Message = tw.span`block`
 const CenterIcon = tw.span`flex justify-center`
 const Disclaimer = tw.span`underline text-center block text-indigo-500`
 
+const GreenCheckIcon = tw(CheckIcon)`h-16 text-green-600`
+
 export default function HasApprovalInformation() {
     return <Container>
         <Header>
@@ -15,7 +17,7 @@ export default function HasApprovalInformation() {
                 You have given approval to move your tokens around.
             </Message>
             <CenterIcon>
-                <CheckIcon tw="h-16 text-green-600"/>
+                <GreenCheckIcon/>
             </CenterIcon>
             <Disclaimer>
                 Why was this necessary?

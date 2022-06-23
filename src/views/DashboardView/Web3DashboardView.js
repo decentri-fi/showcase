@@ -6,7 +6,6 @@ import DashboardView from "./DashboardView";
 import Search from "./partials/Search/Search";
 import ReactGA from "react-ga";
 
-
 export default function Web3DashboardView() {
 
     const web3 = useWeb3();

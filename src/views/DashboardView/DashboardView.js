@@ -15,6 +15,15 @@ import DollarLabel from "../../components/Label/DollarLabel";
 
 const Container = tw.div`w-full pt-8 lg:pt-24 bg-defaultBackground`
 
+const ProtocolSection = tw.section`w-full lg:w-1/2 grid justify-items-start mb-6 rounded py-4`
+const ProtocolSectionHeader = tw.div`flex text-sm flex-row mb-2`;
+const ProtocolSectionHeaderLogo = tw.img`h-6 w-6 mr-2`;
+const ProtocolDetails = tw.div`w-full bg-white`
+
+const DashboardWrapper = tw.div`grid justify-items-center`
+const DashboardHeaderContainer = tw.div`w-full lg:w-1/2`
+const FlexWrap = tw.div`flex flex-wrap`
+
 export default function DashboardView({dashboardHooks}) {
 
     useEffect(() => {
@@ -23,41 +32,40 @@ export default function DashboardView({dashboardHooks}) {
 
     const sections = dashboardHooks.usedProtocols.map((proto, index) => {
         return (
-            <div tw="w-full lg:w-1/2 grid justify-items-start mb-6 rounded py-4" key={index}>
-
-                <div tw="flex text-sm flex-row mb-2">
-                    <img alt="logo" src={proto.logo} tw="h-6 w-6 mr-2"/>
+            <ProtocolSection key={index}>
+                <ProtocolSectionHeader>
+                    <ProtocolSectionHeaderLogo alt="logo" src={proto.logo}/>
                     <h3>{proto.name} (<DollarLabel amount={proto.totalDollarValue} />)</h3>
-                </div>
+                </ProtocolSectionHeader>
 
-                <div tw="w-full bg-white">
+                <ProtocolDetails>
                     <StakingDetails protocol={proto} dashboardHooks={dashboardHooks}/>
                     <PoolingDetails protocol={proto} dashboardHooks={dashboardHooks}/>
                     <LendingDetails protocol={proto} dashboardHooks={dashboardHooks}/>
                     <BorrowingDetails protocol={proto} dashboardHooks={dashboardHooks}/>
-                </div>
-            </div>
+                </ProtocolDetails>
+            </ProtocolSection>
         )
     })
 
 
     return <Container>
-        <div tw="grid justify-items-center">
-            <div tw="w-full lg:w-1/2">
+        <DashboardWrapper>
+            <DashboardHeaderContainer>
                 <Search dashboardHooks={dashboardHooks}/>
 
-                <div tw="flex flex-wrap">
+                <FlexWrap>
                     <DashboardHeader dashboardHooks={dashboardHooks}/>
                     <OverviewDetails dashboardHooks={dashboardHooks}/>
-                </div>
-            </div>
+                </FlexWrap>
+            </DashboardHeaderContainer>
 
             <ClaimableDetails dashboardHooks={dashboardHooks}
                               claimables={dashboardHooks.claimables}/>
             <BalanceDetails dashboardHooks={dashboardHooks}/>
 
             {sections}
-        </div>
+        </DashboardWrapper>
     </Container>;
 }
 

@@ -1,27 +1,33 @@
 import React from "react";
 import tw from "twin.macro"
+
+const Container = tw.div`flex px-2 mb-2`
+const Border = tw.div`shadow-md hover:shadow-lg  w-full p-2 bg-white dark:bg-gray-800`
+const Center = tw.div`flex items-center`
+
+const Title = tw.p`text-xs text-gray-800 dark:text-gray-100`
+const CenterText = tw.p`text-gray-800 text-sm dark:text-white font-bold`
+const Icon = tw.div`mr-2`
+
 export default function DetailCard({centerHtml, title, icon, bottomHtml = <></>}) {
     return (
-        <div tw="flex px-2 mb-2">
-            <div tw="shadow-md hover:shadow-lg  w-full p-2 bg-white dark:bg-gray-800">
-                <div tw="flex items-center">
-                    <div>
+        <Container>
+            <Border>
+                <Center>
+                    <Icon>
                         {icon}
-                    </div>
-                    <div tw="ml-2">
-                        <p tw="text-xs text-gray-800 dark:text-gray-100">
+                    </Icon>
+                    <div>
+                        <Title>
                             {title}
-                        </p>
-                        <p tw="text-gray-800 text-sm dark:text-white font-bold">
+                        </Title>
+                        <CenterText>
                             {centerHtml}
-                        </p>
+                        </CenterText>
                     </div>
-                </div>
-                <div tw="flex flex-col justify-start">
-
-                </div>
+                </Center>
                 {bottomHtml}
-            </div>
-        </div>
+            </Border>
+        </Container>
     )
 };

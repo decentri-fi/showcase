@@ -34,6 +34,7 @@
     "react-github-btn": "^1.2.0",
     "react-modal": "^3.13.1",
     "react-number-format": "^4.8.0",
+    "react-placeholder-loading": "^0.5.30",
     "react-rnd": "^10.2.4",
     "react-router-dom": "^5.2.0",
     "react-scripts": "4.0.3",

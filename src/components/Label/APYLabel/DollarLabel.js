@@ -3,6 +3,6 @@ import NumberFormat from "react-number-format";
 
 export default function APYLabel({amount}) {
     return (
-        <NumberFormat value={amount} displayType={'text'} decimalScale={2} thousandSeparator={true} />
+        <NumberFormat value={amount} displayType={'text'} decimalScale={2} fixedDecimalScale={true} thousandSeparator={true} />
     )
 };

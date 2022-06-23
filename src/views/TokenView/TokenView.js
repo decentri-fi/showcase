@@ -1,14 +1,17 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import DollarLabel from "../../components/Label/DollarLabel";
 import useTokenviewHooks from "./hooks/tokenview-hooks";
-import FarmingOpportunities from "./partials/FarmingOpportunities";
-import LendingOpportunities from "./partials/LendingOpportunities";
+import FarmingOpportunities from "../../components/FarmingOpportunities/FarmingOpportunities";
+import LendingOpportunities from "../../components/LendingOpportunities/LendingOpportunities";
 import PoolingOpportunities from "../../components/PoolingOpportunities/PoolingOpportunities";
 import FallbackImage from "../../components/Image/FallbackImage";
 import {useParams} from "react-router-dom";
 import tw from "twin.macro";
 import {CurrencyDollarIcon} from "@heroicons/react/solid";
 import ReactGA from "react-ga";
+import {fetchProtocols} from "../../api/defitrack/protocols/protocols";
+import {fetchStakingMarketsForToken} from "../../api/defitrack/staking/staking";
+import {fetchLendingMarketsForToken} from "../../api/defitrack/lending/lending";
 
 const StatsContainer = tw.div`w-full lg:grid lg:grid-cols-4 mt-4 gap-2`
 const DefaultStat = tw.div`flex flex-nowrap shadow p-2`
@@ -20,6 +23,8 @@ const StatTitle = tw.span`text-gray-600`
 const StatCenterText = tw.div`text-primary-300 font-bold text-4xl`
 const StatDescription = tw.span`text-gray-400`
 const StatLogo = tw.div`w-12 h-12`
+
+const Bold = tw.b`text-black`
 
 function TokenStats({token, userBalance, network}) {
 
@@ -82,7 +87,7 @@ function TokenStats({token, userBalance, network}) {
                         <StatCenterText>
                             <DollarLabel amount={getUserDollarBalance()}/>
                         </StatCenterText>
-                        <StatDescription>Your wallet contains <b tw="text-black">{getUserTokenBalance()}</b> <span tw="text-green-500">{token.symbol}</span>.</StatDescription>
+                        <StatDescription>Your wallet contains <Bold>{getUserTokenBalance()}</Bold> <span tw="text-green-500">{token.symbol}</span>.</StatDescription>
                     </StatLeft>
                     <StatRight>
                         <div tw="text-blue-600 ">
@@ -121,6 +126,60 @@ export default function TokenView() {
         }
     }
 
+    const [farmingOpportunities, setFarmingOpportunities] = useState([])
+
+    useEffect(() => {
+        async function fetchData() {
+            if (token !== null) {
+                let protocols = await fetchProtocols();
+                for (const proto of protocols) {
+                    fetchStakingMarketsForToken(
+                        network,
+                        proto,
+                        token.address
+                    ).then((elements) => {
+                        for (const element of elements) {
+                            setFarmingOpportunities((prevState) => {
+                                prevState.push(element)
+                                return [...prevState]
+                            })
+                        }
+                    })
+                }
+            }
+        }
+
+        if (token !== null && network !== null) {
+            fetchData();
+        }
+    }, [token, network])
+
+
+    const [lendingOpportunities, setLendingOpportunities] = useState([])
+    useEffect(() => {
+        async function fetchData() {
+            let protocols = await fetchProtocols();
+            for (const proto of protocols) {
+                fetchLendingMarketsForToken(
+                    network,
+                    token.address,
+                    proto
+                ).then((elements) => {
+                    for (const element of elements) {
+                        setLendingOpportunities((prevState) => {
+                            prevState.push(element)
+                            return [...prevState]
+                        })
+                    }
+                })
+            }
+        }
+
+        if (token !== null && token.type === 'SINGLE' && network !== null) {
+            fetchData();
+        }
+    }, [token, network])
+
     useEffect(() => {
         ReactGA.pageview(window.location.pathname + window.location.search);
     }, [])
@@ -133,15 +192,11 @@ export default function TokenView() {
             return (
                 <>
                     <TokenStats network={network} token={token} userBalance={userBalance}/>
-                    <FarmingOpportunities token={token}
-                                          network={network}/>
+                    <FarmingOpportunities farmingOpportunities={farmingOpportunities}/>
 
                     <PoolingOpportunities poolingOpportunities={poolingOpportunities}
                                           title={poolingOpportunitiesTitle()}/>
-                    {
-                        token.type === 'SINGLE' &&
-                        <LendingOpportunities token={token} network={network}/>
-                    }
+                    <LendingOpportunities lendingOpportunities={lendingOpportunities}/>
                 </>
             );
         }
@@ -149,7 +204,7 @@ export default function TokenView() {
 
     if (token !== null) {
         return <>
-            <div tw="lg:mx-64">
+            <div>
                 {detail}
             </div>
         </>;

@@ -1,28 +1,25 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from "react";
+import {fetchProtocols} from "../../api/defitrack/protocols/protocols";
+import {fetchStakingMarketsForToken} from "../../api/defitrack/staking/staking";
 import SearchField from "../Search/SearchField";
-import {PoolingRow} from "./PoolingRow";
-import tw from "twin.macro";
 import {Pagination} from "../Pagination/Pagination";
-import TextLoader from "../Loader/TextLoader";
-import PlaceholderLoading from 'react-placeholder-loading'
+import tw from 'twin.macro';
+import FarmingRow from "./FarmingRow";
 
-const ListContainer = tw.div`flex grid justify-items-center w-full bg-white mb-4`
-const List = tw.ul`flex flex-col w-full`
+const ListContainer = tw.div`flex grid justify-items-center w-full bg-white`
+const List = tw.ul`flex flex-col w-full `
 
 const Center = tw.div`w-full grid justify-items-center`
-const Container = tw.div`bg-white shadow-lg rounded-sm border border-gray-200 w-full lg:w-1/2 my-4 py-4`
+const Container = tw.div`bg-white shadow-lg rounded-sm border border-gray-200 w-full lg:w-1/2 my-4`
 const Header = tw.div`px-5 py-4 border-b border-gray-100 font-semibold text-gray-800`
 
-
-export default({poolingOpportunities, title = "Pooling Opportunities"}) => {
+export default function FarmingOpportunities({farmingOpportunities}) {
 
     const [searchFilter, setSearchFilter] = useState(null)
 
-    const rows = poolingOpportunities.filter((row) => {
+    const rows = farmingOpportunities.filter(row => {
         if (searchFilter !== null && searchFilter.length > 0) {
-            return row.token.filter(t => {
-                return t.symbol.toLowerCase().includes(searchFilter.toLowerCase())
-            }).length > 0
+            return row.stakedToken.name.toLowerCase().includes(searchFilter.toString().toLowerCase());
         } else {
             return true;
         }
@@ -30,7 +27,7 @@ export default({poolingOpportunities, title = "Pooling Opportunities"}) => {
         return row2.marketSize - row1.marketSize
     }).map((row, i) => {
         return (
-            <PoolingRow key={i} poolingElement={row}/>
+            <FarmingRow key={i} farmingElement={row}/>
         )
     })
 
@@ -47,7 +44,7 @@ export default({poolingOpportunities, title = "Pooling Opportunities"}) => {
         return (
             <Center>
                 <Container>
-                    <Header><h2>{title}</h2></Header>
+                    <Header><h2>Farming Opportunities</h2></Header>
 
                     <Center>
                         <SearchField onChange={search} onClick={e => console.log(e)}/>
@@ -67,8 +64,6 @@ export default({poolingOpportunities, title = "Pooling Opportunities"}) => {
             </Center>
         );
     } else {
-        return <>
-        </>
+       return <></>
     }
-
 }

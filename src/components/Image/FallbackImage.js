@@ -1,11 +1,14 @@
 import React from 'react';
 import tw from 'twin.macro'
 
+const MaxWithObject = tw.object`w-full`;
+const MaxWithImg = tw.object`w-full`;
+
 export default function FallbackImage({src}) {
 
     return (
-        <object tw="w-full" data={src} type="image/png">
-            <img tw="w-full" alt="logo" src="https://static.defitrack.io/images/fallback.png"/>
-        </object>
+        <MaxWithObject data={src} type="image/png">
+            <MaxWithImg alt="logo" src="https://static.defitrack.io/images/fallback.png"/>
+        </MaxWithObject>
     )
 };

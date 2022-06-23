@@ -5,11 +5,6 @@ export const fetchPoolingsV2 = async (address, protocol) => {
     return result.data;
 }
 
-export const fetchPoolingMarketsV2 = async (protocol) => {
-    const result = await axios.get(`https://api.defitrack.io/${protocol.slug}/pooling/markets`);
-    return result.data;
-}
-
 export const fetchPoolingMarketsForToken = async (network, protocol, address) => {
     const result = await axios.get(`https://api.defitrack.io/${protocol.slug}/pooling/markets?network=${network}&token=${address}`);
     return result.data;

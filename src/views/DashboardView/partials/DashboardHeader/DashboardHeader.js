@@ -9,6 +9,31 @@ import DollarLabel from "../../../../components/Label/DollarLabel";
 import DetailCard from "../../../../components/Card/DetailCard";
 import {CurrencyDollarIcon} from "@heroicons/react/outline";
 
+const Address = tw.span`hidden lg:block font-bold text-base text-black dark:text-white ml-2`
+const ShortAddress = tw.span`lg:hidden block font-bold text-base text-black dark:text-white ml-2 border-b`
+const ENS = tw.span`text-sm text-gray-500 dark:text-white ml-2`
+const Blockie = tw.span`hidden lg:block rounded-xl relative p-2 w-32 `;
+const GeneralInfo = tw.div`flex items-center mb-6 flex-col lg:flex-row`
+
+const LeftColumn = tw.div` w-full mb-4 shadow-md p-4 bg-white dark:bg-gray-700`
+
+const AddressInfo = tw.div`flex items-center`
+const AddressText = tw.div`flex flex-col`
+const Wrapper = tw.div`flex w-full flex-wrap lg:flex-nowrap`;
+
+const PortfolioValue = tw.div`lg:justify-self-end text-xs`
+const PortfolioValueContainer = tw.div`w-full grid`
+
+const ScanningContainer = tw.div`block m-auto`;
+const ProgressText = tw.span`text-sm inline-block text-gray-500 dark:text-gray-100`
+const DoneScanningText = tw.span`text-gray-700 dark:text-white font-bold`
+
+const PercentageContainer = tw.div`w-full h-2 bg-gray-200 rounded-full mt-2`;
+const Percentage = tw.div`h-full text-center text-xs text-white bg-purple-500 rounded-full`
+
+const DetailCardIcon = tw(CurrencyDollarIcon)`text-purple-400 h-8 w-8`
+
+
 export default function DashboardHeader({dashboardHooks}) {
 
     const {
@@ -28,11 +53,12 @@ export default function DashboardHeader({dashboardHooks}) {
         if (doneScanning === 0 || totalScanning === 0) {
             return "0%"
         } else {
-            return (100 * doneScanning / (totalScanning)) + '%'
+            return (100 * doneScanning / (totalScanning)).toFixed(2) + '%'
         }
     }
 
     function updateSmallValues(newValue) {
+        console.log(newValue)
         dashboardHooks.setHideSmallValues(newValue ? 'true' : 'false');
     }
 
@@ -45,34 +71,15 @@ export default function DashboardHeader({dashboardHooks}) {
         }
     }
 
-    const Address = tw.span`hidden lg:block font-bold text-base text-black dark:text-white ml-2`
-    const ShortAddress = tw.span`lg:hidden block font-bold text-base text-black dark:text-white ml-2 border-b`
-    const ENS = tw.span`text-sm text-gray-500 dark:text-white ml-2`
-    const Blockie = tw.span`hidden lg:block rounded-xl relative p-2 w-32 `;
-    const GeneralInfo = tw.div`flex items-center mb-6 flex-col lg:flex-row`
-
-    const LeftColumn = tw.div` w-full m-4 shadow-md p-4 bg-white dark:bg-gray-700`
-    const RightColumn = tw.div`lg:w-3/12 lg:block hidden  m-4  p-4 bg-white dark:bg-gray-700`
-
-    const AddressInfo = tw.div`flex items-center`
-    const AddressText = tw.div`flex flex-col`
-    const Wrapper = tw.div`flex w-full flex-wrap lg:flex-nowrap`;
-
-    const PortfolioValue = tw.div`lg:justify-self-end`
-    const PortfolioValueContainer = tw.div`w-full grid`
-
-    const ScanningContainer = tw.div`block m-auto`;
-    const ProgressText = tw.span`text-sm inline-block text-gray-500 dark:text-gray-100`
-    const DoneScanningText = tw.span`text-gray-700 dark:text-white font-bold`
-
-    const PercentageContainer = tw.div`w-full h-2 bg-gray-200 rounded-full mt-2`;
-    const Percentage = tw.div`h-full text-center text-xs text-white bg-purple-500 rounded-full`
-
-    const DetailCardIcon = tw(CurrencyDollarIcon)`text-purple-400 h-8 w-8`
 
     return (
             <Wrapper>
                 <LeftColumn>
+                    <PortfolioValueContainer>
+                        <PortfolioValue>
+                            <Toggle checkedLabel={"show small values"} uncheckedLabel={"hide small values"} checked={dashboardHooks.hideSmallValues} onChange={updateSmallValues} />
+                        </PortfolioValue>
+                    </PortfolioValueContainer>
                     <GeneralInfo>
                         <AddressInfo>
                             <Blockie><FallbackImage src={makeABlockie(address)}/></Blockie>
@@ -96,7 +103,7 @@ export default function DashboardHeader({dashboardHooks}) {
                     </GeneralInfo>
                     <ScanningContainer>
                         <ProgressText>
-                            Progress :<DoneScanningText> {doneScanning}</DoneScanningText> / {totalScanning}
+                            {percentageDone}
                         </ProgressText>
                         <PercentageContainer>
                             <Percentage style={{

@@ -19,8 +19,8 @@ const FallbackImageContainer = tw.div`flex flex-nowrap`
 const Image = tw.div`h-5 w-5 lg:h-8 lg:w-8`
 const OverlayImage = tw.div`lg:h-4 lg:w-4 h-2 w-2 -mx-2 `
 
-const NameColumn = tw.div`pl-1 w-1/4 flex-1 font-medium text-indigo-600 dark:text-gray-200 text-xs`
-const AmountColumn = tw.div`text-sm text-left text-gray-600 dark:text-gray-200 w-1/2 lg:w-1/3`
+const NameColumn = tw.div`pl-1 w-1/4 lg:w-3/4 flex-1 font-medium text-red-600 dark:text-gray-200 text-xs`
+const AmountColumn = tw.div`hidden lg:block text-sm text-left text-gray-600 dark:text-gray-200 w-1/2 lg:w-0`
 const TwoColumns = tw.div`grid grid-cols-2`
 
 const ThinGreen = tw.span`text-green-500 font-thin`

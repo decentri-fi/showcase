@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@defitrack/js-client": "^1.0.3",
+    "@defitrack/js-client": "^1.0.7",
     "@emotion/react": "^11.6.0",
     "@emotion/styled": "^11.6.0",
     "@ethersproject/address": "^5.4.0",
@@ -31,6 +31,7 @@
     "react-anchor-link-smooth-scroll": "^1.0.12",
     "react-dom": "^17.0.2",
     "react-ga": "^3.3.0",
+    "react-ga4": "^1.4.1",
     "react-github-btn": "^1.2.0",
     "react-modal": "^3.13.1",
     "react-number-format": "^4.8.0",

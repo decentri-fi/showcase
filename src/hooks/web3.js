@@ -1,6 +1,7 @@
 import {useWeb3React} from "@web3-react/core";
 import {InjectedConnector} from "@web3-react/injected-connector";
 import {useEffect, useState} from "react";
+import swal from "sweetalert";
 
 export function useActiveWeb3React() {
     return useWeb3React('NETWORK')
@@ -49,17 +50,21 @@ export default function useWeb3() {
     };
 
     const login = async () => {
-        let inj = injected;
-        if ((await inj.isAuthorized()) !== true) {
-            await web3React.activate(inj, (err) => {
-                console.log(err)
-            }, true)
-            populateAccount();
-        } else {
-            await web3React.activate(inj, (err) => {
-                console.log(err)
-            }, true)
-            populateAccount();
+        try {
+            let inj = injected;
+            if ((await inj.isAuthorized()) !== true) {
+                await web3React.activate(inj, (err) => {
+                    console.log(err)
+                }, true)
+                populateAccount();
+            } else {
+                await web3React.activate(inj, (err) => {
+                    console.log(err)
+                }, true)
+                populateAccount();
+            }
+        } catch (ex) {
+            console.error(ex)
         }
     };
 

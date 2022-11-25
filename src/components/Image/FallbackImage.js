@@ -8,7 +8,7 @@ export default function FallbackImage({src}) {
 
     return (
         <MaxWithObject data={src} type="image/png">
-            <MaxWithImg alt="logo" src="https://static.defitrack.io/images/fallback.png"/>
+            <MaxWithImg alt="logo" src="https://static.decentri.fi/images/fallback.png"/>
         </MaxWithObject>
     )
 };

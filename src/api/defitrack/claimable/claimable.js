@@ -1,6 +1,5 @@
-import axios from "axios";
+import defitrack from "@defitrack/js-client";
 
 export const fetchClaimables = async (address, protocol) => {
-    const result = await axios.get(`https://api.defitrack.io/${protocol.slug}/${address}/claimables`)
-    return result.data
+    return defitrack.claiming().getClaimables(protocol.slug, address)
 }

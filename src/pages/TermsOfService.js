@@ -70,7 +70,7 @@ export default ({ headingText = "Terms And Condition" }) => {
               </li>
               <li>
                 <strong>Company</strong> (referred to as either "the Company", "We", "Us" or "Our" in this Agreement)
-                refers to Defitrack DAO.
+                refers to Decentrifi DAO.
               </li>
               <li>
                 <strong>Country</strong> refers to: any country in the world
@@ -88,7 +88,7 @@ export default ({ headingText = "Terms And Condition" }) => {
                 available by the Service.
               </li>
               <li>
-                <strong>Website</strong> refers to https://defitrack.io and any of its subdomains.
+                <strong>Website</strong> refers to https://decentri.fi and any of its subdomains.
               </li>
               <li>
                 <strong>You</strong> means the individual accessing or using the Service, or the company, or other legal

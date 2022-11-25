@@ -1,16 +1,16 @@
 import {useHistory} from "react-router-dom";
-import ReactGA from "react-ga";
+import ReactGA from "react-ga4";
 import React from "react";
 
 import tw from "twin.macro";
 
-const SearchContainer = tw.div`pt-2 relative mx-auto max-w-screen-xl text-gray-600 lg:mb-8 lg:mt-4 grid mb-4`;
+const SearchContainer = tw.div`pt-2 w-full relative max-w-screen-xl text-gray-600 lg:mb-8 lg:mt-4 grid mb-4`;
 const SearchInput = tw.input`w-11/12 border-2 border-gray-300 bg-white h-10 px-5 pr-16 rounded-lg text-sm focus:outline-none`
 const SearchButtonContainer = tw.div`w-1/12 grid flex`
-const SearchButtonIcon  = tw.svg`justify-self-center text-gray-600 h-4 w-4 fill-current`;
+const SearchButtonIcon  = tw.svg`justify-self-end text-gray-600 h-4 w-4 fill-current`;
 const SearchButton = tw.button`grid w-1/12 absolute right-0 top-0 mt-5`
 
-export default function Search({dashboardHooks}) {
+export default function Search({dashboardHooks, searchPlaceholder = "Search an address"}) {
     const history = useHistory()
 
     const search = function (e) {
@@ -21,7 +21,7 @@ export default function Search({dashboardHooks}) {
             <SearchContainer>
                 <SearchInput
                     onChange={search}
-                    type="search" name="search" placeholder="Search"/>
+                    type="search" name="search" placeholder={searchPlaceholder}/>
                 <SearchButtonContainer>
                     <SearchButton onClick={e => {
                         if (dashboardHooks.searchAddress !== null && dashboardHooks.searchAddress !== undefined && (dashboardHooks.searchAddress.length === 40 || dashboardHooks.searchAddress.length === 42)) {

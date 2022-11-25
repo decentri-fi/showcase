@@ -10,10 +10,10 @@ function getContract(address, abi, library, account) {
     )
 }
 
-function getProviderOrSigner(library, account) {
+export function getProviderOrSigner(library, account) {
     return account ? getSigner(library, account) : library
 }
 
-function getSigner(library, account) {
+export function getSigner(library, account) {
     return library.getSigner(account).connectUnchecked()
 }

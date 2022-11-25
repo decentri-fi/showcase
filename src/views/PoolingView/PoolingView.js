@@ -4,7 +4,7 @@ import usePoolingViewHooks from "./hooks/poolingview-hooks";
 import PoolingOpportunities from "../../components/PoolingOpportunities/PoolingOpportunities";
 import Actions from "./partials/Actions/Actions";
 import tw from "twin.macro";
-import ReactGA from "react-ga";
+import ReactGA from "react-ga4";
 
 export default function PoolingView() {
     const poolingViewHooks = usePoolingViewHooks()

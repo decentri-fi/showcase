@@ -1,5 +1,5 @@
 import {useEffect, useState} from "react";
-import {fetchLendingsV2} from "../../../api/defitrack/lending/lending";
+import {lendingPositions} from "../../../api/defitrack/lending/lending";
 
 export default function useDashboardLendingHooks(account, protocols, {setTotalScanning, setDoneScanning}) {
     const [lendings, setLendings] = useState([])
@@ -11,7 +11,7 @@ export default function useDashboardLendingHooks(account, protocols, {setTotalSc
                 return prevTotalScanning + protocols.length
             })
             for (const protocol of protocols) {
-                fetchLendingsV2(account, protocol).then(retLendings => {
+                lendingPositions(account, protocol).then(retLendings => {
                     setDoneScanning(prevState => {
                         return prevState + 1
                     })

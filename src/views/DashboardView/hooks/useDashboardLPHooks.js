@@ -1,5 +1,5 @@
 import {useEffect, useState} from "react";
-import {fetchPoolingsV2} from "../../../api/defitrack/pools/pools";
+import {poolingPositions} from "../../../api/defitrack/pools/pools";
 
 export default function useDashboardLPHooks(account, protocols,  {setTotalScanning, setDoneScanning}) {
     const [lps, setLps] = useState([]);
@@ -12,7 +12,7 @@ export default function useDashboardLPHooks(account, protocols,  {setTotalScanni
                     return prevTotalScanning + protocols.length
                 })
                 for (const protocol of protocols) {
-                    fetchPoolingsV2(account, protocol).then(poolings => {
+                    poolingPositions(account, protocol).then(poolings => {
                         setDoneScanning(prevState => {
                             return prevState + 1
                         })

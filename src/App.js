@@ -25,14 +25,13 @@ import CustomHeader from "./components/Header/CustomHeader";
 import LandingView from "./views/LandingView/LandingView";
 import Web3DashboardView from "./views/DashboardView/Web3DashboardView.js";
 import FooterV2 from "./components/Footer/FooterV2";
-import ReactGA from "react-ga";
-import ConnectView from "./views/ConnectView/LandingView";
+import ReactGA from "react-ga4";
+import ConnectView from "./views/ConnectView/ConnectView";
 import ProtocolsView from "./views/ProtocolsView/ProtocolsView";
 import ServiceLandingPage from "./demos/ServiceLandingPage";
 import ProtocolView from "./views/ProtocolsView/ProtocolView";
-import useProtocolsviewHooks from "./views/ProtocolsView/hooks/protocolsview-hooks";
-import TermsOfService from "./pages/TermsOfService";
 import TermsOfServiceView from "./views/TermsOfServiceView/TermsOfServiceView";
+import useDashboardHooks from "./views/DashboardView/hooks/dashboard-hooks";
 
 function getLibrary(provider) {
     const library = new Web3Provider(
@@ -54,23 +53,23 @@ function getLibrary(provider) {
     return library
 }
 
-const ga = 'UA-175320212-1'
-
 export default function App() {
-    ReactGA.initialize(ga);
+    ReactGA.initialize([
+        {
+            trackingId: "G-WLP674G3V2"
+        }
+    ]);
+
     const Web3ProviderNetwork = createWeb3ReactRoot('NETWORK')
 
     return (
-        <Web3ReactProvider getLibrary={getLibrary}>
-            <Web3ProviderNetwork getLibrary={getLibrary}>
+        <Web3ProviderNetwork getLibrary={getLibrary}>
                 <Router>
                     <Switch>
                         <Route path="/dashboard">
-                            <div tw="w-full bg-defaultBackground">
-                                <CustomHeader/>
-                                <Web3DashboardView/>
-                                <FooterV2/>
-                            </div>
+                            <CustomHeader/>
+                            <Web3DashboardView />
+                            <FooterV2/>
                         </Route>
                         <Route exact path="/protocols">
                             <CustomHeader/>
@@ -88,9 +87,9 @@ export default function App() {
                             <FooterV2/>
                         </Route>
                         <Route path="/terms-of-service">
-                            <CustomHeader showUserLink={false} />
-                            <TermsOfServiceView  />
-                            <FooterV2 />
+                            <CustomHeader showUserLink={false}/>
+                            <TermsOfServiceView/>
+                            <FooterV2/>
                         </Route>
                         <Route path="/test">
                             <ServiceLandingPage/>
@@ -123,6 +122,5 @@ export default function App() {
                     </Switch>
                 </Router>
             </Web3ProviderNetwork>
-        </Web3ReactProvider>
     );
 }

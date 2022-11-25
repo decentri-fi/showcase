@@ -1,11 +1,9 @@
-import axios from "axios";
+import defitrack from "@defitrack/js-client";
 
-export const fetchLendingsV2 = async (address, protocol) => {
-    const result = await axios.get(`https://api.defitrack.io/${protocol.slug}/lending/${address}/positions`);
-    return result.data;
+export const lendingPositions = async (address, protocol) => {
+    return await defitrack.lending().positions(protocol.slug, address);
 }
 
 export const fetchLendingMarketsForToken = async (network, address, protocol) => {
-    const result = await axios.get(`https://api.defitrack.io/${protocol.slug}/lending/markets?network=${network}&token=${address}`);
-    return result.data;
+    return await defitrack.lending().marketsForToken(protocol.slug, address, network)
 }

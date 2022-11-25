@@ -4,9 +4,9 @@ import {CurrencyDollarIcon} from "@heroicons/react/outline";
 import DetailCard from "../../../../components/Card/DetailCard"; //eslint-disable-line
 import tw from 'twin.macro';
 
-const Container = tw.div`w-full flex flex-wrap`
-const Header = tw.h3`text-lg font-medium mb-2 px-4 `
-const Table = tw.div`mb-8 flex flex-wrap grid grid-cols-2 lg:grid-cols-6`
+const Container = tw.div`flex flex-wrap`
+const Header = tw.h3`text-lg font-medium mb-2  `
+const Table = tw.div`w-full mb-8 flex flex-wrap gap-2 grid grid-cols-2 lg:grid-cols-6`
 
 const GreenDollarIcon = tw(CurrencyDollarIcon)`text-green-400 h-8 w-8`
 const YellowDollarIcon = tw(CurrencyDollarIcon)`text-yellow-400 h-8 w-8`
@@ -138,6 +138,8 @@ export default function OverviewDetails(
                                         </BlueProgressBar>}
                         />}
 
+                </Table>
+                <Table>
                     <Protocols dashboardHooks={dashboardHooks}/>
                 </Table>
             </Container>

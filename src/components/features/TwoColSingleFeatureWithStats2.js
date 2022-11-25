@@ -10,7 +10,7 @@ import { ReactComponent as SvgDotPattern } from "images/dot-pattern.svg";
 const Container = tw.div`relative`;
 const TwoColumn = tw.div`flex flex-col md:flex-row justify-between max-w-screen-xl mx-auto py-20 md:py-24`;
 const Column = tw.div`w-full max-w-md mx-auto md:max-w-none md:mx-0`;
-const ImageColumn = tw(Column)`md:w-5/12 flex-shrink-0 h-80 md:h-auto relative`;
+const ImageColumn = tw(Column)`md:w-5/12 flex-shrink-0 h-80 md:h-auto relative hidden lg:block`;
 const TextColumn = styled(Column)(props => [
   tw`md:w-7/12 mt-16 md:mt-0`,
   props.textOnLeft ? tw`md:mr-12 lg:mr-16 md:order-first` : tw`md:ml-12 lg:ml-16 md:order-last`
@@ -33,8 +33,8 @@ const Statistic = tw.div`text-left sm:inline-block sm:mr-12 last:mr-0 mt-4`;
 const Value = tw.div`font-bold text-lg sm:text-xl lg:text-2xl text-secondary-500 tracking-wide`;
 const Key = tw.div`font-medium text-primary-700`;
 
-const PrimaryButton = tw(PrimaryButtonBase)`mt-8 md:mt-10 text-sm inline-block ml-0`;
-const SecondaryButton = tw(PrimaryButtonBase)`mt-8 md:mt-10 bg-white text-primary-500 border-primary-500 border-2 text-sm inline-block ml-0 md:ml-4`;
+const PrimaryButton = tw(PrimaryButtonBase)`mx-2 mt-8 md:mt-10 text-sm inline-block ml-0`;
+const SecondaryButton = tw(PrimaryButtonBase)` mx-2 mt-8 md:mt-10 bg-white text-primary-500 border-primary-500 border-2 text-sm inline-block ml-0 md:ml-4`;
 
 const DecoratorBlob = styled(SvgDotPattern)(props => [
   tw`w-20 h-20 absolute right-0 bottom-0 transform translate-x-1/2 translate-y-1/2 fill-current text-primary-500 -z-10`
@@ -49,8 +49,8 @@ export default ({
   ),
   description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
   primaryButtonText = "Learn More",
-  primaryButtonUrl = "https://defitrack.io",
-    secondaryButtonUrl = "https://defitrack.io/defi-hub",
+  primaryButtonUrl = "https://decentri.fi",
+    secondaryButtonUrl = "https://decentri.fi/defi-hub",
     secondaryButtonText = "Learn more",
   imageSrc = StatsIllustrationSrc,
   imageCss = null,

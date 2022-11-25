@@ -1,6 +1,5 @@
-import axios from "axios";
+import defitrack from "@defitrack/js-client";
 
 export const calculatePrice = async (priceRequest) => {
-    const result = await axios.post(`https://api.defitrack.io/price`, priceRequest)
-    return result.data
+    return await defitrack.prices().calculate(priceRequest.address, priceRequest.network, priceRequest.amount);
 };

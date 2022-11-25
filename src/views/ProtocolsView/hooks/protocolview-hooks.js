@@ -56,7 +56,7 @@ export default function useProtocolView() {
 
     async function fetchFarmingMarkets() {
         if (protocol !== null) {
-            defitrack.farming().markets(protocol.slug, 'ETHEREUM').then(fo => {
+            defitrack.farming().markets(protocol.slug).then(fo => {
                 for (const element of fo) {
                     setFarmingOpportunities((prevState) => {
                         prevState.push(element)

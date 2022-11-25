@@ -5,7 +5,7 @@ import Actions from "./partials/Actions";
 import ChangeNetworkSection from "../../components/ChangeNetworkSection/ChangeNetworkSection";
 import PositionInformation from "./partials/PositionInformation";
 import useWeb3 from "../../hooks/web3";
-import ReactGA from "react-ga";
+import ReactGA from "react-ga4";
 
 export default function FarmingView({farmingElement, token}) {
 
@@ -26,7 +26,10 @@ export default function FarmingView({farmingElement, token}) {
     return (
         <>
             <PositionInformation farmingViewHooks={farmingViewHooks} farmingElement={farmingElement} />
-            <Actions farmingViewHooks={farmingViewHooks} token={token} farmingElement={farmingElement}/>
+            {
+                farmingElement.prepareInvestmentSupported &&
+                <Actions farmingViewHooks={farmingViewHooks} token={token} farmingElement={farmingElement}/>
+            }
         </>
     )
 };

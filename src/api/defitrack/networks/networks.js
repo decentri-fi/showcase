@@ -1,6 +1,5 @@
-import axios from 'axios';
+import defitrack from "@defitrack/js-client";
 
 export const fetchNetworks = async () => {
-    const response = await axios.get('https://api.defitrack.io/networks');
-    return response.data
+    return await defitrack.networks().list();
 }

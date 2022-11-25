@@ -8,7 +8,7 @@ import FallbackImage from "../../components/Image/FallbackImage";
 import {useParams} from "react-router-dom";
 import tw from "twin.macro";
 import {CurrencyDollarIcon} from "@heroicons/react/solid";
-import ReactGA from "react-ga";
+import ReactGA from "react-ga4";
 import {fetchProtocols} from "../../api/defitrack/protocols/protocols";
 import {fetchStakingMarketsForToken} from "../../api/defitrack/staking/staking";
 import {fetchLendingMarketsForToken} from "../../api/defitrack/lending/lending";

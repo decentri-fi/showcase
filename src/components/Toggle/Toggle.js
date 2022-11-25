@@ -3,8 +3,8 @@ import tw from "twin.macro";
 import {ToggleButton} from "@mui/material";
 import {EyeIcon, EyeOffIcon} from "@heroicons/react/outline"; //eslint-disable-line
 
-export default function Toggle({onChange, checked, checkedLabel = <EyeOffIcon tw="h-4" />, uncheckedLabel = <>
-    <EyeIcon tw="h-4"/>
+export default function Toggle({onChange, checked, checkedLabel = <EyeOffIcon />, uncheckedLabel = <>
+    <EyeIcon />
     </>
     }) {
 
@@ -12,7 +12,7 @@ export default function Toggle({onChange, checked, checkedLabel = <EyeOffIcon tw
 
     return (
         <>
-            <ToggleButton value="check" selected={checked} onChange={() => onChange(!checked)}>{theLabel}</ToggleButton>
+            <ToggleButton size={"small"} value="check" selected={checked} onChange={() => onChange(!checked)}>{theLabel}</ToggleButton>
         </>
     )
 };

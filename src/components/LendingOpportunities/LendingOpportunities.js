@@ -14,7 +14,7 @@ const List = tw.ul`flex flex-col w-full `
 
 
 const Center = tw.div`w-full grid justify-items-center`
-const Container = tw.div`bg-white shadow-lg rounded-sm border border-gray-200 w-full lg:w-1/2 my-4 py-4`
+const Container = tw.div`bg-white shadow-lg rounded-sm border border-gray-200 w-full lg:w-2/3 my-4 py-4`
 const Header = tw.div`px-5 py-4 border-b border-gray-100 font-semibold text-gray-800`
 
 export default function LendingOpportunities({lendingOpportunities}) {

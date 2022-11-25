@@ -7,7 +7,9 @@ import FallbackImage from "../../../../components/Image/FallbackImage";
 
 const Container = tw.div`w-full my-4`
 const Header = tw.div`w-full flex items-center mb-2`
-const HeaderText = tw.div`text-sm font-medium mb-2 bg-gray-600 rounded-r p-1 text-white`
+const HeaderTextContainer = tw.div`lg:w-3/12 w-full`
+const HeaderText = tw.h3`shadow  py-1 px-4 text-sm font-medium mb-2 bg-orange-600 rounded-r  text-white`
+const BalanceText = tw.div`w-9/12 text-right`
 const ListContainer = tw.div`flex flex-col w-full mx-auto items-center justify-center bg-white dark:bg-gray-800`
 const List = tw.ul`flex flex-col w-full`
 
@@ -20,8 +22,8 @@ const FallbackImageContainer = tw.div`flex flex-nowrap`
 const Image = tw.div`h-5 w-5 lg:h-8 lg:w-8`
 const OverlayImage = tw.div`lg:h-4 lg:w-4 h-2 w-2 -mx-2 `
 
-const NameColumn = tw.div`pl-1 w-1/4 flex-1 font-medium text-orange-600 dark:text-gray-200 text-xs`
-const AmountColumn = tw.div`text-sm text-left text-gray-600 dark:text-gray-200 w-1/2 lg:w-1/3`
+const NameColumn = tw.div`pl-1 lg:w-1/4 w-3/4 flex-1 font-medium text-orange-600 dark:text-gray-200 text-xs`
+const AmountColumn = tw.div`hidden lg:block text-sm text-left text-gray-600 dark:text-gray-200 lg:w-1/3 w-0`
 const TwoColumns = tw.div`grid grid-cols-2`
 
 const ThinGreen = tw.span`text-green-500 font-thin`
@@ -29,6 +31,7 @@ const ThinGreen = tw.span`text-green-500 font-thin`
 const TotalColumn = tw.div`text-sm text-left text-gray-600 dark:text-gray-200 w-1/3 lg:w-1/5 justify-items-end grid`
 const PullRight = tw.div`flex flex-col grid justify-items-end`
 const Bold = tw.span`font-bold text-sm`
+const Hidden = tw.span`hidden lg:block`
 
 
 function PoolingList({poolings}) {
@@ -69,12 +72,12 @@ function PoolingEntry({pooling}) {
                     {pooling.name}
                 </NameColumn>
                 <AmountColumn>
-                    <TwoColumns>
-                        <NumberFormat
-                            value={pooling.amount} displayType={'text'} decimalScale={4}
-                            thousandSeparator={true}/>
-                        <ThinGreen>{pooling.symbol}</ThinGreen>
-                    </TwoColumns>
+                        <TwoColumns>
+                            <NumberFormat
+                                value={pooling.amount} displayType={'text'} decimalScale={4}
+                                thousandSeparator={true}/>
+                            <ThinGreen>{pooling.symbol}</ThinGreen>
+                        </TwoColumns>
                 </AmountColumn>
                 <TotalColumn>
                     <PullRight>
@@ -106,8 +109,17 @@ export default function PoolingDetails({protocol, dashboardHooks}) {
         return (
         <Container>
             <Header>
-                <HeaderText>Pooling Overview (<DollarLabel
-                    amount={dashboardHooks.totalPoolingForProtocol(protocol)}/>)</HeaderText>
+                <HeaderTextContainer><HeaderText>Liquidity Pooling</HeaderText></HeaderTextContainer>
+                <BalanceText>
+                    <Hidden>
+                        <PullRight>
+                            <HeaderText>
+                                <DollarLabel
+                                    amount={dashboardHooks.totalPoolingForProtocol(protocol)}/>
+                            </HeaderText>
+                        </PullRight>
+                    </Hidden>
+                </BalanceText>
             </Header>
             <PoolingList poolings={elements}/>
         </Container>

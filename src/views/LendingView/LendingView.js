@@ -1,7 +1,7 @@
 import React, {useEffect} from 'react';
 import useLendingPageHooks from "./hooks/lendingpage-hooks";
 import NumberFormat from "react-number-format";
-import ReactGA from "react-ga";
+import ReactGA from "react-ga4";
 import FallbackImage from "../../components/Image/FallbackImage";
 
 function LendingMarketElement({market}) {
@@ -182,7 +182,7 @@ function LendingContent({lendingMarkets, searchFilter, setSearchFilter, selected
                         }}
                              className={getNetworkCss('ETHEREUM')}>
                             <div className="w-2/12">
-                                <img alt="ethereum" src="https://static.defitrack.io/images/networks/ethereum.png"
+                                <img alt="ethereum" src="https://static.decentri.fi/images/networks/ethereum.png"
                                      className="object-cover rounded-full h-10 w-6 "/>
                             </div>
                             <p className="w-10/12">
@@ -194,7 +194,7 @@ function LendingContent({lendingMarkets, searchFilter, setSearchFilter, selected
                         }}
                              className={getNetworkCss('POLYGON')}>
                             <div className="w-2/12">
-                                <img alt="polygon" src="https://static.defitrack.io/images/networks/polygon.png"
+                                <img alt="polygon" src="https://static.decentri.fi/images/networks/polygon.png"
                                      className="object-cover rounded-full h-10 w-10 "/>
                             </div>
                             <p className="w-10/12">

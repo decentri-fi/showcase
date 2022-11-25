@@ -10,7 +10,7 @@ import { ReactComponent as YoutubeIcon } from "images/youtube-icon.svg";
 import { ReactComponent as SvgDecoratorBlob1 } from "images/svg-decorator-blob-9.svg";
 
 const Container = styled.div`
-${tw`relative bg-primary-500 text-gray-100 -mb-8 -mx-8 px-8 py-20 lg:py-24`}
+${tw`relative bg-primary-500 text-gray-100 -mb-8  px-8 py-20 lg:py-24`}
 background-image: url("https://media.istockphoto.com/vectors/abstract-background-of-halftone-dots-and-curved-lines-vector-id1250331164?k=20&m=1250331164&s=612x612&w=0&h=qMsTBJQZ2Kne-2CoZaRvLRSUxpElEG1plEb_YvnxCso=");
 background-repeat: no-repeat;
 background-size: cover;
@@ -53,13 +53,13 @@ export default () => {
             <ColumnHeading>Product</ColumnHeading>
             <LinkList>
               <LinkListItem>
-                <Link href="https://docs.defitrack.io">Documentation</Link>
+                <Link href="https://docs.decentri.fi">Documentation</Link>
               </LinkListItem>
               <LinkListItem>
-                <Link href="https://defitrack.io/dashboard">Showcase</Link>
+                <Link href="https://decentri.fi/dashboard">Showcase</Link>
               </LinkListItem>
               <LinkListItem>
-                <Link href="https://docs.defitrack.io/general/supported-protocols">Roadmap</Link>
+                <Link href="https://docs.decentri.fi/general/supported-protocols">Roadmap</Link>
               </LinkListItem>
             </LinkList>
           </Column>
@@ -95,7 +95,7 @@ export default () => {
         <Divider />
         <ThreeColRow>
           <LogoContainer>
-            <LogoImg src="https://static.defitrack.io/images/logo/default-monochrome-white.svg" />
+            <LogoImg src="https://static.decentri.fi/images/logo/namewithlogo.png" />
           </LogoContainer>
           <CopywrightNotice>&copy; 2022 Defitrack. All Rights Reserved.</CopywrightNotice>
           <SocialLinksContainer>

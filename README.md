@@ -1,4 +1,4 @@
-Defitrack Frontend
+Decentrifi Frontend
 ===
 
 ### `yarn start`

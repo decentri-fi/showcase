@@ -16,7 +16,7 @@ export function useFarmingViewHooks(farmingElement) {
 
     const [staking, setStaking] = useState(null)
     const [wantBalance, setWantBalance] = useState(null)
-    const [wantPrice, setWantPrice] = useState(0);
+    const [wantAmountInDollars, setWantAmountInDollars] = useState(0);
     const [approving, setApproving] = useState(false)
     const [depositing, setDepositing] = useState(false)
     const [withdrawing, setWithdrawing] = useState(false)
@@ -57,7 +57,7 @@ export function useFarmingViewHooks(farmingElement) {
                         new BigNumber(10).exponentiatedBy(farmingElement.stakedToken.decimals)
                     ),
                 })
-                setWantPrice(price);
+                setWantAmountInDollars(price);
             }
         }
 
@@ -89,7 +89,7 @@ export function useFarmingViewHooks(farmingElement) {
         if (staking === null) {
             return "0.00"
         } else {
-            const result = new BigNumber(staking.stakedToken.amount)
+            const result = new BigNumber(staking.amount)
             if (new BigNumber(0).isLessThan(result)) {
                 return `~ ${result.toFixed(6, 0)}`;
             } else {
@@ -107,7 +107,6 @@ export function useFarmingViewHooks(farmingElement) {
     const depositAll = async () => {
         validateNetwork();
         const n = new BigNumber(wantBalance)
-        console.log(n);
 
         if (wantBalance < 1) {
             swal({
@@ -210,7 +209,7 @@ export function useFarmingViewHooks(farmingElement) {
         withdrawing: withdrawing,
         approving: approving,
         staking: staking,
-        wantPrice: wantPrice,
+        wantAmountInDollars: wantAmountInDollars,
         approved: approved
     }
 }

@@ -10,7 +10,8 @@ import useDashboardBorrowingHooks from "./useDashboardBorrowingHooks";
 import useDashboardLPHooks from "./useDashboardLPHooks";
 import useDashboardNetworkHooks from "./useDashboardNetworkHooks";
 
-export default function useDashboardHooks(account) {
+export default function
+    useDashboardHooks(account) {
 
     const useDashboardFilter = useDashboardFilterHooks()
     const {protocols} = useDashboardProtocolHooks();
@@ -50,7 +51,7 @@ export default function useDashboardHooks(account) {
                 .filter(claimable => {
                     return protocol == null || claimable.protocol.name === protocol.name
                 })
-                .map(claimable => claimable.claimableToken.dollarValue).reduce((a, b) => a + b, 0)
+                .map(claimable => claimable.dollarValue).reduce((a, b) => a + b, 0)
         }
     }
 
@@ -105,14 +106,17 @@ export default function useDashboardHooks(account) {
     }
 
     function getUniqueNetworks() {
-        let activeNetworks = lendings.map(lending => lending.network).concat(
+        let activeNetworks = lendings
+            .map(lending => lending.network).concat(
             borrowings.map(borrowing => borrowing.network)
         ).concat(
-            stakings.map(staking => staking.network)
+            stakings
+                .map(staking => staking.network)
         ).concat(
             balanceElements.map(balanceElement => balanceElement.network)
         ).concat(
-            lps.map(lp => lp.network)
+            lps
+                .map(lp => lp.network)
         ).concat(
             claimables.map(claimable => claimable.network)
         );
@@ -123,7 +127,7 @@ export default function useDashboardHooks(account) {
                     activeNetworks
                         .map(network => network.name)
                         .map(id => {
-                            return activeNetworks.find(proto => id === proto.name)
+                            return activeNetworks.find(n => id === n.name)
                         })
                 )
             )
@@ -133,16 +137,22 @@ export default function useDashboardHooks(account) {
     }
 
     function getUniqueProtocols() {
-        let activeProtocols = lendings.map(lending => lending.protocol).concat(
+        let activeProtocols = lendings
+                .filter(smallValueFilter)
+                .map(lending => lending.protocol)
+            .concat(
                 borrowings.map(borrowing => borrowing.protocol)
             ).concat(
-                stakings.map(staking => staking.protocol)
+                stakings
+                    .filter(smallValueFilter)
+                    .map(staking => staking.protocol)
             ).concat(
-                lps.map(lp => lp.protocol)
+                lps
+                    .filter(smallValueFilter)
+                    .map(lp => lp.protocol)
             ).concat(
                 claimables.map(claimable => claimable.protocol)
-            )
-        ;
+            );
 
         const set = Array.from(
             new Set(
@@ -173,7 +183,7 @@ export default function useDashboardHooks(account) {
     const [searchAddress, setSearchAddress] = useState(null);
 
     return {
-        searchAddress: searchAddress,
+        searchAddress,
         setSearchAddress: setSearchAddress,
         address: account,
         usedProtocols: getUniqueProtocols(),

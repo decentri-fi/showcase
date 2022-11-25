@@ -37,7 +37,7 @@ export const LogoLink = styled(NavLink)`
   ${tw`flex items-center font-black border-b-0 text-2xl! ml-0!`};
 
   img {
-    ${tw`ml-8 w-48 h-12 mr-3`}
+    ${tw`ml-8 w-96 h-12 mr-3`}
   }
 `;
 
@@ -88,7 +88,7 @@ export default ({ roundedHeaderButton = false, logoLink, links, className, colla
 
   const defaultLogoLink = (
     <LogoLink href="/">
-      <img src="https://static.defitrack.io/images/logo/default-monochrome-white.svg" alt="logo" />
+      <img src="https://static.decentri.fi/images/logo/namewithlogo.png" alt="logo" />
     </LogoLink>
   );
 

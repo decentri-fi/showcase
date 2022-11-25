@@ -14,6 +14,7 @@ const FarmingMarketLeft = tw.div`w-9/12 flex flex-col`
 const FarmingMarketRight = tw.div`text-primary-300 w-3/12 text-center items-center grid justify-items-center`
 const Logo = tw.div`w-12 h-12`
 const ThinGreen = tw.span`text-green-500`
+const FarmStats = tw.div`flex grid gap-2 grid-cols-3 w-full mb-4 mt-4`
 
 function FarmingMarketInfo({farmingElement}) {
 
@@ -43,7 +44,7 @@ function BalanceInformation({
 
     function getPercentage() {
         if (farmingViewHooks.staking !== null) {
-            let stakingAmount = farmingViewHooks.staking.stakedToken.amount;
+            let stakingAmount = farmingViewHooks.staking.amount;
             return (stakingAmount * 100 / (stakingAmount + farmingViewHooks.wantBalance));
         } else {
             return 0;
@@ -51,7 +52,7 @@ function BalanceInformation({
     }
 
     function getWalletDollarBalance() {
-        return farmingViewHooks.wantPrice
+        return farmingViewHooks.wantAmountInDollars
     }
 
     function getStakingDollarBalance() {
@@ -61,7 +62,15 @@ function BalanceInformation({
         return 0
     }
 
-    const FarmStats = tw.div`flex grid gap-2 grid-cols-3 w-full mb-4 mt-4`
+    const stakingPowerText = () => {
+        if(farmingViewHooks.getWantBalance() > 0) {
+            return `${farmingViewHooks.getWantBalance()} ${farmingElement.stakedToken.symbol} left`
+        } else {
+
+        }
+    }
+
+
 
     return (
         <FarmStats>
@@ -83,7 +92,7 @@ function BalanceInformation({
             <FarmingMarketBox>
                 <FarmingMarketLeft>
                     <StatTitle>Farming Balance</StatTitle>
-                    <StatName>{farmingViewHooks.getWantBalance()}</StatName>
+                    <StatName>{farmingViewHooks.getStakedBalance()}</StatName>
                     <StatDescription>That's around <ThinGreen><DollarLabel
                         amount={getStakingDollarBalance()}/> </ThinGreen> in {farmingElement.stakedToken.symbol}
                     </StatDescription>
@@ -101,8 +110,7 @@ function BalanceInformation({
                     <StatTitle>Staking Power</StatTitle>
                     <StatName>{getPercentage()}%</StatName>
                     <StatDescription>
-                        <ThinGreen>{farmingViewHooks.getWantBalance()} {farmingElement.stakedToken.symbol} left
-                        </ThinGreen>
+                        <ThinGreen>{stakingPowerText}</ThinGreen>
                     </StatDescription>
                 </FarmingMarketLeft>
                 <FarmingMarketRight>

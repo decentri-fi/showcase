@@ -1,50 +1,55 @@
-import React, {useEffect, useState} from 'react';
-import {useHistory} from 'react-router-dom'
+import React, {useEffect} from 'react';
 import tw from "twin.macro";
 import MainFeature2 from "../../components/features/TwoColWithTwoHorizontalFeaturesAndButton";
 import prototypeIllustrationImageSrc from "../../images/prototype-illustration.svg";
 import {ReactComponent as BriefcaseIcon} from "feather-icons/dist/icons/share.svg";
 import {ReactComponent as ChainIcon} from "feather-icons/dist/icons/link.svg";
-import ReactGA from "react-ga";
+import ReactGA from "react-ga4";
 import TwoColSingleFeatureWithStats2 from "../../components/features/TwoColSingleFeatureWithStats2";
 import GetStartedLight from "../../components/cta/GetStartedLight";
 
 const Subheading = tw.span`uppercase tracking-widest font-bold text-primary-500`;
 const HighlightedText = tw.span`text-primary-500`;
 
+const Container = tw.div`w-full`
+
+const Dark = tw.section`bg-defaultBackground`
+
 export default function LandingView() {
 
     useEffect(() => {
-        ReactGA.pageview(window.location.pathname + window.location.search);
+        ReactGA.send({
+            hitType: "pageview",
+            page: window.location.pathname + window.location.search
+        });
     }, [])
 
+    let statistics = [
+        {
+            key: "Protocols",
+            value: "21+"
+        },
+        {
+            key: "Networks",
+            value: "7+"
+        },
+        {
+            key: "Markets",
+            value: "550+"
+        }
+    ];
+
     return (
-        <>
-            <TwoColSingleFeatureWithStats2 statistics={
-                [
-                    {
-                        key: "Protocols",
-                        value: "21+"
-                    },
-                    {
-                        key: "Networks",
-                        value: "7+"
-                    },
-                    {
-                        key: "Markets",
-                        value: "550+"
-                    }
-                ]
-            }
+        <Container>
+            <TwoColSingleFeatureWithStats2 statistics={statistics}
                                            primaryButtonText="Explore Defi Hub"
-                                           primaryButtonUrl="https://docs.defitrack.io"
+                                           primaryButtonUrl="https://docs.decentri.fi"
                                            subheading="Defi Hub"
                                            heading="Decentralized Finance. Simplified. Open Source."
                                            description="Defi Hub is the easiest way to integrate with existing defi protocols without having to know the inner workings of platform or chain-specific models."
-
             />
 
-            <section tw="bg-defaultBackground">
+            <Dark>
                 <MainFeature2
                     subheading={<Subheading>Defitrack Track</Subheading>}
                     heading={
@@ -56,7 +61,7 @@ export default function LandingView() {
                         <>
                             Tracking funds requires specific know-how about underlying protocols and projects.
                             We keep track of all the major <HighlightedText><a target="_blank"
-                                                                               href="https://docs.defitrack.io">lending,
+                                                                               href="https://docs.decentri.fi">lending,
                             farming, pool and staking providers</a></HighlightedText> and the current, relevant markets.
                         </>
                     }
@@ -79,16 +84,16 @@ export default function LandingView() {
                         }
                     ]}
                 />
-            </section>
+            </Dark>
 
             <section tw="bg-defaultBackground">
                 <GetStartedLight
-                    primaryLinkUrl="https://docs.defitrack.io"
-                    secondaryLinkUrl="https://docs.defitrack.io"
+                    primaryLinkUrl="https://docs.decentri.fi"
+                    secondaryLinkUrl="https://docs.decentri.fi"
                     subheading="Buidling in the space?"
                     heading="Explore our developer-friendly docs."
                 />
             </section>
-        </>
+        </Container>
     )
 };

@@ -147,8 +147,8 @@ export default function Actions({farmingViewHooks, token, farmingElement}) {
             <Center>
                 <Box sx={{borderBottom: 1, borderColor: 'divider'}}>
                     <Tabs value={value} onChange={handleChange} aria-label="farm actions">
-                        <Tab label="Default Actions"/>
-                        <Tab label="Farm Specific Actions"/>
+                        <Tab label="Enter Market"/>
+                        <Tab label="Leave Market"/>
                     </Tabs>
                 </Box>
             </Center>

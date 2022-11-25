@@ -1,5 +1,5 @@
 import {useEffect, useState} from "react";
-import {fetchStakingsV2} from "../../../api/defitrack/staking/staking";
+import {farmingPositions} from "../../../api/defitrack/staking/staking";
 
 export default function useDashboardStakingHooks(account, protocols, {setTotalScanning, setDoneScanning}) {
 
@@ -13,7 +13,7 @@ export default function useDashboardStakingHooks(account, protocols, {setTotalSc
                     return prevTotalScanning + protocols.length
                 })
                 for (const protocol of protocols) {
-                        fetchStakingsV2(account, protocol).then(retStakings => {
+                        farmingPositions(account, protocol).then(retStakings => {
                         setDoneScanning(prevState => {
                             return prevState + 1
                         })

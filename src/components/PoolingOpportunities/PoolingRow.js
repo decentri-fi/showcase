@@ -26,7 +26,6 @@ const AmountColumn=tw.div`text-sm text-left text-gray-600 dark:text-gray-200 w-1
 
 const TotalColumn = tw.div`text-sm text-left text-gray-600 dark:text-gray-200 w-1/3 lg:w-1/5 justify-items-end grid`
 const PullRight = tw.div`flex flex-col grid justify-items-end`
-const Bold = tw.span`font-bold text-sm`
 const Hidden = tw.span`hidden lg:block`
 
 export function PoolingRow({poolingElement}) {
@@ -44,6 +43,9 @@ export function PoolingRow({poolingElement}) {
                         <Image>
                             <FallbackImage src={poolingElement.protocol.logo}/>
                         </Image>
+                        <OverlayImage>
+                            <FallbackImage src={poolingElement.network.logo}/>
+                        </OverlayImage>
                     </FallbackImageContainer>
                 </IconColumn>
                 <NameColumn>

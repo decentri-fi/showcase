@@ -32,8 +32,7 @@ const DecoratorBlob = styled(SvgDotPattern)(props => [
     tw`w-20 h-20 absolute right-0 bottom-0 transform translate-x-1/2 translate-y-1/2 fill-current text-primary-500 -z-10`
 ]);
 
-export default function ConnectWalletSection({
-                                                 login,
+export default function NoWeb3Browser({
                                                  imageSrc = StatsIllustrationSrc,
                                                  imageCss = null,
                                                  imageContainerCss = null,
@@ -49,14 +48,11 @@ export default function ConnectWalletSection({
                 </ImageColumn>
                 <TextColumn textOnLeft={textOnLeft}>
                     <TextContent>
-                        <Subheading>Enable your wallet to access this feature.</Subheading>
-                        <Heading>Connect your web3 wallet.</Heading>
+                        <Subheading>Use a web3 enabled browser or manually search an address.</Subheading>
+                        <Heading>No web3 browser detected.</Heading>
                         <Description>
-                            In order to manage your own account, you can log in using your web3 wallet.
+                            It would appear your browser doesn't suppor web3. To fully appreciate this application, connect your wallet using a web3-enabled browser.
                         </Description>
-                        <PrimaryButton onClick={login}>
-                            Connect
-                        </PrimaryButton>
                     </TextContent>
                 </TextColumn>
             </TwoColumn>

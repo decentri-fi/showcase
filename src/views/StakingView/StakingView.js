@@ -2,9 +2,13 @@ import React, {useEffect} from 'react';
 import FarmingView from "../FarmingView/FarmingView";
 import useStakingViewHooks from "./hooks/stakingview-hooks";
 import tw from "twin.macro";
-import ReactGA from "react-ga";
+import ReactGA from "react-ga4";
+
+const Container = tw.div`mx-4 mt-4 flex flex-wrap lg:mx-64`
 
 export default function StakingView() {
+
+
     const tokenViewHooks = useStakingViewHooks()
 
     const {
@@ -37,9 +41,9 @@ export default function StakingView() {
 
     if (token !== null) {
         return <>
-            <div tw="mx-4 mt-4 flex flex-wrap lg:mx-64">
+            <Container>
                 {detail}
-            </div>
+            </Container>
         </>;
     } else {
         return (

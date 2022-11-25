@@ -87,7 +87,7 @@ export default () => {
                             available by the Service.
                         </li>
                         <li>
-                            <strong>Website</strong> refers to https://defitrack.io and any of its subdomains.
+                            <strong>Website</strong> refers to https://decentri.fi and any of its subdomains.
                         </li>
                         <li>
                             <strong>You</strong> means the individual accessing or using the Service, or the company, or other legal

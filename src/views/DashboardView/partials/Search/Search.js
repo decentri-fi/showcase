@@ -4,7 +4,7 @@ import React from "react";
 
 import tw from "twin.macro";
 
-const SearchContainer = tw.div`pt-2 w-full relative max-w-screen-xl text-gray-600 lg:mb-8 lg:mt-4 grid mb-4`;
+const SearchContainer = tw.div`pt-2 w-full relative max-w-screen-xl text-gray-600 lg:mb-8 grid mb-4`;
 const SearchInput = tw.input`w-11/12 border-2 border-gray-300 bg-white h-10 px-5 pr-16 rounded-lg text-sm focus:outline-none`
 const SearchButtonContainer = tw.div`w-1/12 grid flex`
 const SearchButtonIcon  = tw.svg`justify-self-end text-gray-600 h-4 w-4 fill-current`;

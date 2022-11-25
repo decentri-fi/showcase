@@ -46,7 +46,7 @@ export default function LandingView() {
                                            primaryButtonUrl="https://docs.decentri.fi"
                                            subheading="Defi Hub"
                                            heading="Decentralized Finance. Simplified. Open Source."
-                                           description="Defi Hub is the easiest way to integrate with existing defi protocols without having to know the inner workings of platform or chain-specific models."
+                                           description="Defi Hub is the easiest way to integrate with existing defi protocols without having to know the inner workings of protocols or chain-specific models."
             />
 
             <Dark>
@@ -59,14 +59,16 @@ export default function LandingView() {
                     }
                     description={
                         <>
-                            Tracking funds requires specific know-how about underlying protocols and projects.
+                            Tracking positions requires specific know-how about underlying protocols and projects.
                             We keep track of all the major <HighlightedText><a target="_blank"
                                                                                href="https://docs.decentri.fi">lending,
                             farming, pool and staking providers</a></HighlightedText> and the current, relevant markets.
+                            <br />
+                            We pour all this data into a unified model, which lets you easily <b>compare different positions.</b>
                         </>
                     }
                     primaryButtonText={"EXPLORE THE SHOWCASE"}
-                    primaryButtonUrl={"/dashboard"}
+                    primaryButtonUrl={"/account/0x26fcbd3afebbe28d0a8684f790c48368d21665b5"}
                     imageSrc={prototypeIllustrationImageSrc}
                     showDecoratorBlob={false}
                     features={[

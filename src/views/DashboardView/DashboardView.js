@@ -12,7 +12,7 @@ import BorrowingDetails from "./partials/BorrowingDetails";
 import tw from 'twin.macro';
 import Search from "./partials/Search/Search";
 
-const Container = tw.div`px-2 flex pt-8 lg:pt-24 bg-defaultBackground`
+const Container = tw.div`px-2 flex pt-8 bg-defaultBackground`
 
 const ProtocolSection = tw.section`w-full lg:w-1/2 grid justify-items-start mb-6 rounded py-4`
 const ProtocolSectionHeader = tw.a`flex text-sm flex-row mb-2`;
@@ -23,6 +23,7 @@ const DashboardWrapper = tw.div`grid justify-items-center`
 const DashboardHeaderContainer = tw.div`flex flex-wrap w-full  lg:w-1/2`
 const FlexWrap = tw.div`flex flex-wrap`
 const HorizontalCenter = tw.div`pl-1 flex items-center`
+const HideSmallValueFilter = tw.p`text-xs`
 
 
 export default function DashboardView({dashboardHooks}) {
@@ -30,6 +31,15 @@ export default function DashboardView({dashboardHooks}) {
     useEffect(() => {
         ReactGA.pageview(window.location.pathname + window.location.search);
     }, [])
+
+
+    function showSmallValues() {
+        dashboardHooks.setHideSmallValues(false);
+    }
+
+    function hideSmallValues() {
+        dashboardHooks.setHideSmallValues(true);
+    }
 
     const sections = dashboardHooks.usedProtocols.map((proto, index) => {
         return (
@@ -68,11 +78,22 @@ export default function DashboardView({dashboardHooks}) {
             </DashboardHeaderContainer>
 
             <ClaimableDetails dashboardHooks={dashboardHooks}
-                                  claimables={dashboardHooks.claimables}/>
+                              claimables={dashboardHooks.claimables}/>
 
             <BalanceDetails dashboardHooks={dashboardHooks}/>
 
             {sections}
+            {
+                dashboardHooks.hideSmallValues &&
+                <HideSmallValueFilter>Positions with small deposits are not displayed (&lt;$1). <u><a onClick={showSmallValues}>show
+                    everything</a></u></HideSmallValueFilter>
+            }
+
+            {
+                !dashboardHooks.hideSmallValues &&
+                <HideSmallValueFilter>Positions with small deposits are included (&lt;$1). <u><a onClick={hideSmallValues}>hide
+                    small values</a></u></HideSmallValueFilter>
+            }
         </DashboardWrapper>
     </Container>;
 }

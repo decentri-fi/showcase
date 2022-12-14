@@ -1,15 +1,7 @@
 import React from 'react';
-import QuickswapActions from "./QuickswapActions";
 import tw from 'twin.macro';
 
 export default function Actions({poolingViewHooks}) {
-    const activeElement = poolingViewHooks.activePoolingElement;
-    if (activeElement.network.name === 'POLYGON' && activeElement.protocol.name === 'QUICKSWAP') {
-        return (
-            <QuickswapActions poolingMarket={activeElement}
-                              chosenToken={poolingViewHooks.selectedUnderlyingTokenBalance}/>
-        )
-    } else {
         return (
             <>
                 <h2 tw="mt-8 max-w-lg mb-6 font-sans text-3xl font-bold leading-none tracking-tight text-gray-900 sm:text-4xl md:mx-auto">
@@ -42,5 +34,4 @@ export default function Actions({poolingViewHooks}) {
                 </h2>
             </>
         )
-    }
 }

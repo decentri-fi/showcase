@@ -51,7 +51,8 @@ export default function NoWeb3Browser({
                         <Subheading>Use a web3 enabled browser or manually search an address.</Subheading>
                         <Heading>No web3 browser detected.</Heading>
                         <Description>
-                            It would appear your browser doesn't suppor web3. To fully appreciate this application, connect your wallet using a web3-enabled browser.
+                            It would appear your browser doesn't support web3. That's alright!
+                            To fully appreciate this showcase, connect your wallet using a web3-enabled browser.
                         </Description>
                     </TextContent>
                 </TextColumn>

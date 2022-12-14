@@ -1,28 +1,35 @@
 import React, {useEffect} from 'react';
-import ConnectWalletSection from "../../components/ConnectWalletSection/ConnectWalletSection";
-import useDashboardHooks from "./hooks/dashboard-hooks";
-import useWeb3 from "../../hooks/web3";
-import DashboardView from "./DashboardView";
-import ReactGA from "react-ga4";
 
-import tw from 'twin.macro';
+
+import useWeb3 from "../../hooks/web3";
+import useDashboardHooks from "../DashboardView/hooks/dashboard-hooks";
+import ReactGA from "react-ga4";
+import ConnectWalletSection from "../../components/ConnectWalletSection/ConnectWalletSection";
 import NoWeb3Browser from "../../components/ConnectWalletSection/NoWeb3Browser";
+import tw from "twin.macro";
+import ClaimableView from "./ClaimableView";
 import CustomHeader from "../../components/Header/CustomHeader";
 import {useHistory} from "react-router-dom";
 
 const Container = tw.div`px-2 flex pt-8 lg:pt-24 bg-defaultBackground`
 const Center = tw.div`w-full grid justify-items-center`;
 
-export default function Web3DashboardView() {
 
+export default function Web3ClaimableView() {
     const web3 = useWeb3();
     const history = useHistory();
-    const dashboardHooks = useDashboardHooks(web3.account,{
+
+    const dashboardHooks = useDashboardHooks(web3.account, {
+        supportsPooling: false,
+        supportsLending: false,
+        supportsStaking: false,
         supportsClaimables: true,
+        supportsBalances: false,
+        supportsDebt: false
     });
 
     const onAddressChange = (address) => {
-        history.push(`/${address}/profile`);
+        history.push(`/${address}/claimables`);
     };
 
     useEffect(() => {
@@ -35,8 +42,8 @@ export default function Web3DashboardView() {
     if (web3.account != null) {
         return (
             <>
-                <CustomHeader onAddressChange={onAddressChange} showSearch={true}></CustomHeader>
-                <DashboardView dashboardHooks={dashboardHooks}/>
+                <CustomHeader onAddressChange={onAddressChange}></CustomHeader>
+                <ClaimableView dashboardHooks={dashboardHooks}/>
             </>
         );
     } else {
@@ -46,10 +53,10 @@ export default function Web3DashboardView() {
                 <Container>
                     <Center>
                         {
-                            web3.supported &&  <ConnectWalletSection login={web3.login}/>
+                            web3.supported && <ConnectWalletSection login={web3.login}/>
                         }
                         {
-                            !web3.supported &&  <NoWeb3Browser />
+                            !web3.supported && <NoWeb3Browser/>
                         }
                     </Center>
                 </Container>

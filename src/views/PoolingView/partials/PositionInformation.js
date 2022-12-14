@@ -5,7 +5,7 @@ import PrimaryButton from "../../../components/Button/PrimaryButton";
 import tw from "twin.macro";
 
 const DefaultStat = tw.div`flex flex-nowrap shadow p-2`
-const DoubleStat = tw(DefaultStat)`col-span-2`
+const DoubleStat = tw(DefaultStat)`col-span-4`
 const SingleStat = tw(DefaultStat)`col-span-1`
 const StatLeft = tw.div`w-9/12 flex flex-col`
 const StatRight = tw.div`text-primary-300 w-3/12 text-center items-center grid justify-items-center`
@@ -17,21 +17,21 @@ const StatLogo = tw.div`w-12 h-12`
 function PoolingMarketInfo({poolingMarketElement}) {
 
     return (
-        <DoubleStat>
-            <StatLeft>
-                <StatTitle>{poolingMarketElement.name} on {poolingMarketElement.network.name}</StatTitle>
-                <StatCenterText>{poolingMarketElement.name}</StatCenterText>
-                <StatDescription>{poolingMarketElement.name} has a market size of
-                    <span tw="text-green-500"> <DollarLabel
-                        amount={poolingMarketElement.marketSize}/></span>
-                </StatDescription>
-            </StatLeft>
-            <StatRight>
-                <StatLogo>
-                    <FallbackImage src={poolingMarketElement.protocol.logo}/>
-                </StatLogo>
-            </StatRight>
-        </DoubleStat>
+            <DoubleStat>
+                <StatLeft>
+                    <StatTitle>{poolingMarketElement.name} on {poolingMarketElement.network.name}</StatTitle>
+                    <StatCenterText>{poolingMarketElement.name}</StatCenterText>
+                    <StatDescription>{poolingMarketElement.name} has a market size of
+                        <span tw="text-green-500"> <DollarLabel
+                            amount={poolingMarketElement.marketSize}/></span>
+                    </StatDescription>
+                </StatLeft>
+                <StatRight>
+                    <StatLogo>
+                        <FallbackImage src={poolingMarketElement.protocol.logo}/>
+                    </StatLogo>
+                </StatRight>
+            </DoubleStat>
     )
 }
 
@@ -128,14 +128,12 @@ function BalanceInformation({poolingViewHooks}) {
 export default function PositionInformation({poolingMarketElement, poolingViewHooks}) {
 
     const PositionInfo = tw.div`w-full grid gap-2 justify-items-center mt-4`
-    const StatsContainer = tw.div`w-full grid grid-cols-4 mt-4 gap-2`
+    const StatsContainer = tw.div`w-full grid grid-cols-4 mt-4 gap-2 mb-4`
 
     return <PositionInfo>
         <StatsContainer>
+            <PoolingMarketInfo poolingMarketElement={poolingMarketElement}></PoolingMarketInfo>
             <UnderlyingTokensInfo poolingMarketElement={poolingMarketElement}/>
-            <PoolingMarketInfo poolingMarketElement={poolingMarketElement}/>
         </StatsContainer>
-
-        <BalanceInformation poolingViewHooks={poolingViewHooks}/>
     </PositionInfo>;
 };

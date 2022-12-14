@@ -14,7 +14,7 @@ const ENS = tw.span`text-sm text-gray-500 dark:text-white ml-2`
 const Blockie = tw.span`hidden lg:block rounded-xl relative p-2 w-24 `;
 const GeneralInfo = tw.div`flex items-center mb-3 flex-col lg:flex-row`
 
-const LeftColumn = tw.div` w-full mb-4 shadow-md p-4 bg-white dark:bg-gray-700`
+const LeftColumn = tw.div` w-full mb-4  p-4 bg-white dark:bg-gray-700`
 
 const AddressInfo = tw.div`flex items-center`
 const AddressText = tw.div`flex flex-col`
@@ -35,6 +35,7 @@ const DetailCardIcon = tw(CurrencyDollarIcon)`text-purple-400 h-8 w-8`
 export default function DashboardHeader({dashboardHooks}) {
 
     const {
+        hasFinishedScanning,
         doneScanning,
         totalScanning,
         address
@@ -92,7 +93,7 @@ export default function DashboardHeader({dashboardHooks}) {
                     </GeneralInfo>
 
                     {
-                        percentageDone < 100 &&
+                        !hasFinishedScanning &&
                         <ScanningContainer>
                             <ProgressText>
                                 {percentageDoneText}

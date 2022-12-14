@@ -24,7 +24,6 @@ export default function PoolingView() {
                 <>
                     <PositionInformation poolingMarketElement={activePoolingElement}
                                          poolingViewHooks={poolingViewHooks}/>
-                    <Actions poolingViewHooks={poolingViewHooks}/>
                     <PoolingOpportunities poolingOpportunities={poolingViewHooks.alternativePoolingMarkets}
                                           title="Alternative Pooling Opportunities"/>
                 </>

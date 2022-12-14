@@ -3,7 +3,7 @@ import "styles/globalStyles.css";
 
 import React from "react";
 import {Web3Provider} from '@ethersproject/providers'
-import {createWeb3ReactRoot, Web3ReactProvider} from "@web3-react/core";
+import {createWeb3ReactRoot} from "@web3-react/core";
 import {BrowserRouter as Router, Route, Switch} from 'react-router-dom';
 
 /*
@@ -31,7 +31,8 @@ import ProtocolsView from "./views/ProtocolsView/ProtocolsView";
 import ServiceLandingPage from "./demos/ServiceLandingPage";
 import ProtocolView from "./views/ProtocolsView/ProtocolView";
 import TermsOfServiceView from "./views/TermsOfServiceView/TermsOfServiceView";
-import useDashboardHooks from "./views/DashboardView/hooks/dashboard-hooks";
+import Web3ClaimableView from "./views/ClaimableView/Web3ClaimableView";
+import AddressClaimableView from "./views/ClaimableView/AddressClaimableView";
 
 function getLibrary(provider) {
     const library = new Web3Provider(
@@ -60,67 +61,77 @@ export default function App() {
         }
     ]);
 
-    const Web3ProviderNetwork = createWeb3ReactRoot('NETWORK')
+    const Web3ProviderNetwork = createWeb3ReactRoot('NETWORK');
 
     return (
         <Web3ProviderNetwork getLibrary={getLibrary}>
-                <Router>
-                    <Switch>
-                        <Route path="/dashboard">
-                            <CustomHeader/>
-                            <Web3DashboardView />
-                            <FooterV2/>
-                        </Route>
-                        <Route exact path="/protocols">
-                            <CustomHeader/>
-                            <ProtocolsView/>
-                            <FooterV2/>
-                        </Route>
-                        <Route exact path="/protocols/:protocol">
-                            <CustomHeader/>
-                            <ProtocolView/>
-                            <FooterV2/>
-                        </Route>
-                        <Route path="/defi-hub">
-                            <CustomHeader showUserLink={false}/>
-                            <ConnectView/>
-                            <FooterV2/>
-                        </Route>
-                        <Route path="/terms-of-service">
-                            <CustomHeader showUserLink={false}/>
-                            <TermsOfServiceView/>
-                            <FooterV2/>
-                        </Route>
-                        <Route path="/test">
-                            <ServiceLandingPage/>
-                        </Route>
-                        <Route path="/account/:user">
-                            <CustomHeader/>
-                            <AddressDashboardView/>
-                            <FooterV2/>
-                        </Route>
-                        <Route path="/tokens/:network/:token">
-                            <CustomHeader/>
-                            <TokenView/>
-                            <FooterV2/>
-                        </Route>
-                        <Route path="/staking/:network/:protocol/:selectedStakingId">
-                            <CustomHeader/>
-                            <StakingView/>
-                            <FooterV2/>
-                        </Route>
-                        <Route exact path="/pooling/:network/:protocol/:selectedPoolingMarketId">
-                            <CustomHeader/>
-                            <PoolingView/>
-                            <FooterV2/>
-                        </Route>
-                        <Route>
-                            <CustomHeader expanded={true} showUserLink={false}/>
-                            <LandingView/>
-                            <FooterV2/>
-                        </Route>
-                    </Switch>
-                </Router>
-            </Web3ProviderNetwork>
+            <Router>
+                <Switch>
+                    <Route path="/dashboard">
+                        <Web3DashboardView/>
+                        <FooterV2/>
+                    </Route>
+                    <Route path="/claimables">
+                        <Web3ClaimableView />
+                        <FooterV2/>
+                    </Route>
+                    <Route exact path="/protocols">
+                        <CustomHeader/>
+                        <ProtocolsView/>
+                        <FooterV2/>
+                    </Route>
+                    <Route exact path="/protocols/:protocol">
+                        <CustomHeader/>
+                        <ProtocolView/>
+                        <FooterV2/>
+                    </Route>
+                    <Route path="/defi-hub">
+                        <CustomHeader showUserLink={false}/>
+                        <ConnectView/>
+                        <FooterV2/>
+                    </Route>
+                    <Route path="/terms-of-service">
+                        <CustomHeader showUserLink={false}/>
+                        <TermsOfServiceView/>
+                        <FooterV2/>
+                    </Route>
+                    <Route path="/test">
+                        <ServiceLandingPage/>
+                    </Route>
+                    <Route path="/:user/profile">
+                        <AddressDashboardView/>
+                        <FooterV2/>
+                    </Route>
+                    <Route path="/account/:user">
+                        <AddressDashboardView/>
+                        <FooterV2/>
+                    </Route>
+                    <Route path="/:user/claimables">
+                        <AddressClaimableView />
+                        <FooterV2/>
+                    </Route>
+                    <Route path="/tokens/:network/:token">
+                        <CustomHeader/>
+                        <TokenView/>
+                        <FooterV2/>
+                    </Route>
+                    <Route path="/staking/:network/:protocol/:selectedStakingId">
+                        <CustomHeader/>
+                        <StakingView/>
+                        <FooterV2/>
+                    </Route>
+                    <Route exact path="/pooling/:network/:protocol/:selectedPoolingMarketId">
+                        <CustomHeader/>
+                        <PoolingView/>
+                        <FooterV2/>
+                    </Route>
+                    <Route>
+                        <CustomHeader expanded={true} showUserLink={false}/>
+                        <LandingView/>
+                        <FooterV2/>
+                    </Route>
+                </Switch>
+            </Router>
+        </Web3ProviderNetwork>
     );
 }

@@ -3,10 +3,13 @@ import DollarLabel from "../../../../components/Label/DollarLabel";
 import {CurrencyDollarIcon} from "@heroicons/react/outline";
 import DetailCard from "../../../../components/Card/DetailCard"; //eslint-disable-line
 import tw from 'twin.macro';
+import PlaceholderLoading from "react-placeholder-loading";
+import {Subheading} from "../../../../components/misc/Headings";
+import {SectionDescription} from "../../../../components/misc/Typography";
 
-const Container = tw.div`flex flex-wrap`
+const Container = tw.div`w-full mr-4 flex flex-wrap`
 const Header = tw.h3`text-lg font-medium mb-2  `
-const Table = tw.div`w-full mb-8 flex flex-wrap gap-2 grid grid-cols-2 lg:grid-cols-6`
+const Table = tw.div`w-full mb-8 flex flex-wrap`
 
 const GreenDollarIcon = tw(CurrencyDollarIcon)`text-green-400 h-8 w-8`
 const YellowDollarIcon = tw(CurrencyDollarIcon)`text-yellow-400 h-8 w-8`
@@ -21,24 +24,46 @@ const GreenProgressBar = tw(ProgressBar)`bg-green-500`
 const OrangeProgressBar = tw(ProgressBar)`bg-orange-500`
 
 const Logo = tw.img`h-8 w-8`
+const FullRow = tw.div`w-full`
 
 function Protocols({dashboardHooks}) {
+
+    const getElements = () => {
+        if (dashboardHooks.usedProtocols.length > 0) {
+            return dashboardHooks.usedProtocols.map(protocol => {
+                return <ProtocolElement dashboardHooks={dashboardHooks} protocol={protocol} key={protocol.name}/>
+            })
+        } else if(dashboardHooks) {
+            return <DummyCard/>
+        }
+    }
+
     return (
         <>
-            {dashboardHooks.usedProtocols.map(protocol => {
-                return <ProtocolElement dashboardHooks={dashboardHooks} protocol={protocol} key={protocol.name}/>
-            })}
+            {getElements()}
         </>
     )
 }
 
 function ProtocolElement({protocol}) {
     return (
-        <DetailCard title={protocol.name}
-                    centerHtml={<DollarLabel amount={protocol.totalDollarValue}/>}
-                    icon={
-                        <Logo alt="logo" src={protocol.logo}/>
-                    }/>
+        <FullRow>
+            <DetailCard title={protocol.name}
+                        centerHtml={<DollarLabel amount={protocol.totalDollarValue}/>}
+                        icon={
+                            <Logo alt="logo" src={protocol.logo}/>
+                        }/>
+        </FullRow>
+    )
+}
+
+function DummyCard() {
+    return (
+        <FullRow>
+            <DetailCard title={<PlaceholderLoading width={'100%'} height={20} shape={"rect"}/>}
+                        icon={<PlaceholderLoading width={30} height={30} shape={"circle"}/>}
+            />
+        </FullRow>
     )
 }
 
@@ -48,13 +73,28 @@ export default function OverviewDetails(
     }
 ) {
 
+
+    return (
+        <>
+            <Container>
+                <AccountOverview dashboardHooks={dashboardHooks} />
+                <DefiOverview dashboardHooks={dashboardHooks}/>
+            </Container>
+        </>
+    );
+}
+
+function AccountOverview({dashboardHooks}) {
+
     const {
+        hasFinishedScanning,
         totalWalletBalance,
         totalLending,
         totalStaking,
         totalPooling,
         totalBorrowing,
     } = dashboardHooks
+
 
     function totalDollarValue() {
         return ((totalWalletBalance)
@@ -82,14 +122,17 @@ export default function OverviewDetails(
         };
     }
 
-    const assetAllocation = calculateAssetAllocation()
+    if (hasFinishedScanning && totalDollarValue() === 0) {
+        return <></>
+    }
 
+    const assetAllocation = calculateAssetAllocation();
     return (
         <>
-            <Container>
-                <Header>Account Overview</Header>
-                <Table>
-                    {totalWalletBalance > 0 &&
+            <Header>Account Overview</Header>
+            <Table>
+                {totalWalletBalance > 0 &&
+                    <FullRow>
                         <DetailCard title="Wallet"
                                     centerHtml={<DollarLabel amount={totalWalletBalance}/>}
                                     bottomHtml={
@@ -101,8 +144,14 @@ export default function OverviewDetails(
                                     }
                                     icon={<GreenDollarIcon/>}
                         />
-                    }
-                    {totalLending > 0 &&
+                    </FullRow>
+                }
+                {
+                    totalDollarValue() === 0 &&
+                    <DummyCard/>
+                }
+                {totalLending > 0 &&
+                    <FullRow>
                         <DetailCard title="Lending"
                                     centerHtml={<DollarLabel amount={totalLending}/>}
                                     bottomHtml={
@@ -114,19 +163,28 @@ export default function OverviewDetails(
                                     }
                                     icon={<YellowDollarIcon/>}
                         />
-                    }
-                    {totalBorrowing > 0 && <DetailCard title="Borrowing"
-                                                       centerHtml={<DollarLabel amount={totalBorrowing}/>}
-                                                       icon={<RedDollarIcon/>}/>}
-                    {totalPooling > 0 && <DetailCard title="Pooling"
-                                                     icon={<OrangeDollarIcon/>}
-                                                     centerHtml={<DollarLabel amount={totalPooling}/>}
-                                                     bottomHtml={<OrangeProgressBar
-                                                         style={{
-                                                             width: assetAllocation.pooling + '%'
-                                                         }}></OrangeProgressBar>}/>
-                    }
-                    {totalStaking > 0 &&
+                    </FullRow>
+                }
+                {totalBorrowing > 0 &&
+                    <FullRow>
+                        <DetailCard title="Borrowing"
+                                    centerHtml={<DollarLabel amount={totalBorrowing}/>}
+                                    icon={<RedDollarIcon/>}/>
+                    </FullRow>
+                }
+                {totalPooling > 0 &&
+                    <FullRow>
+                        <DetailCard title="Pooling"
+                                    icon={<OrangeDollarIcon/>}
+                                    centerHtml={<DollarLabel amount={totalPooling}/>}
+                                    bottomHtml={<OrangeProgressBar
+                                        style={{
+                                            width: assetAllocation.pooling + '%'
+                                        }}></OrangeProgressBar>}/>
+                    </FullRow>
+                }
+                {totalStaking > 0 &&
+                    <FullRow>
                         <DetailCard title="Farming"
                                     icon={<BlueDollarIcon/>}
                                     centerHtml={<DollarLabel amount={totalStaking}/>}
@@ -136,13 +194,36 @@ export default function OverviewDetails(
                                                 width: assetAllocation.staking + '%'
                                             }}>
                                         </BlueProgressBar>}
-                        />}
+                        />
+                    </FullRow>
+                }
 
-                </Table>
-                <Table>
-                    <Protocols dashboardHooks={dashboardHooks}/>
-                </Table>
+            </Table>
+        </>
+    )
+}
+
+const Hero = tw.div`justify-self-center bg-gray-100 w-full border p-4 mb-4 text-center`
+const HeroDescription = tw.p`text-gray-400 text-lg`
+
+function DefiOverview({dashboardHooks}) {
+    if (dashboardHooks.usedProtocols.length === 0 && dashboardHooks.hasFinishedScanning) {
+        return <>
+            <Container>
+                <Hero>
+                    <Header>We couldn't find any <Subheading>Active Defi Application</Subheading></Header>
+                    <HeroDescription>Unfortunately, we couldn't identify any participation in a defi application for this specific address. It might be a fresh account or simply not exist at all.</HeroDescription>
+                </Hero>
             </Container>
+        </>
+    }
+
+    return (
+        <>
+            <Header>Defi Overview</Header>
+            <Table>
+                <Protocols dashboardHooks={dashboardHooks}/>
+            </Table>
         </>
     );
 }

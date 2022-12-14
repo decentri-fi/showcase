@@ -1,7 +1,7 @@
 import {useEffect, useState} from "react";
 import {poolingPositions} from "../../../api/defitrack/pools/pools";
 
-export default function useDashboardLPHooks(account, protocols,  {setTotalScanning, setDoneScanning}) {
+export default function useDashboardLPHooks(account, protocols, supportsPooling, {setTotalScanning, setDoneScanning}) {
     const [lps, setLps] = useState([]);
 
     useEffect(async () => {
@@ -27,7 +27,7 @@ export default function useDashboardLPHooks(account, protocols,  {setTotalScanni
             }
         }
 
-        if (account != null) {
+        if (supportsPooling && account != null) {
             loadData();
         }
     }, [protocols, account])

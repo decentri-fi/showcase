@@ -59,7 +59,7 @@ export function PoolingRow({poolingElement}) {
                 </AmountColumn>
                 <TotalColumn>
                     <PullRight>
-                        <PrimaryButton label="+" onClick={() => {
+                        <PrimaryButton label="→" onClick={() => {
                             history.push(`/pooling/${poolingElement.network.name}/${poolingElement.protocol.slug}/${poolingElement.id}`);
                         }}/>
                     </PullRight>

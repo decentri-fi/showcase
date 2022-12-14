@@ -7,6 +7,7 @@ import useWeb3 from "../../hooks/web3";
 import {Button} from "@mui/material";
 import makeBlockie from "ethereum-blockies-base64";
 import {useHistory} from "react-router-dom";
+import Search from "../../views/DashboardView/partials/Search/Search";
 
 const StyledHeader = styled(Header)`
   ${tw`pt-8 max-w-none lg:mt-8 pb-4`}
@@ -28,6 +29,9 @@ const HeroContainer = tw.div`z-20 relative px-4 sm:px-8 max-w-screen-xl mx-auto`
 const TwoColumn = tw.div`lg:pt-24 lg:pb-32 px-4 flex justify-between items-center flex-col lg:flex-row`;
 const LeftColumn = tw.div`flex flex-col items-center lg:block`;
 const RightColumn = tw.div`w-full sm:w-5/6 lg:w-1/2 mt-16 lg:mt-0 lg:pl-8`;
+
+
+const SearchHolder = tw.div`px-4 flex justify-between items-center flex-col lg:flex-row`;
 
 const Heading = styled.h1`
   ${tw`text-3xl text-center lg:text-left sm:text-4xl lg:text-5xl xl:text-6xl font-black text-gray-100 leading-none`}
@@ -93,7 +97,7 @@ function Expansion({expanded}) {
         : <></>
 }
 
-export default function CustomHeader({expanded = false, showUserLink = true}) {
+export default function CustomHeader({onAddressChange, expanded = false, showUserLink = true, showSearch = false}) {
 
     const web3 = useWeb3();
     const history = useHistory();
@@ -103,7 +107,7 @@ export default function CustomHeader({expanded = false, showUserLink = true}) {
             <NavLink onClick={e => {
                 history.push('/dashboard');
             }}>
-                Defi Hub
+                Profile
             </NavLink>
             <NavLink onClick={e => {
                 history.push('/protocols');
@@ -130,11 +134,28 @@ export default function CustomHeader({expanded = false, showUserLink = true}) {
         </NavLinks>
     ]
 
+    const search = () => {
+        if (showSearch) {
+            return (
+                <SearchHolder>
+                    <LeftColumn></LeftColumn>
+                    <RightColumn>
+                        <Search onAddressChange={onAddressChange}></Search>
+                    </RightColumn>
+                </SearchHolder>
+            )
+        } else {
+            return <></>;
+        }
+    }
+
+
     return (
         <Container>
             <OpacityOverlay/>
             <HeroContainer>
                 <StyledHeader links={navLinks.concat(userLinks)}/>
+                {search()}
                 <Expansion expanded={expanded}/>
             </HeroContainer>
         </Container>

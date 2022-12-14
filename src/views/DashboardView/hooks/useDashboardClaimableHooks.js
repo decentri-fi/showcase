@@ -1,7 +1,7 @@
 import {useEffect, useState} from "react";
 import {fetchClaimables} from "../../../api/defitrack/claimable/claimable";
 
-export default function useDashboardClaimableHooks(account, protocols, {setTotalScanning, setDoneScanning}) {
+export default function useDashboardClaimableHooks(account, protocols, supportsClaimables, {setTotalScanning, setDoneScanning}) {
     const [claimables, setClaimables] = useState([])
     useEffect(() => {
         const loadData = async () => {
@@ -27,7 +27,7 @@ export default function useDashboardClaimableHooks(account, protocols, {setTotal
             }
         };
 
-        if (account !== null) {
+        if (supportsClaimables && account !== null) {
             loadData();
         }
     }, [protocols, account])

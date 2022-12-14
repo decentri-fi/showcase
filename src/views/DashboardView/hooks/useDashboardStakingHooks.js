@@ -1,7 +1,7 @@
 import {useEffect, useState} from "react";
 import {farmingPositions} from "../../../api/defitrack/staking/staking";
 
-export default function useDashboardStakingHooks(account, protocols, {setTotalScanning, setDoneScanning}) {
+export default function useDashboardStakingHooks(account, protocols, supportsStaking, {setTotalScanning, setDoneScanning}) {
 
     const [stakings, setStakings] = useState([]);
 
@@ -30,7 +30,7 @@ export default function useDashboardStakingHooks(account, protocols, {setTotalSc
             }
         }
 
-        if (account !== null)
+        if (supportsStaking && account !== null)
             loadData();
     }, [protocols, account])
 

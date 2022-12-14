@@ -49,10 +49,11 @@ export default function ConnectWalletSection({
                 </ImageColumn>
                 <TextColumn textOnLeft={textOnLeft}>
                     <TextContent>
-                        <Subheading>Enable your wallet to access this feature.</Subheading>
+                        <Subheading>Enabled your web3 wallet to fully appreciate this experience.</Subheading>
                         <Heading>Connect your web3 wallet.</Heading>
                         <Description>
-                            In order to manage your own account, you can log in using your web3 wallet.
+                            In order to view the positions related to your account, connect your web3 wallet. <br /><br />
+                            If you don't feel like doing this, you can just search any address using the search bar. We appreciate you being here either way.
                         </Description>
                         <PrimaryButton onClick={login}>
                             Connect

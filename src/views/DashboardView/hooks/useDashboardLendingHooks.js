@@ -1,7 +1,7 @@
 import {useEffect, useState} from "react";
 import {lendingPositions} from "../../../api/defitrack/lending/lending";
 
-export default function useDashboardLendingHooks(account, protocols, {setTotalScanning, setDoneScanning}) {
+export default function useDashboardLendingHooks(account, protocols, supportsLending, {setTotalScanning, setDoneScanning}) {
     const [lendings, setLendings] = useState([])
 
     useEffect(() => {
@@ -27,7 +27,7 @@ export default function useDashboardLendingHooks(account, protocols, {setTotalSc
             }
         }
 
-        if (account !== null) {
+        if (supportsLending && account !== null) {
             loadData();
         }
     }, [protocols, account])

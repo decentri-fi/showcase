@@ -5,6 +5,9 @@ import FallbackImage from "../../../../components/Image/FallbackImage";
 import {useHistory} from "react-router-dom";
 
 import tw from "twin.macro"
+import PlaceholderLoading from "react-placeholder-loading";
+import {Subheading} from "../../../../components/misc/Headings";
+import {SectionDescription} from "../../../../components/misc/Typography";
 
 const ListContainer = tw.div`flex flex-col w-full mx-auto items-center justify-center bg-white`
 const List = tw.ul`flex flex-col w-full `
@@ -20,16 +23,16 @@ const OverlayImage = tw.div`lg:h-4 lg:w-4 h-2 w-2 -mx-2 `
 
 const TwoColumns = tw.div`grid grid-cols-2`
 
-const NameColumn = tw.div`pl-1 lg:w-1/4 w-3/4 flex-1 font-medium text-green-600 dark:text-gray-200 text-xs`
-const AmountColumn = tw.div`hidden lg:block text-sm text-left text-gray-600 dark:text-gray-200 lg:w-1/3 w-0`
+const NameColumn = tw.div`px-1 pl-1 lg:w-1/4 w-3/4 flex-1 font-medium text-green-600 dark:text-gray-200 text-xs`
+const AmountColumn = tw.div`px-1 hidden lg:block text-sm text-left text-gray-600 dark:text-gray-200 lg:w-1/3 w-0`
 
-const TotalColumn = tw.div`text-sm text-left text-gray-600 dark:text-gray-200 w-1/3 lg:w-1/5 justify-items-end grid`
+const TotalColumn = tw.div`px-1 text-sm text-left text-gray-600 dark:text-gray-200 w-1/3 lg:w-1/5 justify-items-end grid`
 const PullRight = tw.div`flex flex-col grid justify-items-end`
 const Bold = tw.span`font-bold text-sm`
 
-const Center = tw.div`grid w-full justify-items-center mb-4`
-const Section = tw.div`w-full lg:w-1/2  bg-white py-4`
-const Header = tw.div`w-full flex items-center mb-2 `
+const Center = tw.div`w-full mb-4`
+const Section = tw.div`w-full bg-white py-4`
+const AssetHeader = tw.div`w-full flex items-center mb-2 `
 const HeaderTextContainer = tw.div`lg:w-3/12 w-full`
 const HeaderText = tw.h3`shadow px-4 py-1 text-sm font-medium mb-2 bg-green-600 rounded-r  text-white`
 const BalanceText = tw.div`w-9/12 text-right`
@@ -83,47 +86,92 @@ function BalanceRow({balance}) {
 }
 
 function BalanceList({balances}) {
-
+    const balanceElements = () => {
+        if (balances.length > 0) {
+            return balances.map((balance, idx) => {
+                return <BalanceRow key={idx} balance={balance}/>
+            });
+        } else {
+            return <DummyElement/>
+        }
+    }
     return (
         <ListContainer>
-            <List>
-                {
-                    balances.map((balance, idx) => {
-                        return <BalanceRow key={idx} balance={balance}/>
-                    })
-                }
-            </List>
+            <List>{balanceElements()}</List>
         </ListContainer>
     )
 }
 
-export default function BalanceDetails({dashboardHooks}) {
+function DummyElement() {
+    return (
+    <ListItem>
+        <Row>
+            <IconColumn>
+                <IconBlock>
+                    <FallbackImageContainer>
+                        <Image>
+                           <PlaceholderLoading width={30} height={30} shape={"circle"} />
+                        </Image>
+                    </FallbackImageContainer>
+                </IconBlock>
+            </IconColumn>
+            <NameColumn>
+                <PlaceholderLoading width={"100%"} height={"30"} shape={"rect"} />
+            </NameColumn>
+            <AmountColumn>
+                <TwoColumns>
+                    <PlaceholderLoading width={"100%"} height={"30"} shape={"rect"} />
+                    <PlaceholderLoading width={"100%"} height={"30"} shape={"rect"} />
+                </TwoColumns>
+            </AmountColumn>
+            <TotalColumn>
+                <PullRight>
+                    <Bold>
+                        <PlaceholderLoading width={"100%"} height={"30"} shape={"rect"} />
+                    </Bold>
+                </PullRight>
+            </TotalColumn>
+        </Row>
+    </ListItem>
+)
+}
 
-    if (dashboardHooks.balanceElements.length === 0) {
+const Container = tw.div`w-full mr-4 flex flex-wrap`
+const Header = tw.h3`text-lg font-medium mb-2  `
+
+const Hero = tw.div`justify-self-center bg-gray-100 w-full border p-4 mb-4 text-center`
+const HeroDescription = tw.p`text-gray-400 text-lg`
+
+export default function BalanceDetails({dashboardHooks}) {
+    if (dashboardHooks.hasFinishedScanning && dashboardHooks.balanceElements.length === 0) {
         return (
-            <></>
+            <Container>
+                <Hero>
+                        <Header>We couldn't find any <Subheading>Active Assets</Subheading></Header>
+                        <HeroDescription>Unfortunately, we couldn't locate assets for this specific account. It might be a fresh account or simply not exist at all.</HeroDescription>
+                </Hero>
+            </Container>
         )
-    } else {
-        return (
-            <Center>
-                <Section>
-                    <Header>
-                        <HeaderTextContainer>
-                            <HeaderText>Assets</HeaderText>
-                        </HeaderTextContainer>
-                        <BalanceText>
-                            <Hidden>
-                                <PullRight>
-                                    <HeaderText>
-                                        <DollarLabel
-                                            amount={dashboardHooks.totalWalletBalance}/></HeaderText>
-                                </PullRight>
-                            </Hidden>
-                        </BalanceText>
-                    </Header>
-                    <BalanceList balances={dashboardHooks.balanceElements}/>
-                </Section>
-            </Center>
-        );
     }
+    return (
+        <Center>
+            <Section>
+                <AssetHeader>
+                    <HeaderTextContainer>
+                        <HeaderText>Assets</HeaderText>
+                    </HeaderTextContainer>
+                    <BalanceText>
+                        <Hidden>
+                            <PullRight>
+                                <HeaderText>
+                                    <DollarLabel
+                                        amount={dashboardHooks.totalWalletBalance}/></HeaderText>
+                            </PullRight>
+                        </Hidden>
+                    </BalanceText>
+                </AssetHeader>
+                <BalanceList balances={dashboardHooks.balanceElements}/>
+            </Section>
+        </Center>
+    );
 };

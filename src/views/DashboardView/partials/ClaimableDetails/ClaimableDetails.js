@@ -7,6 +7,7 @@ import DollarLabel from "../../../../components/Label/DollarLabel";
 import PrimaryButton from "../../../../components/Button/PrimaryButton";
 import FallbackImage from "../../../../../src/components/Image/FallbackImage";
 import tw from "twin.macro";
+import PlaceholderLoading from "react-placeholder-loading";
 
 
 
@@ -38,7 +39,7 @@ const PullRight = tw.div`flex flex-col grid justify-items-end`
 const Bold = tw.span`font-bold text-sm`
 
 const Center = tw.div`grid w-full justify-items-center mb-4`
-const Section = tw.div`w-full lg:w-1/2  bg-white py-4`
+const Section = tw.div`w-full bg-white py-4`
 const Hidden = tw.span`hidden lg:block`
 
 
@@ -76,6 +77,44 @@ function ClaimButton({claimable, claimHook}) {
         <PrimaryButton onClick={claim} label="Claim"/>
     );
 }
+
+function DummyRow() {
+    return (
+        <ListItem>
+            <Row>
+                <IconColumn>
+                    <IconBlock>
+                        <FallbackImageContainer>
+                            <Image>
+                                <PlaceholderLoading width={30} height={30} shape={"circle"} />
+                            </Image>
+                        </FallbackImageContainer>
+                    </IconBlock>
+                </IconColumn>
+                <NameColumn>
+                    <PlaceholderLoading width={50} height={10} shape={"rect"} />
+                </NameColumn>
+                <AmountColumn>
+                    <TwoColumns>
+                        <div>
+                            <PlaceholderLoading width={50} height={10} shape={"rect"} />
+                        </div>
+                        <ThinGreen>
+                            <PlaceholderLoading width={50} height={10} shape={"rect"} />
+                        </ThinGreen>
+                    </TwoColumns>
+                </AmountColumn>
+                <TotalColumn>
+                    <PullRight>
+                        <Bold>
+                        </Bold>
+                    </PullRight>
+                </TotalColumn>
+            </Row>
+        </ListItem>
+    );
+}
+
 
 function ClaimableRow({claimable, claimHook}) {
 
@@ -138,13 +177,54 @@ function ClaimableList({claimables, activeWeb3}) {
     )
 }
 
-export default function ClaimableDetails({claimables, dashboardHooks}) {
+function DummyList() {
+    return (
+        <ListContainer>
+            <List>
+                <DummyRow key={1} />
+            </List>
+        </ListContainer>
+    )
+}
+
+function PlaceHolder() {
+    return (
+        <>
+            <Center>
+                <Section>
+                    <Container>
+                        <Header>
+                            <HeaderTextContainer>
+                                <HeaderText>Claimable</HeaderText>
+                            </HeaderTextContainer>
+                            <BalanceText>
+                                <Hidden>
+                                    <PullRight>
+                                        <HeaderText>
+                                            <DollarLabel
+                                                amount={0.00}/>
+                                        </HeaderText>
+                                    </PullRight>
+                                </Hidden>
+                            </BalanceText>
+                        </Header>
+                        <DummyList />
+                    </Container>
+                </Section>
+            </Center>
+        </>
+    )
+}
+
+export default function ClaimableDetails({dashboardHooks, showPlaceholder = false}) {
 
     const activeWeb3 = useActiveWeb3React()
 
+    const claimables = dashboardHooks.claimables;
+
     if (claimables.length === 0) {
         return (
-            <></>
+            showPlaceholder && <PlaceHolder />
         )
     } else {
 

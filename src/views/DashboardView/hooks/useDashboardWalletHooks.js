@@ -1,11 +1,11 @@
 import {useEffect, useState} from "react";
 import {fetchNativeBalance, fetchTokenBalance} from "../../../api/defitrack/balance/balance";
 
-export default function useDashboardWalletHooks(account, networks) {
+export default function useDashboardWalletHooks(account, networks, supportsBalances) {
     const [balanceElements, setBalanceElements] = useState({})
 
     useEffect(() => {
-        if (account != null && networks != null && networks.length > 0) {
+        if (supportsBalances && account != null && networks != null && networks.length > 0) {
             if (balanceElements[account] === undefined) {
                 balanceElements[account] = [];
                 fetchNativeBalance(account).then(nativeBalance => {

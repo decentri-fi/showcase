@@ -1,4 +1,4 @@
-import {useEffect, useState} from 'react';
+import {useState} from 'react';
 import {useDashboardFilterHooks} from "./useDashboardFilterHooks";
 import useDashboardProtocolHooks from "./useDashboardProtocolHooks";
 import useDashboardWalletHooks from "./useDashboardWalletHooks";
@@ -11,12 +11,19 @@ import useDashboardLPHooks from "./useDashboardLPHooks";
 import useDashboardNetworkHooks from "./useDashboardNetworkHooks";
 
 export default function
-    useDashboardHooks(account) {
+    useDashboardHooks(account, {
+    supportsClaimables = false,
+    supportsBalances = true,
+    supportsDebt = true,
+    supportsLending = true,
+    supportsStaking = true,
+    supportsPooling = true
+}) {
 
     const useDashboardFilter = useDashboardFilterHooks()
     const {protocols} = useDashboardProtocolHooks();
     const {networks} = useDashboardNetworkHooks();
-    const {balanceElements} = useDashboardWalletHooks(account, networks);
+    const {balanceElements} = useDashboardWalletHooks(account, networks, supportsBalances);
     const {
         setDoneScanning,
         doneScanning,
@@ -24,11 +31,14 @@ export default function
         totalScanning
     } = useDashboardScanningProgressHooks();
 
-    const {stakings} = useDashboardStakingHooks(account, protocols, {setTotalScanning, setDoneScanning});
-    const {lendings} = useDashboardLendingHooks(account, protocols, {setTotalScanning, setDoneScanning});
-    const {claimables} = useDashboardClaimableHooks(account, protocols, {setTotalScanning, setDoneScanning});
-    const {borrowings} = useDashboardBorrowingHooks(account, protocols, {setTotalScanning, setDoneScanning});
-    const {lps} = useDashboardLPHooks(account, protocols, {setTotalScanning, setDoneScanning});
+    const {stakings} = useDashboardStakingHooks(account, protocols, supportsStaking, {setTotalScanning, setDoneScanning});
+    const {lendings} = useDashboardLendingHooks(account, protocols, supportsLending, {setTotalScanning, setDoneScanning});
+    const {claimables} = useDashboardClaimableHooks(account, protocols, supportsClaimables, {
+        setTotalScanning,
+        setDoneScanning
+    });
+    const {borrowings} = useDashboardBorrowingHooks(account, protocols, supportsDebt,{setTotalScanning, setDoneScanning});
+    const {lps} = useDashboardLPHooks(account, protocols, supportsPooling, {setTotalScanning, setDoneScanning});
 
     function totalStaking(protocol) {
         if (stakings == null || stakings.length === 0) {
@@ -108,18 +118,18 @@ export default function
     function getUniqueNetworks() {
         let activeNetworks = lendings
             .map(lending => lending.network).concat(
-            borrowings.map(borrowing => borrowing.network)
-        ).concat(
-            stakings
-                .map(staking => staking.network)
-        ).concat(
-            balanceElements.map(balanceElement => balanceElement.network)
-        ).concat(
-            lps
-                .map(lp => lp.network)
-        ).concat(
-            claimables.map(claimable => claimable.network)
-        );
+                borrowings.map(borrowing => borrowing.network)
+            ).concat(
+                stakings
+                    .map(staking => staking.network)
+            ).concat(
+                balanceElements.map(balanceElement => balanceElement.network)
+            ).concat(
+                lps
+                    .map(lp => lp.network)
+            ).concat(
+                claimables.map(claimable => claimable.network)
+            );
 
         if (activeNetworks.length > 0) {
             return Array.from(
@@ -132,14 +142,14 @@ export default function
                 )
             )
         } else {
-            return  []
+            return []
         }
     }
 
     function getUniqueProtocols() {
         let activeProtocols = lendings
-                .filter(smallValueFilter)
-                .map(lending => lending.protocol)
+            .filter(smallValueFilter)
+            .map(lending => lending.protocol)
             .concat(
                 borrowings.map(borrowing => borrowing.protocol)
             ).concat(
@@ -167,7 +177,7 @@ export default function
         return set.map(proto => {
             return {
                 ...proto,
-                totalDollarValue:  totalLending(proto) + totalStaking(proto) + totalPooling(proto)
+                totalDollarValue: totalLending(proto) + totalStaking(proto) + totalPooling(proto)
             }
         })
     }
@@ -188,6 +198,7 @@ export default function
         address: account,
         usedProtocols: getUniqueProtocols(),
         usedNetworks: getUniqueNetworks(),
+        hasFinishedScanning: doneScanning === totalScanning,
         totalScanning: totalScanning,
         doneScanning: doneScanning,
         balanceElements: balanceElements.filter(smallValueFilter),

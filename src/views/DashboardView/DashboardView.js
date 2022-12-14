@@ -1,8 +1,6 @@
-import React, {useEffect} from "react";
-import ReactGA from "react-ga4";
+import React from "react";
 import DashboardHeader from "./partials/DashboardHeader";
 import OverviewDetails from "./partials/OverviewDetails";
-import ClaimableDetails from "./partials/ClaimableDetails";
 import BalanceDetails from "./partials/BalanceDetails";
 import StakingDetails from "./partials/StakingDetails";
 import PoolingDetails from "./partials/PoolingDetails";
@@ -10,28 +8,25 @@ import LendingDetails from "./partials/LendingDetails";
 import BorrowingDetails from "./partials/BorrowingDetails";
 
 import tw from 'twin.macro';
-import Search from "./partials/Search/Search";
+import ClaimableDetails from "./partials/ClaimableDetails";
 
-const Container = tw.div`px-2 flex pt-8 bg-defaultBackground`
+const Container = tw.div`flex bg-defaultBackground`
 
-const ProtocolSection = tw.section`w-full lg:w-1/2 grid justify-items-start mb-6 rounded py-4`
+const ProtocolSection = tw.section`w-full grid justify-items-start mb-6 rounded py-4`
 const ProtocolSectionHeader = tw.a`flex text-sm flex-row mb-2`;
 const ProtocolSectionHeaderLogo = tw.img`h-6 w-6 mr-2`;
 const ProtocolDetails = tw.div`w-full bg-white`
 
-const DashboardWrapper = tw.div`grid justify-items-center`
-const DashboardHeaderContainer = tw.div`flex flex-wrap w-full  lg:w-1/2`
-const FlexWrap = tw.div`flex flex-wrap`
-const HorizontalCenter = tw.div`pl-1 flex items-center`
+const DashboardWrapper = tw.div`w-full`
+const HorizontalCenter = tw.div`pl-1 flex items-center w-full`
 const HideSmallValueFilter = tw.p`text-xs`
 
+const Full = tw.div`flex flex-wrap w-full`;
+const Column = tw.div`w-1/2 px-4`
+
+const CenterText = tw.div`text-center w-full`
 
 export default function DashboardView({dashboardHooks}) {
-
-    useEffect(() => {
-        ReactGA.pageview(window.location.pathname + window.location.search);
-    }, [])
-
 
     function showSmallValues() {
         dashboardHooks.setHideSmallValues(false);
@@ -69,31 +64,35 @@ export default function DashboardView({dashboardHooks}) {
 
     return <Container>
         <DashboardWrapper>
-            <DashboardHeaderContainer>
-                <Search dashboardHooks={dashboardHooks}/>
-                <FlexWrap>
-                    <DashboardHeader dashboardHooks={dashboardHooks}/>
+
+            <DashboardHeader dashboardHooks={dashboardHooks}/>
+
+            <Full>
+                <Column>
                     <OverviewDetails dashboardHooks={dashboardHooks}/>
-                </FlexWrap>
-            </DashboardHeaderContainer>
+                </Column>
+                <Column>
+                    <ClaimableDetails dashboardHooks={dashboardHooks} />
+                    <BalanceDetails dashboardHooks={dashboardHooks}/>
+                    {sections}
 
-            <ClaimableDetails dashboardHooks={dashboardHooks}
-                              claimables={dashboardHooks.claimables}/>
+                    <HorizontalCenter>
+                           <CenterText>
+                               {
+                                   dashboardHooks.hideSmallValues &&
+                                   <HideSmallValueFilter>Positions with small deposits are not displayed (&lt;$1). <u><a onClick={showSmallValues}>show
+                                       everything</a></u></HideSmallValueFilter>
+                               }
 
-            <BalanceDetails dashboardHooks={dashboardHooks}/>
-
-            {sections}
-            {
-                dashboardHooks.hideSmallValues &&
-                <HideSmallValueFilter>Positions with small deposits are not displayed (&lt;$1). <u><a onClick={showSmallValues}>show
-                    everything</a></u></HideSmallValueFilter>
-            }
-
-            {
-                !dashboardHooks.hideSmallValues &&
-                <HideSmallValueFilter>Positions with small deposits are included (&lt;$1). <u><a onClick={hideSmallValues}>hide
-                    small values</a></u></HideSmallValueFilter>
-            }
+                               {
+                                   !dashboardHooks.hideSmallValues &&
+                                   <HideSmallValueFilter>Positions with small deposits are included (&lt;$1). <u><a onClick={hideSmallValues}>hide
+                                       small values</a></u></HideSmallValueFilter>
+                               }
+                           </CenterText>
+                    </HorizontalCenter>
+                </Column>
+            </Full>
         </DashboardWrapper>
     </Container>;
 }

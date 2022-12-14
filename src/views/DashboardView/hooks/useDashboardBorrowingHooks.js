@@ -1,7 +1,7 @@
 import {useEffect, useState} from "react";
 import {fetchBorrowingsV2} from "../../../api/defitrack/borrowing/borrowing";
 
-export default function useDashboardBorrowingHooks(account, protocols, {setTotalScanning, setDoneScanning}) {
+export default function useDashboardBorrowingHooks(account, protocols, supportsDebt, {setTotalScanning, setDoneScanning}) {
     const [borrowings, setBorrowings] = useState([])
 
     useEffect(() => {
@@ -27,7 +27,7 @@ export default function useDashboardBorrowingHooks(account, protocols, {setTotal
             }
         }
 
-        if (account != null) {
+        if (supportsDebt && account != null) {
             loadData();
         }
     }, [protocols, account])

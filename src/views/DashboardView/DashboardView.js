@@ -80,13 +80,13 @@ export default function DashboardView({dashboardHooks}) {
                            <CenterText>
                                {
                                    dashboardHooks.hideSmallValues &&
-                                   <HideSmallValueFilter>Positions with small deposits are not displayed (&lt;$1). <u><a onClick={showSmallValues}>show
+                                   <HideSmallValueFilter>Positions with small deposits are not displayed (&lt;$0.01). <u><a onClick={showSmallValues}>show
                                        everything</a></u></HideSmallValueFilter>
                                }
 
                                {
                                    !dashboardHooks.hideSmallValues &&
-                                   <HideSmallValueFilter>Positions with small deposits are included (&lt;$1). <u><a onClick={hideSmallValues}>hide
+                                   <HideSmallValueFilter>Positions with small deposits are included (&lt;$0.01). <u><a onClick={hideSmallValues}>hide
                                        small values</a></u></HideSmallValueFilter>
                                }
                            </CenterText>

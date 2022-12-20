@@ -184,7 +184,7 @@ export default function
 
     let smallValueFilter = element => {
         if (useDashboardFilter.hideSmallValues) {
-            return element.dollarValue > 1
+            return element.dollarValue > 0.01
         } else {
             return true;
         }

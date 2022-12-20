@@ -7,11 +7,12 @@ import {useHistory} from "react-router-dom";
 import tw from "twin.macro"
 import PlaceholderLoading from "react-placeholder-loading";
 import {Subheading} from "../../../../components/misc/Headings";
-import {SectionDescription} from "../../../../components/misc/Typography";
+import SadWhalePic from "../../../../images/sad_whale.png";
 
 const ListContainer = tw.div`flex flex-col w-full mx-auto items-center justify-center bg-white`
 const List = tw.ul`flex flex-col w-full `
-
+const CenterImage = tw.div`w-full flex justify-center my-2`
+const SadWhaleImage = tw.img`w-10 h-10`
 const ListItem = tw.li`flex flex-row`
 const Row = tw.div`select-none cursor-pointer flex flex-1 items-center px-3 py-2 border-b`
 const IconColumn = tw.div`flex flex-col lg:w-1/12 w-1/5 justify-center items-center mx-4 lg:block`;
@@ -148,6 +149,9 @@ export default function BalanceDetails({dashboardHooks}) {
             <Container>
                 <Hero>
                         <Header>We couldn't find any <Subheading>Active Assets</Subheading></Header>
+                        <CenterImage>
+                            <SadWhaleImage src={SadWhalePic} />
+                        </CenterImage>
                         <HeroDescription>Unfortunately, we couldn't locate assets for this specific account. It might be a fresh account or simply not exist at all.</HeroDescription>
                 </Hero>
             </Container>

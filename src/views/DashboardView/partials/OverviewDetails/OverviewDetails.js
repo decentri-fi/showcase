@@ -5,8 +5,11 @@ import DetailCard from "../../../../components/Card/DetailCard"; //eslint-disabl
 import tw from 'twin.macro';
 import PlaceholderLoading from "react-placeholder-loading";
 import {Subheading} from "../../../../components/misc/Headings";
-import {SectionDescription} from "../../../../components/misc/Typography";
+import SadWhalePic from "../../../../images/sad_whale.png";
 
+
+const CenterImage = tw.div`w-full flex justify-center my-2`
+const SadWhaleImage = tw.img`w-10 h-10`
 const Container = tw.div`w-full mr-4 flex flex-wrap`
 const Header = tw.h3`text-lg font-medium mb-2  `
 const Table = tw.div`w-full mb-8 flex flex-wrap`
@@ -204,7 +207,7 @@ function AccountOverview({dashboardHooks}) {
 }
 
 const Hero = tw.div`justify-self-center bg-gray-100 w-full border p-4 mb-4 text-center`
-const HeroDescription = tw.p`text-gray-400 text-lg`
+const HeroDescription = tw.p`text-gray-500 text-lg`
 
 function DefiOverview({dashboardHooks}) {
     if (dashboardHooks.usedProtocols.length === 0 && dashboardHooks.hasFinishedScanning) {
@@ -212,6 +215,9 @@ function DefiOverview({dashboardHooks}) {
             <Container>
                 <Hero>
                     <Header>We couldn't find any <Subheading>Active Defi Application</Subheading></Header>
+                    <CenterImage>
+                        <SadWhaleImage src={SadWhalePic} />
+                    </CenterImage>
                     <HeroDescription>Unfortunately, we couldn't identify any participation in a defi application for this specific address. It might be a fresh account or simply not exist at all.</HeroDescription>
                 </Hero>
             </Container>

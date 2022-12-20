@@ -1,12 +1,20 @@
 import React, {useEffect} from 'react';
 import tw from "twin.macro";
-import MainFeature2 from "../../components/features/TwoColWithTwoHorizontalFeaturesAndButton";
+import Feature from "../../components/features/TwoColWithTwoHorizontalFeaturesAndButton";
 import prototypeIllustrationImageSrc from "../../images/prototype-illustration.svg";
 import {ReactComponent as BriefcaseIcon} from "feather-icons/dist/icons/share.svg";
 import {ReactComponent as ChainIcon} from "feather-icons/dist/icons/link.svg";
 import ReactGA from "react-ga4";
 import TwoColSingleFeatureWithStats2 from "../../components/features/TwoColSingleFeatureWithStats2";
 import GetStartedLight from "../../components/cta/GetStartedLight";
+import StepFeature from "../../components/features/TwoColWithSteps";
+import VerticalWithAlternateImageAndText from "../../components/features/VerticalWithAlternateImageAndText";
+import DashedBorderSixFeatures from "../../components/features/DashedBorderSixFeatures";
+import TwoColWithButton from "../../components/features/TwoColWithButton";
+
+import MoneyUnicornPic from "images/moneyunicorns.png";
+import UnicornsReading from "images/unicornsreading.png";
+import BookkeeperUniPic from "images/bookkeperuni.png";
 
 const Subheading = tw.span`uppercase tracking-widest font-bold text-primary-500`;
 const HighlightedText = tw.span`text-primary-500`;
@@ -41,7 +49,9 @@ export default function LandingView() {
 
     return (
         <Container>
-            <TwoColSingleFeatureWithStats2 statistics={statistics}
+            <TwoColSingleFeatureWithStats2
+                imageSrc={UnicornsReading}
+                statistics={statistics}
                                            primaryButtonText="Explore Defi Hub"
                                            primaryButtonUrl="https://docs.decentri.fi"
                                            subheading="Defi Hub"
@@ -49,8 +59,23 @@ export default function LandingView() {
                                            description="Defi Hub is the easiest way to integrate with existing defi protocols without having to know the inner workings of protocols or chain-specific models."
             />
 
+
             <Dark>
-                <MainFeature2
+                <TwoColWithButton
+                    subheading={"Staking Made Easy"}
+                    heading={<>
+                        Easily Enter, Exit and Claim <span tw="text-primary-500">Your Farms.</span>
+                    </>}
+                    primaryButtonUrl={"/claimables"}
+                    buttonRounded={false}
+                    description={"We'll find your claimable farms, airdrops and rewards. Connect your web3 wallet. With just 1 click you can harvest your yield."}
+                    primaryButtonText={"START CLAIMING"}
+                    imageSrc={MoneyUnicornPic}
+                />
+
+            </Dark>
+
+                <Feature
                     subheading={<Subheading>Defitrack Track</Subheading>}
                     heading={
                         <>
@@ -67,9 +92,9 @@ export default function LandingView() {
                             We pour all this data into a unified model, which lets you easily <b>compare different positions.</b>
                         </>
                     }
-                    primaryButtonText={"EXPLORE THE SHOWCASE"}
+                    primaryButtonText={"EXPLORE THE DASHBOARD"}
                     primaryButtonUrl={"/account/0x26fcbd3afebbe28d0a8684f790c48368d21665b5"}
-                    imageSrc={prototypeIllustrationImageSrc}
+                    imageSrc={BookkeeperUniPic}
                     showDecoratorBlob={false}
                     features={[
                         {
@@ -86,16 +111,15 @@ export default function LandingView() {
                         }
                     ]}
                 />
-            </Dark>
 
-            <section tw="bg-defaultBackground">
+            <Dark>
                 <GetStartedLight
                     primaryLinkUrl="https://docs.decentri.fi"
                     secondaryLinkUrl="https://docs.decentri.fi"
                     subheading="Buidling in the space?"
                     heading="Explore our developer-friendly docs."
                 />
-            </section>
+            </Dark>
         </Container>
     )
 };

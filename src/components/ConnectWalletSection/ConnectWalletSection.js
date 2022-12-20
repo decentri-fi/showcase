@@ -5,6 +5,7 @@ import {SectionHeading, Subheading as SubheadingBase} from "components/misc/Head
 import {PrimaryButton as PrimaryButtonBase} from "components/misc/Buttons.js";
 import StatsIllustrationSrc from "images/stats-illustration.svg";
 import {ReactComponent as SvgDotPattern} from "images/dot-pattern.svg";
+import FoxWithWalletPic from "../../images/fox-with-wallet.png";
 
 const Container = tw.div`w-full grid justify-items-center`;
 const TwoColumn = tw.div`flex flex-col md:flex-row justify-between max-w-screen-xl mx-8 pb-12  md:py-24`;
@@ -32,6 +33,7 @@ const DecoratorBlob = styled(SvgDotPattern)(props => [
     tw`w-20 h-20 absolute right-0 bottom-0 transform translate-x-1/2 translate-y-1/2 fill-current text-primary-500 -z-10`
 ]);
 
+
 export default function ConnectWalletSection({
                                                  login,
                                                  imageSrc = StatsIllustrationSrc,
@@ -44,7 +46,7 @@ export default function ConnectWalletSection({
         <Container>
             <TwoColumn css={!imageInsideDiv && tw`md:items-center`}>
                 <ImageColumn css={imageContainerCss}>
-                    <Image imageSrc={imageSrc} css={imageCss}/>
+                    <Image imageSrc={FoxWithWalletPic} css={imageCss}/>
                     <DecoratorBlob/>
                 </ImageColumn>
                 <TextColumn textOnLeft={textOnLeft}>

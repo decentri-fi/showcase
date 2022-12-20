@@ -8,6 +8,7 @@ import PrimaryButton from "../../../../components/Button/PrimaryButton";
 import FallbackImage from "../../../../../src/components/Image/FallbackImage";
 import tw from "twin.macro";
 import PlaceholderLoading from "react-placeholder-loading";
+import FAQ from "../../../../components/faqs/SingleCol";
 
 
 
@@ -187,6 +188,8 @@ function DummyList() {
     )
 }
 
+const HighlightedText = tw.span`text-primary-500`
+
 function PlaceHolder() {
     return (
         <>
@@ -227,7 +230,6 @@ export default function ClaimableDetails({dashboardHooks, showPlaceholder = fals
             showPlaceholder && <PlaceHolder />
         )
     } else {
-
         return (
             <Center>
                 <Section>

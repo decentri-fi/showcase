@@ -1,1 +1,1 @@
-export {default} from './OverviewDetails'
+export {default} from './AccountBreakdown'

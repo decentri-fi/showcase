@@ -17,6 +17,13 @@ const Subheading = tw(SubheadingBase)`mb-4`;
 const Heading = tw(SectionHeading)`w-full`;
 const Description = tw(SectionDescription)`w-full text-center mb-4`;
 
+const Center = tw.div`w-full flex grid justify-items-center mb-3`
+
+const SectionWithBackground = tw.div`grid w-full justify-items-center bg-defaultBackground pt-2`
+
+const ClaimableSection = tw.div`py-4 lg:w-2/3 w-full px-4 mt-4`
+const FAQSection = tw.div`w-full px-4  bg-defaultBackground`
+
 export default function ClaimableView({dashboardHooks}) {
 
     function showSmallValues() {
@@ -45,7 +52,7 @@ export default function ClaimableView({dashboardHooks}) {
 
     return <Container>
         <DashboardWrapper>
-            <div tw="w-full flex grid justify-items-center mb-3">
+            <Center>
                 <Navbar items={
                     [
                         {
@@ -60,26 +67,26 @@ export default function ClaimableView({dashboardHooks}) {
                         }
                     ]
                 } />
-            </div>
+            </Center>
 
-            <div tw="grid justify-items-center bg-defaultBackground pt-2">
+            <SectionWithBackground>
                 <Subheading>Don't forget your rewards</Subheading>
                 <Heading>Outstanding <HighlightedText>Claims</HighlightedText></Heading>
                 <Description>Find out if you have any unclaimed yields, rewards, NFTs or airdrops!
                     We automatically check your wallet for any unclaimed reward.</Description>
-            </div>
+            </SectionWithBackground>
 
-            <div tw="lg:w-2/3 w-full px-4 mt-4">
+            <ClaimableSection>
                 <ClaimableDetails showPlaceholder={true} dashboardHooks={dashboardHooks}/>
-            </div>
-            <div tw="lg:w-2/3 px-4  bg-defaultBackground">
+            </ClaimableSection>
+            <FAQSection>
                 <FAQ
                     description={""}
                     faqs={faqs}
                     subheading={"Frequently asked claiming questions"}
                     heading={<>Any <HighlightedText>Questions ?</HighlightedText></>}
                 />
-            </div>
+            </FAQSection>
 
             {
                 dashboardHooks.hideSmallValues &&

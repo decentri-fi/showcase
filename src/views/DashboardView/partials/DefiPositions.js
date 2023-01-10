@@ -13,6 +13,8 @@ const ProtocolDetails = tw.div`w-full bg-white`
 const HeaderText = tw.h3`shadow px-4 py-1 text-sm font-medium mb-2 rounded-r text-gray-600`
 const HorizontalCenter = tw.div`pl-1 flex items-center w-full`
 
+const ProtocolTitle = tw.div`flex`
+
 export default function DefiPositions({dashboardHooks}) {
 
     const DefiBreakdown = dashboardHooks.usedProtocols.map((proto, index) => {
@@ -20,7 +22,7 @@ export default function DefiPositions({dashboardHooks}) {
             <ProtocolSection key={index}>
                 <ProtocolSectionHeader href={proto.website} target="_blank">
                     <HeaderText>
-                        <div tw="flex">
+                        <ProtocolTitle>
                             <ProtocolSectionHeaderLogo alt="logo" src={proto.logo}/>
                             {proto.name}
                             <HorizontalCenter>
@@ -30,7 +32,7 @@ export default function DefiPositions({dashboardHooks}) {
                                         fill="currentColor"></path>
                                 </svg>
                             </HorizontalCenter>
-                        </div>
+                        </ProtocolTitle>
                     </HeaderText>
 
                 </ProtocolSectionHeader>

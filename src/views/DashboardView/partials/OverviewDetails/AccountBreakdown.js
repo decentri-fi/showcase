@@ -74,7 +74,7 @@ function DummyCard() {
     )
 }
 
-export default function OverviewDetails(
+export default function AccountBreakdown(
     {
         dashboardHooks
     }

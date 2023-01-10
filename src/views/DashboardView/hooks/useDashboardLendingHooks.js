@@ -15,6 +15,13 @@ export default function useDashboardLendingHooks(account, protocols, supportsLen
         }
     }, [lendings]);
 
+    useEffect(() => {
+        if (account !== undefined && supportsLending) {
+            const lendingElements = JSON.parse(localStorage.getItem(`lending-elements-${account}`)) || [];
+            setLendings(lendingElements);
+        }
+    }, [account]);
+
 
     useEffect(() => {
         const loadData = async () => {

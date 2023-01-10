@@ -46,7 +46,7 @@ export default function useWeb3() {
         ethereum: ethereum,
         login: login,
         isOnCorrectChain: isOnCorrectChain,
-        hasAccount: () =>  metamaskHooks.useAccount().length > 0,
+        hasAccount: metamaskHooks.useAccount()?.length > 0,
         active: metamaskHooks.useIsActive(),
         supported: supported(),
         web3React: web3React,

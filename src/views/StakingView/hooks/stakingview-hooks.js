@@ -39,7 +39,7 @@ export default function useStakingViewHooks() {
 
     useEffect(() => {
         async function fetchData() {
-            if (token !== null && web3.hasAccount() && token.type === 'SINGLE') {
+            if (token !== null && web3.hasAccount && token.type === 'SINGLE') {
                 const result = await fetchTokenBalance(activeFarmingElement.stakedToken.address, web3.account, network);
                 if (result > 0) {
                     setUserBalance(

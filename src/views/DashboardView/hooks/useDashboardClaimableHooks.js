@@ -15,6 +15,13 @@ export default function useDashboardClaimableHooks(account, protocols, supportsC
         }
     }, [claimables]);
 
+    useEffect(() => {
+        if (account !== undefined && supportsClaimables) {
+            const claimableElements = JSON.parse(localStorage.getItem(`claimable-elements-${account}`)) || [];
+            setClaimables(claimableElements);
+        }
+    }, [account]);
+
 
     useEffect(() => {
         const loadData = async () => {

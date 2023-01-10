@@ -17,7 +17,7 @@ export default function FarmingView({farmingElement, token}) {
     }, [])
 
 
-    if (hasAccount() && isOnCorrectChain()) {
+    if (hasAccount && isOnCorrectChain()) {
         return (
             <ChangeNetworkSection currentNetwork={farmingElement.network} requiredChainId={farmingElement.network.chainId} />
         )

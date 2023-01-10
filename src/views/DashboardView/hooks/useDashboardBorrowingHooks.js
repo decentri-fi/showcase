@@ -17,6 +17,13 @@ export default function useDashboardBorrowingHooks(account, protocols, supportsD
     }, [borrowings]);
 
     useEffect(() => {
+        if(account !== undefined && supportsDebt) {
+            const borrowingElements = JSON.parse(localStorage.getItem(`borrowing-elements-${account}`)) || [];
+            setBorrowings(borrowingElements);
+        }
+    }, [account]);
+
+    useEffect(() => {
         const loadData = async () => {
             if (protocols.length > 0) {
                 if(borrowings === null) {

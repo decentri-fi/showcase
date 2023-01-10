@@ -44,7 +44,7 @@ export default function useQuickswapActions(poolingMarket, chosenToken) {
     }, [chosenToken])
 
     function isValidChain() {
-        return web3.hasAccount() && web3.isOnCorrectChain(poolingMarket.network.chainId);
+        return web3.hasAccount && web3.isOnCorrectChain(poolingMarket.network.chainId);
     }
 
     const yeet = async (e) => {

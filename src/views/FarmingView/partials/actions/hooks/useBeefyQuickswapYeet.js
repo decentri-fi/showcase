@@ -149,7 +149,7 @@ export default function useBeefyQuickswapYeet(wantTokenInfo, farmingMarket) {
     }
 
     function isValidChain() {
-        return web3.hasAccount() && web3.isOnCorrectChain(farmingMarket.network.chainId);
+        return web3.hasAccount && web3.isOnCorrectChain(farmingMarket.network.chainId);
     }
 
     const fullApprove = async (erc20, spender) => {

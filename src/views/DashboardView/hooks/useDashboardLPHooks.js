@@ -18,6 +18,13 @@ export default function useDashboardLPHooks(account, protocols, supportsPooling,
         }
     }, [lps]);
 
+    useEffect(() => {
+        if(account !== undefined && supportsPooling) {
+            const lpElements = getStoredElements() || [];
+            setLps(lpElements);
+        }
+    }, [account]);
+
     useEffect(async () => {
         const loadData = async () => {
             if (protocols.length > 0) {

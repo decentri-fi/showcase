@@ -17,6 +17,13 @@ export default function useDashboardStakingHooks(account, protocols, supportsSta
     }, [stakings]);
 
     useEffect(() => {
+        if(account !== undefined && supportsStaking) {
+            const stakingElements = JSON.parse(localStorage.getItem(`staking-elements-${account}`)) || [];
+            setStakings(stakingElements);
+        }
+    }, [account]);
+
+    useEffect(() => {
         const loadData = async () => {
             if (protocols.length > 0) {
                 if(stakings === null) {

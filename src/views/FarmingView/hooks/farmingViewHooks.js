@@ -35,7 +35,7 @@ export function useFarmingViewHooks(farmingElement) {
     }
 
     useEffect(() => {
-        if (web3.hasAccount()) {
+        if (web3.hasAccount) {
             fetchAllowance();
             fetchFarmingPosition();
         }

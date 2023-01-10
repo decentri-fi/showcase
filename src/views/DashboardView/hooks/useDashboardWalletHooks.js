@@ -13,6 +13,13 @@ export default function useDashboardWalletHooks(account, networks, supportsBalan
     }, [balanceElements]);
 
     useEffect(() => {
+        if (account !== undefined && supportsBalances) {
+            const balanceElements = JSON.parse(localStorage.getItem(`balance-elements-${account}`)) || [];
+            setBalanceElements(balanceElements);
+        }
+    }, [account]);
+
+    useEffect(() => {
         if (supportsBalances && account != null && networks != null && networks.length > 0) {
             const savedOne = JSON.parse(localStorage.getItem(`balance-elements-${account}`));
             if (savedOne != null) {

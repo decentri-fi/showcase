@@ -10,9 +10,9 @@ import SadWhalePic from "../../../../images/sad_whale.png";
 
 const CenterImage = tw.div`w-full flex justify-center my-2`
 const SadWhaleImage = tw.img`w-10 h-10`
-const Container = tw.div`w-full mr-4 flex flex-wrap`
+const Container = tw.div`w-full mr-4 flex flex-wrap border p-4 rounded-lg mb-2`
 const Header = tw.h3`text-lg font-medium mb-2  `
-const Table = tw.div`w-full mb-8 flex flex-wrap`
+const Table = tw.div`w-full flex flex-wrap mb-2`
 
 const GreenDollarIcon = tw(CurrencyDollarIcon)`text-green-400 h-8 w-8`
 const YellowDollarIcon = tw(CurrencyDollarIcon)`text-yellow-400 h-8 w-8`
@@ -26,8 +26,12 @@ const YellowProgressBar = tw(ProgressBar)`bg-yellow-500`
 const GreenProgressBar = tw(ProgressBar)`bg-green-500`
 const OrangeProgressBar = tw(ProgressBar)`bg-orange-500`
 
+const HeaderText = tw.h3`shadow px-4 py-1 text-sm font-medium mb-2 bg-green-600 rounded-r  text-white`
+
 const Logo = tw.img`h-8 w-8`
 const FullRow = tw.div`w-full`
+
+const AccountOverviewWrapper = tw.div`mb-2`
 
 function Protocols({dashboardHooks}) {
 
@@ -132,7 +136,7 @@ function AccountOverview({dashboardHooks}) {
     const assetAllocation = calculateAssetAllocation();
     return (
         <>
-            <Header>Account Overview</Header>
+            <HeaderText>Account Breakdown</HeaderText>
             <Table>
                 {totalWalletBalance > 0 &&
                     <FullRow>
@@ -226,7 +230,7 @@ function DefiOverview({dashboardHooks}) {
 
     return (
         <>
-            <Header>Defi Overview</Header>
+            <HeaderText>Defi Positions</HeaderText>
             <Table>
                 <Protocols dashboardHooks={dashboardHooks}/>
             </Table>

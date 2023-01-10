@@ -3,7 +3,7 @@ import "styles/globalStyles.css";
 
 import React from "react";
 import {Web3Provider} from '@ethersproject/providers'
-import {createWeb3ReactRoot} from "@web3-react/core";
+import {createWeb3ReactRoot, Web3ReactProvider} from "@web3-react/core";
 import {BrowserRouter as Router, Route, Switch} from 'react-router-dom';
 
 /*
@@ -34,6 +34,8 @@ import TermsOfServiceView from "./views/TermsOfServiceView/TermsOfServiceView";
 import Web3ClaimableView from "./views/ClaimableView/Web3ClaimableView";
 import AddressClaimableView from "./views/ClaimableView/AddressClaimableView";
 
+import { hooks as metaMaskHooks, metaMask } from 'hooks/metamask'
+
 function getLibrary(provider) {
     const library = new Web3Provider(
         provider,
@@ -54,6 +56,10 @@ function getLibrary(provider) {
     return library
 }
 
+const connectors = [
+    [metaMask, metaMaskHooks]
+]
+
 export default function App() {
     ReactGA.initialize([
         {
@@ -61,10 +67,8 @@ export default function App() {
         }
     ]);
 
-    const Web3ProviderNetwork = createWeb3ReactRoot('NETWORK');
-
     return (
-        <Web3ProviderNetwork getLibrary={getLibrary}>
+        <Web3ReactProvider connectors={connectors}>
             <Router>
                 <Switch>
                     <Route path="/dashboard">
@@ -132,6 +136,6 @@ export default function App() {
                     </Route>
                 </Switch>
             </Router>
-        </Web3ProviderNetwork>
+        </Web3ReactProvider>
     );
 }

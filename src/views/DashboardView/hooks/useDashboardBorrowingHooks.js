@@ -1,15 +1,26 @@
 import {useEffect, useState} from "react";
 import {fetchBorrowingsV2} from "../../../api/defitrack/borrowing/borrowing";
 
-export default function useDashboardBorrowingHooks(account, protocols, supportsDebt, {setTotalScanning, setDoneScanning}) {
-    const [borrowings, setBorrowings] = useState([])
+
+export default function useDashboardBorrowingHooks(account, protocols, supportsDebt, {
+    setTotalScanning,
+    setDoneScanning
+}) {
+    const [borrowings, setBorrowings] = useState([]);
+
+    useEffect( () => {
+        if(account !== undefined && supportsDebt) {
+            if(borrowings.length >= (JSON.parse(localStorage.getItem(`borrowing-elements-${account}`))?.length || 0)) {
+                localStorage.setItem(`borrowing-elements-${account}`, JSON.stringify(borrowings));
+            }
+        }
+    }, [borrowings]);
 
     useEffect(() => {
         const loadData = async () => {
             setTotalScanning(prevTotalScanning => {
                 return prevTotalScanning + protocols.length
             })
-            setBorrowings([]);
             for (const protocol of protocols) {
                 fetchBorrowingsV2(account, protocol).then(retBorrowings => {
                     setDoneScanning(prevState => {
@@ -22,13 +33,22 @@ export default function useDashboardBorrowingHooks(account, protocols, supportsD
                                 return [...prevState];
                             })
                         }
+                    } else {
+                        setBorrowings(prevState => {
+                            return [...prevState];
+                        })
                     }
                 })
             }
         }
 
         if (supportsDebt && account != null) {
-            loadData();
+            const savedOne = JSON.parse(localStorage.getItem(`borrowing-elements-${account}`));
+            if (savedOne !== null) {
+                setBorrowings(savedOne);
+            } else {
+                loadData();
+            }
         }
     }, [protocols, account])
 

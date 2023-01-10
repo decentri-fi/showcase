@@ -6,6 +6,6 @@ import Modal from "react-modal";
 Modal.setAppElement("#root");
 
 ReactDOM.render(
-  <App />,
-  document.getElementById("root")
+    <App/>,
+    document.getElementById("root")
 );

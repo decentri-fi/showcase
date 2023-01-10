@@ -17,7 +17,7 @@ const List = tw.ul`flex flex-col w-full`
 const ListItem = tw.li`flex flex-row hover:bg-indigo-100`
 const Row = tw.div`select-none cursor-pointer flex flex-1 items-center px-3 py-2 border-b`
 
-const IconColumn = tw.div`flex flex-col lg:w-1/12 w-1/5 justify-center items-center mx-4 lg:block`;
+const IconColumn = tw.div`flex flex-col w-1/12 justify-center items-center mr-4 lg:block`;
 const IconBlock = tw.div`block relative`
 const FallbackImageContainer = tw.div`flex flex-nowrap`
 const Image = tw.div`h-5 w-5 lg:h-8 lg:w-8`

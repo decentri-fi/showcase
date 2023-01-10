@@ -15,7 +15,7 @@ const CenterImage = tw.div`w-full flex justify-center my-2`
 const SadWhaleImage = tw.img`w-10 h-10`
 const ListItem = tw.li`flex flex-row`
 const Row = tw.div`select-none cursor-pointer flex flex-1 items-center px-3 py-2 border-b`
-const IconColumn = tw.div`flex flex-col lg:w-1/12 w-1/5 justify-center items-center mx-4 lg:block`;
+const IconColumn = tw.div`flex flex-col w-1/12 justify-center items-center mr-4 lg:block`;
 const IconBlock = tw.div`block relative`
 const FallbackImageContainer = tw.div`flex flex-nowrap`
 const Image = tw.div`h-5 w-5 lg:h-8 lg:w-8`
@@ -31,8 +31,8 @@ const TotalColumn = tw.div`px-1 text-sm text-left text-gray-600 dark:text-gray-2
 const PullRight = tw.div`flex flex-col grid justify-items-end`
 const Bold = tw.span`font-bold text-sm`
 
-const Center = tw.div`w-full mb-4`
-const Section = tw.div`w-full bg-white py-4`
+const Center = tw.div`w-full mb-4 border p-4 rounded-lg`
+const Section = tw.div`w-full bg-white py-4 `
 const AssetHeader = tw.div`w-full flex items-center mb-2 `
 const HeaderTextContainer = tw.div`lg:w-3/12 w-full`
 const HeaderText = tw.h3`shadow px-4 py-1 text-sm font-medium mb-2 bg-green-600 rounded-r  text-white`
@@ -162,7 +162,7 @@ export default function BalanceDetails({dashboardHooks}) {
             <Section>
                 <AssetHeader>
                     <HeaderTextContainer>
-                        <HeaderText>Assets</HeaderText>
+                        <HeaderText>Wallet</HeaderText>
                     </HeaderTextContainer>
                     <BalanceText>
                         <Hidden>

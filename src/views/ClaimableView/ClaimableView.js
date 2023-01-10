@@ -5,8 +5,9 @@ import tw from 'twin.macro';
 import {SectionHeading, Subheading as SubheadingBase} from "../../components/misc/Headings";
 import {SectionDescription} from "../../components/misc/Typography";
 import FAQ from "../../components/faqs/SingleCol";
+import Navbar from "../../components/Navbar/Navbar";
 
-const Container = tw.div`px-2 flex pt-8 bg-defaultBackground`
+const Container = tw.div`flex pt-8`
 
 const DashboardWrapper = tw.div`w-full grid justify-items-center`
 const HideSmallValueFilter = tw.p`text-xs`
@@ -44,13 +45,34 @@ export default function ClaimableView({dashboardHooks}) {
 
     return <Container>
         <DashboardWrapper>
-            <Subheading>Don't forget your rewards</Subheading>
-            <Heading>Outstanding <HighlightedText>Claims</HighlightedText></Heading>
-            <Description>Find out if you have any unclaimed yields, rewards, NFTs or airdrops!
-                We automatically check your wallet for any unclaimed reward.</Description>
+            <div tw="w-full flex grid justify-items-center mb-3">
+                <Navbar items={
+                    [
+                        {
+                            name: "Profile",
+                            selected: false,
+                            url: '/dashboard'
+                        },
+                        {
+                            name: "Claimables",
+                            selected: true,
+                            url: '#'
+                        }
+                    ]
+                } />
+            </div>
 
-            <div tw="lg:w-2/3 px-4">
+            <div tw="grid justify-items-center bg-defaultBackground pt-2">
+                <Subheading>Don't forget your rewards</Subheading>
+                <Heading>Outstanding <HighlightedText>Claims</HighlightedText></Heading>
+                <Description>Find out if you have any unclaimed yields, rewards, NFTs or airdrops!
+                    We automatically check your wallet for any unclaimed reward.</Description>
+            </div>
+
+            <div tw="lg:w-2/3 w-full px-4 mt-4">
                 <ClaimableDetails showPlaceholder={true} dashboardHooks={dashboardHooks}/>
+            </div>
+            <div tw="lg:w-2/3 px-4  bg-defaultBackground">
                 <FAQ
                     description={""}
                     faqs={faqs}

@@ -14,12 +14,12 @@ const ENS = tw.span`text-sm text-gray-500 dark:text-white ml-2`
 const Blockie = tw.span`hidden lg:block rounded-xl relative p-2 w-24 `;
 const GeneralInfo = tw.div`flex items-center mb-3 flex-col lg:flex-row`
 
-const LeftColumn = tw.div` w-full mb-4  p-4 bg-white dark:bg-gray-700`
+const LeftColumn = tw.div` w-full p-4 bg-white dark:bg-gray-700`
 
 const AddressInfo = tw.div`flex items-center`
 const AddressText = tw.div`flex flex-col`
-const Wrapper = tw.div`flex w-full flex-wrap lg:flex-nowrap`;
-
+const Wrapper = tw.div`flex grid justify-items-center flex-wrap lg:flex-nowrap p-4`;
+const Center = tw.div`w-full lg:w-2/3 border rounded-xl`
 const PortfolioValue = tw.div`lg:justify-self-end text-xs`
 const PortfolioValueContainer = tw.div`w-full grid`
 
@@ -68,7 +68,8 @@ export default function DashboardHeader({dashboardHooks}) {
 
 
     return (
-            <Wrapper>
+        <Wrapper>
+            <Center>
                 <LeftColumn>
                     <GeneralInfo>
                         <AddressInfo>
@@ -84,10 +85,10 @@ export default function DashboardHeader({dashboardHooks}) {
                             <PortfolioValue>
                                 <DetailCard
                                     icon={
-                                        <DetailCardIcon />
+                                        <DetailCardIcon/>
                                     }
                                     centerHtml={<DollarLabel amount={dashboardHooks.totalBalance}/>}
-                                    title={"Portfolio Value"} />
+                                    title={"Portfolio Value"}/>
                             </PortfolioValue>
                         </PortfolioValueContainer>
                     </GeneralInfo>
@@ -106,6 +107,7 @@ export default function DashboardHeader({dashboardHooks}) {
                         </ScanningContainer>
                     }
                 </LeftColumn>
-            </Wrapper>
+            </Center>
+        </Wrapper>
     )
 };

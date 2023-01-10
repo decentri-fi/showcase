@@ -5,12 +5,11 @@ export default function useDashboardLendingHooks(account, protocols, supportsLen
     setTotalScanning,
     setDoneScanning
 }) {
-    const [lendings, setLendings] = useState([]
-    );
+    const [lendings, setLendings] = useState(null);
 
     useEffect(() => {
-        if (account !== undefined && supportsLending) {
-            if(lendings.length >= (JSON.parse(localStorage.getItem(`lending-elements-${account}`))?.length || 0)) {
+        if (account !== undefined && supportsLending && lendings !== null) {
+            if (lendings.length >= (JSON.parse(localStorage.getItem(`lending-elements-${account}`))?.length || 0)) {
                 localStorage.setItem(`lending-elements-${account}`, JSON.stringify(lendings));
             }
         }
@@ -19,27 +18,33 @@ export default function useDashboardLendingHooks(account, protocols, supportsLen
 
     useEffect(() => {
         const loadData = async () => {
-            setTotalScanning(prevTotalScanning => {
-                return prevTotalScanning + protocols.length
-            })
-            for (const protocol of protocols) {
-                lendingPositions(account, protocol).then(retLendings => {
-                    setDoneScanning(prevState => {
-                        return prevState + 1
-                    })
-                    if (retLendings.length > 0) {
-                        for (const lending of retLendings) {
+
+            if (protocols.length > 0) {
+                if (lendings === null) {
+                    setLendings([]);
+                }
+                setTotalScanning(prevTotalScanning => {
+                    return prevTotalScanning + protocols.length
+                })
+                for (const protocol of protocols) {
+                    lendingPositions(account, protocol).then(retLendings => {
+                        setDoneScanning(prevState => {
+                            return prevState + 1
+                        })
+                        if (retLendings.length > 0) {
+                            for (const lending of retLendings) {
+                                setLendings(prevState => {
+                                    prevState.push(lending);
+                                    return [...prevState];
+                                })
+                            }
+                        } else {
                             setLendings(prevState => {
-                                prevState.push(lending);
                                 return [...prevState];
                             })
                         }
-                    } else {
-                        setLendings(prevState => {
-                            return [...prevState];
-                        })
-                    }
-                });
+                    });
+                }
             }
         }
 
@@ -54,6 +59,6 @@ export default function useDashboardLendingHooks(account, protocols, supportsLen
     }, [protocols, account])
 
     return {
-        lendings
+        lendings: lendings || []
     }
 };

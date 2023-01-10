@@ -2,10 +2,10 @@ import {useEffect, useState} from "react";
 import {fetchNativeBalance, fetchTokenBalance} from "../../../api/defitrack/balance/balance";
 
 export default function useDashboardWalletHooks(account, networks, supportsBalances) {
-    const [balanceElements, setBalanceElements] = useState([]);
+    const [balanceElements, setBalanceElements] = useState(null);
 
     useEffect(() => {
-        if (account !== undefined && supportsBalances) {
+        if (account !== undefined && supportsBalances && balanceElements !== null) {
             if (balanceElements.length >= (JSON.parse(localStorage.getItem(`balance-elements-${account}`))?.length || 0)) {
                 localStorage.setItem(`balance-elements-${account}`, JSON.stringify(balanceElements));
             }
@@ -18,6 +18,9 @@ export default function useDashboardWalletHooks(account, networks, supportsBalan
             if (savedOne != null) {
                 setBalanceElements(savedOne)
             } else {
+                if(balanceElements === null) {
+                    setBalanceElements([]);
+                }
                 fetchNativeBalance(account).then(nativeBalance => {
                     for (const balanceElement of nativeBalance) {
                         setBalanceElements(prevState => {

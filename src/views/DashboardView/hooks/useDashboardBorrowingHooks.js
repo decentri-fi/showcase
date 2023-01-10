@@ -6,10 +6,10 @@ export default function useDashboardBorrowingHooks(account, protocols, supportsD
     setTotalScanning,
     setDoneScanning
 }) {
-    const [borrowings, setBorrowings] = useState([]);
+    const [borrowings, setBorrowings] = useState(null);
 
     useEffect( () => {
-        if(account !== undefined && supportsDebt) {
+        if(account !== undefined && supportsDebt && borrowings !== null) {
             if(borrowings.length >= (JSON.parse(localStorage.getItem(`borrowing-elements-${account}`))?.length || 0)) {
                 localStorage.setItem(`borrowing-elements-${account}`, JSON.stringify(borrowings));
             }
@@ -18,27 +18,32 @@ export default function useDashboardBorrowingHooks(account, protocols, supportsD
 
     useEffect(() => {
         const loadData = async () => {
-            setTotalScanning(prevTotalScanning => {
-                return prevTotalScanning + protocols.length
-            })
-            for (const protocol of protocols) {
-                fetchBorrowingsV2(account, protocol).then(retBorrowings => {
-                    setDoneScanning(prevState => {
-                        return prevState + 1
-                    })
-                    if (retBorrowings.length > 0) {
-                        for (const borrowing of retBorrowings) {
+            if (protocols.length > 0) {
+                if(borrowings === null) {
+                    setBorrowings([]);
+                }
+                setTotalScanning(prevTotalScanning => {
+                    return prevTotalScanning + protocols.length
+                })
+                for (const protocol of protocols) {
+                    fetchBorrowingsV2(account, protocol).then(retBorrowings => {
+                        setDoneScanning(prevState => {
+                            return prevState + 1
+                        })
+                        if (retBorrowings.length > 0) {
+                            for (const borrowing of retBorrowings) {
+                                setBorrowings(prevState => {
+                                    prevState.push(borrowing);
+                                    return [...prevState];
+                                })
+                            }
+                        } else {
                             setBorrowings(prevState => {
-                                prevState.push(borrowing);
                                 return [...prevState];
                             })
                         }
-                    } else {
-                        setBorrowings(prevState => {
-                            return [...prevState];
-                        })
-                    }
-                })
+                    });
+                }
             }
         }
 
@@ -53,6 +58,6 @@ export default function useDashboardBorrowingHooks(account, protocols, supportsD
     }, [protocols, account])
 
     return {
-        borrowings
+        borrowings: borrowings || []
     }
 };

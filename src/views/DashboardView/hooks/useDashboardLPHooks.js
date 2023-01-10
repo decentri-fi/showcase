@@ -3,12 +3,16 @@ import {poolingPositions} from "../../../api/defitrack/pools/pools";
 
 export default function useDashboardLPHooks(account, protocols, supportsPooling, {setTotalScanning, setDoneScanning}) {
     const [lps, setLps] = useState(
-        []
+        null
     );
 
+    function getStoredElements() {
+        return JSON.parse(localStorage.getItem(`lp-elements-${account}`));
+    }
+
     useEffect( () => {
-        if(account !== undefined && supportsPooling) {
-            if(lps.length >= (JSON.parse(localStorage.getItem(`lp-elements-${account}`))?.length || 0)) {
+        if(account !== undefined && supportsPooling && lps !== null) {
+            if(lps?.length || 0 >= (getStoredElements()?.length || 0)) {
                 localStorage.setItem(`lp-elements-${account}`, JSON.stringify(lps));
             }
         }
@@ -17,6 +21,9 @@ export default function useDashboardLPHooks(account, protocols, supportsPooling,
     useEffect(async () => {
         const loadData = async () => {
             if (protocols.length > 0) {
+                if(lps === null) {
+                    setLps([]);
+                }
                 setTotalScanning(prevTotalScanning => {
                     return prevTotalScanning + protocols.length
                 })
@@ -43,7 +50,7 @@ export default function useDashboardLPHooks(account, protocols, supportsPooling,
         }
 
         if (supportsPooling && account !== undefined) {
-            const savedOne = JSON.parse(localStorage.getItem(`lp-elements-${account}`));
+            const savedOne = getStoredElements();
             if(savedOne !== null) {
                 setLps(savedOne);
             } else {
@@ -53,6 +60,6 @@ export default function useDashboardLPHooks(account, protocols, supportsPooling,
     }, [protocols, account])
 
     return {
-        lps
+        lps: lps || []
     }
 };

@@ -5,12 +5,10 @@ export default function useDashboardClaimableHooks(account, protocols, supportsC
     setTotalScanning,
     setDoneScanning
 }) {
-    const [claimables, setClaimables] = useState([])
+    const [claimables, setClaimables] = useState(null)
 
     useEffect(() => {
-        if (account !== undefined && supportsClaimables) {
-            console.log('updated claimables', claimables)
-            console.log('claimables', claimables.length)
+        if (account !== undefined && supportsClaimables && claimables !== null) {
             if (claimables.length >= (JSON.parse(localStorage.getItem(`claimable-elements-${account}`))?.length || 0)) {
                 localStorage.setItem(`claimable-elements-${account}`, JSON.stringify(claimables));
             }
@@ -20,12 +18,13 @@ export default function useDashboardClaimableHooks(account, protocols, supportsC
 
     useEffect(() => {
         const loadData = async () => {
-
-            setTotalScanning(prevTotalScanning => {
-                return prevTotalScanning + protocols.length
-            })
-
             if (protocols.length > 0) {
+                if (claimables == null) {
+                    setClaimables([]);
+                }
+                setTotalScanning(prevTotalScanning => {
+                    return prevTotalScanning + protocols.length
+                });
                 for (const protocol of protocols) {
                     fetchClaimables(account, protocol).then(retClaimable => {
                         setDoneScanning(prevState => {
@@ -59,6 +58,6 @@ export default function useDashboardClaimableHooks(account, protocols, supportsC
     }, [protocols, account])
 
     return {
-        claimables
+        claimables: claimables || []
     }
 }

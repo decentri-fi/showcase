@@ -6,11 +6,11 @@ export default function useDashboardStakingHooks(account, protocols, supportsSta
     setDoneScanning
 }) {
 
-    const [stakings, setStakings] = useState( []);
+    const [stakings, setStakings] = useState( null);
 
     useEffect( () => {
-        if(account !== undefined && supportsStaking) {
-            if(stakings.length >= (JSON.parse(localStorage.getItem(`staking-elements-${account}`))?.length || 0)) {
+        if(account !== undefined && supportsStaking && stakings !== null) {
+            if(stakings.length || null >= (JSON.parse(localStorage.getItem(`staking-elements-${account}`))?.length || 0)) {
                 localStorage.setItem(`staking-elements-${account}`, JSON.stringify(stakings));
             }
         }
@@ -19,6 +19,9 @@ export default function useDashboardStakingHooks(account, protocols, supportsSta
     useEffect(() => {
         const loadData = async () => {
             if (protocols.length > 0) {
+                if(stakings === null) {
+                    setStakings([]);
+                }
                 setTotalScanning(prevTotalScanning => {
                     return prevTotalScanning + protocols.length
                 })
@@ -55,6 +58,6 @@ export default function useDashboardStakingHooks(account, protocols, supportsSta
     }, [protocols, account])
 
     return {
-        stakings
+        stakings: stakings || []
     }
 };

@@ -5,11 +5,12 @@ const Container = tw.div`flex mb-2`
 const Border = tw.div`shadow-md hover:shadow-lg  w-full p-2 bg-white dark:bg-gray-800`
 const Center = tw.div`flex items-center`
 
-const Title = tw.p`text-sm text-gray-800 dark:text-gray-100`
+const TitleText = tw.p`text-sm text-gray-800 dark:text-gray-100`
 const BoldText = tw.p`text-gray-800 text-sm dark:text-white font-bold`
 const Icon = tw.div`mr-2`
 const PullRight = tw.div`flex grid justify-items-end text-right`
-
+const Title = tw.div`flex w-2/3`
+const Number = tw.div`w-1/3`
 export default function DetailCard({centerHtml, title, icon, bottomHtml = <></>}) {
     return (
         <Container>
@@ -18,13 +19,13 @@ export default function DetailCard({centerHtml, title, icon, bottomHtml = <></>}
                     <Icon>
                         {icon}
                     </Icon>
-                    <div tw="flex w-2/3">
-                        <Title>
+                    <Title>
+                        <TitleText>
                             {title}
-                        </Title>
+                        </TitleText>
 
-                    </div>
-                    <div tw="w-1/3">
+                    </Title>
+                    <Number>
                         <PullRight>
                             <div>
                                 <BoldText>
@@ -32,7 +33,7 @@ export default function DetailCard({centerHtml, title, icon, bottomHtml = <></>}
                                 </BoldText>
                             </div>
                         </PullRight>
-                    </div>
+                    </Number>
                 </Center>
                 {bottomHtml}
             </Border>

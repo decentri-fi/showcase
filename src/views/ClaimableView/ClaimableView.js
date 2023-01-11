@@ -6,6 +6,7 @@ import {SectionHeading, Subheading as SubheadingBase} from "../../components/mis
 import {SectionDescription} from "../../components/misc/Typography";
 import FAQ from "../../components/faqs/SingleCol";
 import Navbar from "../../components/Navbar/Navbar";
+import {useHistory} from "react-router-dom";
 
 const Container = tw.div`flex pt-8`
 
@@ -25,6 +26,8 @@ const ClaimableSection = tw.div`py-4 lg:w-2/3 w-full px-4 mt-4`
 const FAQSection = tw.div`w-full px-4  bg-defaultBackground`
 
 export default function ClaimableView({dashboardHooks}) {
+
+    const history = useHistory();
 
     function showSmallValues() {
         dashboardHooks.setHideSmallValues(false);
@@ -58,7 +61,10 @@ export default function ClaimableView({dashboardHooks}) {
                         {
                             name: "Profile",
                             selected: false,
-                            url: '/dashboard'
+                            url: '/dashboard',
+                            onClick() {
+                                history.push('/dashboard')
+                            }
                         },
                         {
                             name: "Claimables",

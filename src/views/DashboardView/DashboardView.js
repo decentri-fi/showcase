@@ -7,6 +7,7 @@ import tw from 'twin.macro';
 import ClaimableDetails from "./partials/ClaimableDetails";
 import Navbar from "../../components/Navbar/Navbar";
 import DefiPositions from "./partials/DefiPositions";
+import {useHistory} from "react-router-dom";
 
 const Container = tw.div`flex`
 const DashboardWrapper = tw.div`w-full`
@@ -20,6 +21,8 @@ const CenterText = tw.div`text-center w-full`
 const Center = tw.div`w-full flex grid justify-items-center mt-3 mb-1`
 
 export default function DashboardView({dashboardHooks}) {
+
+    const history = useHistory();
 
     function showSmallValues() {
         dashboardHooks.setHideSmallValues(false);
@@ -43,7 +46,10 @@ export default function DashboardView({dashboardHooks}) {
                         {
                             name: "Claimables",
                             selected: false,
-                            url: '/claimables'
+                            url: '/claimables',
+                            onClick: () => {
+                                history.push('/claimables');
+                            }
                         }
                     ]
                 }/>

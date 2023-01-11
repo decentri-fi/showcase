@@ -18,13 +18,9 @@ function SelectionWrapper({selected, children}) {
 
 export default function ({items = []}) {
 
-    const history = useHistory();
-
     const listItems = items.map((item) => {
         return (
-            <ListItem onClick={(event => {
-                history.push(item.url);
-            })}>
+            <ListItem onClick={item.onClick}>
                 <SelectionWrapper selected={item.selected} href={item.url}
                                   aria-current="page">{item.name}</SelectionWrapper>
             </ListItem>

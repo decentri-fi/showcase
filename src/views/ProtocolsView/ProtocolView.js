@@ -5,8 +5,8 @@ import LendingOpportunities from "../../components/LendingOpportunities/LendingO
 import FarmingOpportunities from "../../components/FarmingOpportunities/FarmingOpportunities";
 import tw from "twin.macro";
 import FallbackImage from "../../components/Image/FallbackImage";
-import DollarLabel from "../../components/Label/DollarLabel";
 import {Button} from "@mui/material";
+import Navbar from "../../components/Navbar/Navbar";
 
 const Container = tw.div`w-full lg:w-1/2`
 
@@ -21,17 +21,64 @@ const LeftColumn = tw.div` w-full p-4 bg-white dark:bg-gray-700`
 const AddressInfo = tw.div`flex items-center`
 const AddressText = tw.div`flex flex-col`
 const Wrapper = tw.div`flex grid justify-items-center flex-wrap lg:flex-nowrap p-4`;
-const Center = tw.div`w-full lg:w-2/3 border rounded-xl`
+const CenteredBorder = tw.div`w-full lg:w-2/3 border rounded-xl`
 const PortfolioValue = tw.div`lg:justify-items-end justify-items-center grid text-xs w-full`
 const PortfolioValueContainer = tw.div`bg-gray-200 p-4 flex flex-col rounded-xl w-2/3 lg:w-1/2`
 const RefreshContainer = tw.div`text-3xl font-bold flex flex-col lg:flex-row`;
 const PortfolioTitle = tw.span`text-center lg:text-left`
 const HorizontalCenter = tw.div`pl-1 flex items-center justify-items-center grid w-full lg:ml-8`
+const Center = tw.div`w-full flex grid justify-items-center mb-3`
+
 
 export default () => {
 
     const protocolHooks = useProtocolViewHooks();
     let protocol = protocolHooks.protocol;
+
+    function LendingTab() {
+        if (protocolHooks.tabs.find(element => element.name === 'Lending' && element.selected === true)) {
+            return <>
+                {
+                    (!protocolHooks.scannedLendingOpportunities || protocolHooks.lendingOpportunities.length > 0) &&
+                    <LendingOpportunities
+                        lendingOpportunities={protocolHooks.lendingOpportunities}></LendingOpportunities>
+                }
+            </>;
+        } else {
+            return <></>
+        }
+    }
+
+    function PoolingTab() {
+        console.log(protocolHooks.tabs);
+        if (protocolHooks.tabs.find(element => element.name === 'Pooling' && element.selected === true)) {
+            return <>
+                {
+                    (!protocolHooks.scannedPoolingOpportunities || protocolHooks.poolingOpportunities.length > 0) &&
+                    <PoolingOpportunities
+                        poolingOpportunities={protocolHooks.poolingOpportunities}></PoolingOpportunities>
+                }
+            </>;
+        } else {
+            return <></>
+        }
+    }
+
+    function FarmingTab() {
+        if (protocolHooks.tabs.find(element => element.name === 'Farming' && element.selected === true)) {
+            return (
+                <>
+                    {
+                        (!protocolHooks.scannedFarmingOpportunities || protocolHooks.farmingOpportunities.length > 0) &&
+                        <FarmingOpportunities
+                            farmingOpportunities={protocolHooks.farmingOpportunities}></FarmingOpportunities>
+                    }
+                </>
+            )
+        } else {
+            return <></>
+        }
+    }
 
     if (protocol == null) {
         return <></>
@@ -39,7 +86,7 @@ export default () => {
         return (
             <>
                 <Wrapper>
-                    <Center>
+                    <CenteredBorder>
                         <LeftColumn>
                             <GeneralInfo>
                                 {
@@ -95,27 +142,22 @@ export default () => {
                                 </PortfolioValue>
                             </GeneralInfo>
                         </LeftColumn>
-                    </Center>
+                    </CenteredBorder>
                 </Wrapper>
 
-                {
-                    (!protocolHooks.scannedFarmingOpportunities || protocolHooks.farmingOpportunities.length > 0) &&
-                    <FarmingOpportunities farmingOpportunities={protocolHooks.farmingOpportunities}></FarmingOpportunities>
-                }
+                <Wrapper>
+                    <Center>
+                        <Navbar items={
+                            protocolHooks.tabs
+                        }/>
+                    </Center>
 
-                {
-                    !protocolHooks.scannedPoolingOpportunities || protocolHooks.poolingOpportunities.length > 0 &&
-                    <PoolingOpportunities poolingOpportunities={
-                        protocolHooks.poolingOpportunities
-                    } title={"Pooling Opportunities"}></PoolingOpportunities>
-                }
+                </Wrapper>
 
-                {
-                    (!protocolHooks.scannedLendingOpportunities || protocolHooks.lendingOpportunities.length > 0) &&
-                    <LendingOpportunities lendingOpportunities={protocolHooks.lendingOpportunities}></LendingOpportunities>
-                }
+                <FarmingTab/>
+                <PoolingTab/>
+                <LendingTab/>
             </>
         )
     }
-
 };

@@ -17,6 +17,44 @@ export default function useProtocolView() {
     const [scannedLendingOpportunities, setScannedLendingOpportunities] = useState(false);
     const [scannedPoolingOpportunities, setScannedPoolingOpportunities] = useState(false);
 
+    const [tabs, setTabs] = useState([])
+
+    function setActiveTab(tabName) {
+        setTabs((prevState) => {
+            return prevState.map((tab) => {
+                tab.selected = tab.name === tabName;
+                return tab;
+            });
+        });
+    }
+
+    useEffect(() => {
+        let t = [];
+        if (poolingOpportunities.length > 0) {
+            t.push({name: 'Pooling', selected: true, onClick: () => setActiveTab('Pooling')});
+        }
+        if (lendingOpportunities.length > 0) {
+            t.push({
+                name: 'Lending', onClick: (() => {
+                    setActiveTab('Lending')
+                })
+            });
+        }
+        if (farmingOpportunities.length > 0) {
+            t.push({
+                name: 'Farming', onClick: (() => {
+                    setActiveTab('Farming')
+                })
+            });
+        }
+
+        if (t.length > 0) {
+            t[0].selected = true;
+        }
+
+        setTabs(t);
+    }, [poolingOpportunities, lendingOpportunities, farmingOpportunities]);
+
     useEffect(() => {
         async function fetchData() {
             const protocols = await fetchProtocols();
@@ -87,7 +125,9 @@ export default function useProtocolView() {
         poolingOpportunities,
         farmingOpportunities,
         lendingOpportunities,
-        networks:  Array.from(
+        tabs,
+        setActiveTab,
+        networks: Array.from(
             new Set(
                 (farmingOpportunities.concat(poolingOpportunities)).map((opportunity) => {
                     return opportunity.network.name

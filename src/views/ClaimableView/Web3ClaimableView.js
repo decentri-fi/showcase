@@ -24,8 +24,6 @@ export default function Web3ClaimableView() {
     const web3 = useWeb3();
     const history = useHistory();
 
-    console.log(useAccounts());
-
     const dashboardHooks = useDashboardHooks(web3.account, {
         supportsPooling: false,
         supportsLending: false,

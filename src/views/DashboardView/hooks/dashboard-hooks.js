@@ -41,7 +41,7 @@ export default function
 
     const {stakings, refresh: refreshStakings} = useDashboardStakingHooks(currentAccount, protocols, supportsStaking, {setTotalScanning, setDoneScanning});
     const {lendings, refresh: refreshLendings} = useDashboardLendingHooks(currentAccount, protocols, supportsLending, {setTotalScanning, setDoneScanning});
-    const {claimables, refresh: refreshClaimables} = useDashboardClaimableHooks(currentAccount, protocols, supportsClaimables, {
+    const {claimables, refresh: refreshClaimables, loading: claimableLoading} = useDashboardClaimableHooks(currentAccount, protocols, supportsClaimables, {
         setTotalScanning,
         setDoneScanning
     });
@@ -209,6 +209,7 @@ export default function
     }
 
     return {
+        claimableLoading,
         refresh,
         searchAddress,
         setSearchAddress: setSearchAddress,

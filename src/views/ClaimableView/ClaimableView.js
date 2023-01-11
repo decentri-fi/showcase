@@ -83,7 +83,7 @@ export default function ClaimableView({dashboardHooks}) {
             </SectionWithBackground>
 
             <ClaimableSection>
-                <ClaimableDetails showPlaceholder={true} dashboardHooks={dashboardHooks}/>
+                <ClaimableDetails showPlaceholder={dashboardHooks.claimableLoading} dashboardHooks={dashboardHooks}/>
             </ClaimableSection>
             <FAQSection>
                 <FAQ

@@ -76,7 +76,7 @@ export default function LandingView() {
             </Dark>
 
                 <Feature
-                    subheading={<Subheading>Defitrack Track</Subheading>}
+                    subheading={<Subheading>Decentrifi Insights</Subheading>}
                     heading={
                         <>
                             Track your ongoing <HighlightedText>DeFi Investments</HighlightedText>
@@ -92,7 +92,7 @@ export default function LandingView() {
                             We pour all this data into a unified model, which lets you easily <b>compare different positions.</b>
                         </>
                     }
-                    primaryButtonText={"EXPLORE THE DASHBOARD"}
+                    primaryButtonText={"EXPLORE DECENTRIFI INSIGHTS"}
                     primaryButtonUrl={"/account/0x26fcbd3afebbe28d0a8684f790c48368d21665b5"}
                     imageSrc={BookkeeperUniPic}
                     showDecoratorBlob={false}
@@ -115,7 +115,7 @@ export default function LandingView() {
             <Dark>
                 <GetStartedLight
                     primaryLinkUrl="https://docs.decentri.fi"
-                    secondaryLinkUrl="https://docs.decentri.fi"
+                    secondaryLinkUrl="https://learn.decentri.fi"
                     subheading="Buidling in the space?"
                     heading="Explore our developer-friendly docs."
                 />

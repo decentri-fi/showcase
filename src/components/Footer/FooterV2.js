@@ -56,7 +56,7 @@ export default () => {
                 <Link href="https://docs.decentri.fi">Documentation</Link>
               </LinkListItem>
               <LinkListItem>
-                <Link href="https://decentri.fi/dashboard">Showcase</Link>
+                <Link href="https://decentri.fi/dashboard">Insights</Link>
               </LinkListItem>
               <LinkListItem>
                 <Link href="https://docs.decentri.fi/general/supported-protocols">Roadmap</Link>
@@ -67,16 +67,16 @@ export default () => {
             <ColumnHeading>Developers</ColumnHeading>
             <LinkList>
               <LinkListItem>
-                <Link href="https://github.com/defitrack">Github</Link>
+                <Link target="_blank" href="https://github.com/decentri-fi">Github</Link>
               </LinkListItem>
               <LinkListItem>
                 <Link href="https://gitcoin.co/explorer?network=mainnet&applicants=ALL&keywords=defitrack&order_by=null">Bounties</Link>
               </LinkListItem>
               <LinkListItem>
-                <Link href="https://github.com/defitrack/defitrack-core">Defitrack Core</Link>
+                <Link target="_blank" href="https://github.com/decentri-fi/defi-hub">Defi Hub</Link>
               </LinkListItem>
               <LinkListItem>
-                <Link href="https://github.com/defitrack/data">Defitrack Data</Link>
+                <Link target="_blank" href="https://github.com/decentri-fi/data">Decentrifi Data</Link>
               </LinkListItem>
             </LinkList>
           </Column>
@@ -84,7 +84,7 @@ export default () => {
             <ColumnHeading>Community</ColumnHeading>
             <LinkList>
               <LinkListItem>
-                <Link href="https://twitter.com/defitrack">Twitter</Link>
+                <Link target="_blank" href="https://twitter.com/defitrack">Twitter</Link>
               </LinkListItem>
               <LinkListItem>
                 <Link href="https://gitcoin.co/grants/4539/defitrack-find-the-best-opportunities-in-the-defi">Gitcoin Grants</Link>

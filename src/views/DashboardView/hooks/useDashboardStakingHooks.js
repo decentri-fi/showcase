@@ -6,29 +6,17 @@ export default function useDashboardStakingHooks(account, protocols, supportsSta
     setDoneScanning
 }) {
 
-    const [stakings, setStakings] = useState( null);
+    const [stakings, setStakings] = useState([]);
 
-    useEffect( () => {
-        if(account !== undefined && supportsStaking && stakings !== null) {
-            if(stakings.length || null >= (JSON.parse(localStorage.getItem(`staking-elements-${account}`))?.length || 0)) {
-                localStorage.setItem(`staking-elements-${account}`, JSON.stringify(stakings));
-            }
-        }
-    }, [stakings]);
+    function refresh() {
+        localStorage.setItem(`staking-elements-${account}`, null);
+        setStakings([]);
+        init();
+    }
 
-    useEffect(() => {
-        if(account !== undefined && supportsStaking) {
-            const stakingElements = JSON.parse(localStorage.getItem(`staking-elements-${account}`)) || [];
-            setStakings(stakingElements);
-        }
-    }, [account]);
-
-    useEffect(() => {
+    function init() {
         const loadData = async () => {
             if (protocols.length > 0) {
-                if(stakings === null) {
-                    setStakings([]);
-                }
                 setTotalScanning(prevTotalScanning => {
                     return prevTotalScanning + protocols.length
                 })
@@ -41,12 +29,14 @@ export default function useDashboardStakingHooks(account, protocols, supportsSta
                             for (const staking of retStakings) {
                                 setStakings(prevState => {
                                     prevState.push(staking)
+                                    localStorage.setItem(`staking-elements-${account}`, JSON.stringify(prevState));
                                     return [...prevState];
                                 })
                             }
                         } else {
                             setStakings(prevState => {
-                                return [...prevState];
+                                localStorage.setItem(`staking-elements-${account}`, JSON.stringify(prevState));
+                                return prevState
                             })
                         }
                     })
@@ -56,15 +46,20 @@ export default function useDashboardStakingHooks(account, protocols, supportsSta
 
         if (supportsStaking && account !== undefined) {
             const savedOne = JSON.parse(localStorage.getItem(`staking-elements-${account}`));
-            if(savedOne !== null) {
+            if (savedOne !== null) {
                 setStakings(savedOne);
             } else {
                 loadData();
             }
         }
+    }
+
+    useEffect(() => {
+        init();
     }, [protocols, account])
 
     return {
-        stakings: stakings || []
+        stakings,
+        refresh
     }
 };

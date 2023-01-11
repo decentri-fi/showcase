@@ -5,31 +5,18 @@ export default function useDashboardLendingHooks(account, protocols, supportsLen
     setTotalScanning,
     setDoneScanning
 }) {
-    const [lendings, setLendings] = useState(null);
+    const [lendings, setLendings] = useState([]);
 
-    useEffect(() => {
-        if (account !== undefined && supportsLending && lendings !== null) {
-            if (lendings.length >= (JSON.parse(localStorage.getItem(`lending-elements-${account}`))?.length || 0)) {
-                localStorage.setItem(`lending-elements-${account}`, JSON.stringify(lendings));
-            }
-        }
-    }, [lendings]);
+    function refresh() {
+        localStorage.setItem(`lending-elements-${account}`, null);
+        setLendings([]);
+        init();
+    }
 
-    useEffect(() => {
-        if (account !== undefined && supportsLending) {
-            const lendingElements = JSON.parse(localStorage.getItem(`lending-elements-${account}`)) || [];
-            setLendings(lendingElements);
-        }
-    }, [account]);
-
-
-    useEffect(() => {
+    function init() {
         const loadData = async () => {
 
             if (protocols.length > 0) {
-                if (lendings === null) {
-                    setLendings([]);
-                }
                 setTotalScanning(prevTotalScanning => {
                     return prevTotalScanning + protocols.length
                 })
@@ -42,11 +29,13 @@ export default function useDashboardLendingHooks(account, protocols, supportsLen
                             for (const lending of retLendings) {
                                 setLendings(prevState => {
                                     prevState.push(lending);
+                                    localStorage.setItem(`lending-elements-${account}`, JSON.stringify(prevState));
                                     return [...prevState];
                                 })
                             }
                         } else {
                             setLendings(prevState => {
+                                localStorage.setItem(`lending-elements-${account}`, JSON.stringify(prevState));
                                 return [...prevState];
                             })
                         }
@@ -63,9 +52,14 @@ export default function useDashboardLendingHooks(account, protocols, supportsLen
                 loadData();
             }
         }
+    }
+
+    useEffect(() => {
+        init();
     }, [protocols, account])
 
     return {
-        lendings: lendings || []
+        lendings,
+        refresh
     }
 };

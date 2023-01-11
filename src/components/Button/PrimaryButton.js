@@ -5,6 +5,6 @@ const GreenButton = tw.button`bg-green-500 text-white font-semibold border round
 
 export default function PrimaryButton({onClick, label}) {
     return (
-        <GreenButton onClick={onClick} tw="">{label}</GreenButton>
+        <GreenButton onClick={onClick}>{label}</GreenButton>
     )
 };

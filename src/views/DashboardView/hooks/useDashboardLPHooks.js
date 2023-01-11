@@ -2,35 +2,21 @@ import {useEffect, useState} from "react";
 import {poolingPositions} from "../../../api/defitrack/pools/pools";
 
 export default function useDashboardLPHooks(account, protocols, supportsPooling, {setTotalScanning, setDoneScanning}) {
-    const [lps, setLps] = useState(
-        null
-    );
+    const [lps, setLps] = useState([]);
 
     function getStoredElements() {
         return JSON.parse(localStorage.getItem(`lp-elements-${account}`));
     }
 
-    useEffect( () => {
-        if(account !== undefined && supportsPooling && lps !== null) {
-            if(lps?.length || 0 >= (getStoredElements()?.length || 0)) {
-                localStorage.setItem(`lp-elements-${account}`, JSON.stringify(lps));
-            }
-        }
-    }, [lps]);
+    function refresh() {
+        localStorage.setItem(`lp-elements-${account}`, null);
+        setLps([]);
+        init();
+    }
 
-    useEffect(() => {
-        if(account !== undefined && supportsPooling) {
-            const lpElements = getStoredElements() || [];
-            setLps(lpElements);
-        }
-    }, [account]);
-
-    useEffect(async () => {
+    function init() {
         const loadData = async () => {
             if (protocols.length > 0) {
-                if(lps === null) {
-                    setLps([]);
-                }
                 setTotalScanning(prevTotalScanning => {
                     return prevTotalScanning + protocols.length
                 })
@@ -43,11 +29,13 @@ export default function useDashboardLPHooks(account, protocols, supportsPooling,
                             for (const pooling of poolings) {
                                 setLps(prevState => {
                                     prevState.push(pooling);
+                                    localStorage.setItem(`lp-elements-${account}`, JSON.stringify(prevState));
                                     return [...prevState];
                                 });
                             }
                         } else {
                             setLps(prevState => {
+                                localStorage.setItem(`lp-elements-${account}`, JSON.stringify(prevState));
                                 return [...prevState];
                             });
                         }
@@ -58,15 +46,20 @@ export default function useDashboardLPHooks(account, protocols, supportsPooling,
 
         if (supportsPooling && account !== undefined) {
             const savedOne = getStoredElements();
-            if(savedOne !== null) {
+            if (savedOne !== null) {
                 setLps(savedOne);
             } else {
                 loadData();
             }
         }
+    }
+
+    useEffect(async () => {
+        init();
     }, [protocols, account])
 
     return {
-        lps: lps || []
+        lps,
+        refresh
     }
 };

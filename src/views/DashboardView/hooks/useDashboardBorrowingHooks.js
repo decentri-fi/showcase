@@ -6,27 +6,18 @@ export default function useDashboardBorrowingHooks(account, protocols, supportsD
     setTotalScanning,
     setDoneScanning
 }) {
-    const [borrowings, setBorrowings] = useState(null);
+    const [borrowings, setBorrowings] = useState([]);
 
-    useEffect( () => {
-        if(account !== undefined && supportsDebt && borrowings !== null) {
-            if(borrowings.length >= (JSON.parse(localStorage.getItem(`borrowing-elements-${account}`))?.length || 0)) {
-                localStorage.setItem(`borrowing-elements-${account}`, JSON.stringify(borrowings));
-            }
-        }
-    }, [borrowings]);
+    function refresh() {
+        localStorage.setItem(`borrowing-elements-${account}`, null);
+        setBorrowings([]);
+        init();
+    }
 
-    useEffect(() => {
-        if(account !== undefined && supportsDebt) {
-            const borrowingElements = JSON.parse(localStorage.getItem(`borrowing-elements-${account}`)) || [];
-            setBorrowings(borrowingElements);
-        }
-    }, [account]);
-
-    useEffect(() => {
+    function init() {
         const loadData = async () => {
             if (protocols.length > 0) {
-                if(borrowings === null) {
+                if (borrowings == null) {
                     setBorrowings([]);
                 }
                 setTotalScanning(prevTotalScanning => {
@@ -41,11 +32,13 @@ export default function useDashboardBorrowingHooks(account, protocols, supportsD
                             for (const borrowing of retBorrowings) {
                                 setBorrowings(prevState => {
                                     prevState.push(borrowing);
+                                    localStorage.setItem(`borrowing-elements-${account}`, JSON.stringify(prevState));
                                     return [...prevState];
                                 })
                             }
                         } else {
                             setBorrowings(prevState => {
+                                localStorage.setItem(`borrowing-elements-${account}`, JSON.stringify(prevState));
                                 return [...prevState];
                             })
                         }
@@ -62,9 +55,14 @@ export default function useDashboardBorrowingHooks(account, protocols, supportsD
                 loadData();
             }
         }
+    }
+
+    useEffect(() => {
+        init();
     }, [protocols, account])
 
     return {
-        borrowings: borrowings || []
+        borrowings,
+        refresh
     }
 };

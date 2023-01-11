@@ -1,4 +1,4 @@
-import {useState} from 'react';
+import {useEffect, useState} from 'react';
 import {useDashboardFilterHooks} from "./useDashboardFilterHooks";
 import useDashboardProtocolHooks from "./useDashboardProtocolHooks";
 import useDashboardWalletHooks from "./useDashboardWalletHooks";
@@ -21,9 +21,17 @@ export default function
 }) {
 
     const useDashboardFilter = useDashboardFilterHooks()
+    const [currentAccount, setCurrentAccount] = useState(null);
+
+    useEffect(() => {
+        if (account !== currentAccount) {
+            setCurrentAccount(account)
+        }
+    }, [account])
+
     const {protocols} = useDashboardProtocolHooks();
     const {networks} = useDashboardNetworkHooks();
-    const {balanceElements} = useDashboardWalletHooks(account, networks, supportsBalances);
+    const {balanceElements, refresh: refreshWallet} = useDashboardWalletHooks(currentAccount, networks, supportsBalances);
     const {
         setDoneScanning,
         doneScanning,
@@ -31,14 +39,14 @@ export default function
         totalScanning
     } = useDashboardScanningProgressHooks();
 
-    const {stakings} = useDashboardStakingHooks(account, protocols, supportsStaking, {setTotalScanning, setDoneScanning});
-    const {lendings} = useDashboardLendingHooks(account, protocols, supportsLending, {setTotalScanning, setDoneScanning});
-    const {claimables} = useDashboardClaimableHooks(account, protocols, supportsClaimables, {
+    const {stakings, refresh: refreshStakings} = useDashboardStakingHooks(currentAccount, protocols, supportsStaking, {setTotalScanning, setDoneScanning});
+    const {lendings, refresh: refreshLendings} = useDashboardLendingHooks(currentAccount, protocols, supportsLending, {setTotalScanning, setDoneScanning});
+    const {claimables, refresh: refreshClaimables} = useDashboardClaimableHooks(currentAccount, protocols, supportsClaimables, {
         setTotalScanning,
         setDoneScanning
     });
-    const {borrowings} = useDashboardBorrowingHooks(account, protocols, supportsDebt,{setTotalScanning, setDoneScanning});
-    const {lps} = useDashboardLPHooks(account, protocols, supportsPooling, {setTotalScanning, setDoneScanning});
+    const {borrowings, refresh: refreshBorrowings} = useDashboardBorrowingHooks(currentAccount, protocols, supportsDebt,{setTotalScanning, setDoneScanning});
+    const {lps} = useDashboardLPHooks(currentAccount, protocols, supportsPooling, {setTotalScanning, setDoneScanning});
 
     function totalStaking(protocol) {
         if (stakings == null || stakings.length === 0) {
@@ -192,10 +200,19 @@ export default function
 
     const [searchAddress, setSearchAddress] = useState(null);
 
+    function refresh() {
+        refreshWallet();
+        refreshStakings();
+        refreshClaimables();
+        refreshLendings();
+        refreshBorrowings();
+    }
+
     return {
+        refresh,
         searchAddress,
         setSearchAddress: setSearchAddress,
-        address: account,
+        address: currentAccount,
         usedProtocols: getUniqueProtocols(),
         usedNetworks: getUniqueNetworks(),
         hasFinishedScanning: doneScanning === totalScanning,

@@ -5,30 +5,18 @@ export default function useDashboardClaimableHooks(account, protocols, supportsC
     setTotalScanning,
     setDoneScanning
 }) {
-    const [claimables, setClaimables] = useState(null)
+    const [claimables, setClaimables] = useState([])
 
-    useEffect(() => {
-        if (account !== undefined && supportsClaimables && claimables !== null) {
-            if (claimables.length >= (JSON.parse(localStorage.getItem(`claimable-elements-${account}`))?.length || 0)) {
-                localStorage.setItem(`claimable-elements-${account}`, JSON.stringify(claimables));
-            }
-        }
-    }, [claimables]);
-
-    useEffect(() => {
-        if (account !== undefined && supportsClaimables) {
-            const claimableElements = JSON.parse(localStorage.getItem(`claimable-elements-${account}`)) || [];
-            setClaimables(claimableElements);
-        }
-    }, [account]);
+    function refresh() {
+        localStorage.setItem(`claimable-elements-${account}`, null);
+        setClaimables([]);
+        init();
+    }
 
 
-    useEffect(() => {
+    function init() {
         const loadData = async () => {
             if (protocols.length > 0) {
-                if (claimables == null) {
-                    setClaimables([]);
-                }
                 setTotalScanning(prevTotalScanning => {
                     return prevTotalScanning + protocols.length
                 });
@@ -41,11 +29,13 @@ export default function useDashboardClaimableHooks(account, protocols, supportsC
                             for (const claimable of retClaimable) {
                                 setClaimables(prevState => {
                                     prevState.push(claimable);
+                                    localStorage.setItem(`claimable-elements-${account}`, JSON.stringify(prevState));
                                     return [...prevState];
                                 })
                             }
                         } else {
                             setClaimables(prevState => {
+                                localStorage.setItem(`claimable-elements-${account}`, JSON.stringify(prevState));
                                 return [...prevState];
                             });
                         }
@@ -62,9 +52,14 @@ export default function useDashboardClaimableHooks(account, protocols, supportsC
                 loadData();
             }
         }
+    }
+
+    useEffect(() => {
+        init();
     }, [protocols, account])
 
     return {
-        claimables: claimables || []
+        claimables,
+        refresh
     }
 }

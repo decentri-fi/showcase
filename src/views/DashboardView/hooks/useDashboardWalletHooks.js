@@ -2,37 +2,25 @@ import {useEffect, useState} from "react";
 import {fetchNativeBalance, fetchTokenBalance} from "../../../api/defitrack/balance/balance";
 
 export default function useDashboardWalletHooks(account, networks, supportsBalances) {
-    const [balanceElements, setBalanceElements] = useState(null);
+    const [balanceElements, setBalanceElements] = useState([]);
 
-    useEffect(() => {
-        if (account !== undefined && supportsBalances && balanceElements !== null) {
-            if (balanceElements.length >= (JSON.parse(localStorage.getItem(`balance-elements-${account}`))?.length || 0)) {
-                localStorage.setItem(`balance-elements-${account}`, JSON.stringify(balanceElements));
-            }
-        }
-    }, [balanceElements]);
+    function refresh() {
+        localStorage.setItem(`balance-elements-${account}`, null);
+        setBalanceElements([]);
+        init();
+    }
 
-    useEffect(() => {
-        if (account !== undefined && supportsBalances) {
-            const balanceElements = JSON.parse(localStorage.getItem(`balance-elements-${account}`)) || [];
-            setBalanceElements(balanceElements);
-        }
-    }, [account]);
-
-    useEffect(() => {
+    function init() {
         if (supportsBalances && account != null && networks != null && networks.length > 0) {
             const savedOne = JSON.parse(localStorage.getItem(`balance-elements-${account}`));
             if (savedOne != null) {
                 setBalanceElements(savedOne)
             } else {
-                if(balanceElements === null) {
-                    setBalanceElements([]);
-                }
                 fetchNativeBalance(account).then(nativeBalance => {
                     for (const balanceElement of nativeBalance) {
                         setBalanceElements(prevState => {
                             prevState.push(balanceElement);
-                            console.log(prevState)
+                            localStorage.setItem(`balance-elements-${account}`, JSON.stringify(prevState));
                             return [...prevState];
                         })
                     }
@@ -43,12 +31,14 @@ export default function useDashboardWalletHooks(account, networks, supportsBalan
                             for (const balanceElement of tokenBalance) {
                                 setBalanceElements(prevState => {
                                     prevState.push(balanceElement);
+                                    localStorage.setItem(`balance-elements-${account}`, JSON.stringify(prevState));
                                     return [...prevState];
                                 })
                             }
                         } else {
                             setBalanceElements(prevState => {
-                                return [...prevState];
+                                localStorage.setItem(`balance-elements-${account}`, JSON.stringify(prevState));
+                                return prevState
                             })
                         }
                     }).catch(ex => {
@@ -57,11 +47,16 @@ export default function useDashboardWalletHooks(account, networks, supportsBalan
                 }
             }
         }
+    }
+
+    useEffect(() => {
+        init();
     }, [account, networks])
 
     return {
         balanceElements: balanceElements?.sort((a, b) => {
             return b.dollarValue - a.dollarValue
-        }) || []
+        }) || [],
+        refresh
     }
 };

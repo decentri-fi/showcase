@@ -5,8 +5,9 @@ import LendingOpportunities from "../../components/LendingOpportunities/LendingO
 import FarmingOpportunities from "../../components/FarmingOpportunities/FarmingOpportunities";
 import tw from "twin.macro";
 import FallbackImage from "../../components/Image/FallbackImage";
-import {Button} from "@mui/material";
+import {Breadcrumbs, Button, Link} from "@mui/material";
 import Navbar from "../../components/Navbar/Navbar";
+import MyBreadcrumbs from "../../components/MyBreadcrumbs";
 
 const Container = tw.div`w-full lg:w-1/2`
 
@@ -20,14 +21,15 @@ const LeftColumn = tw.div` w-full p-4 bg-white dark:bg-gray-700`
 
 const AddressInfo = tw.div`flex items-center`
 const AddressText = tw.div`flex flex-col`
-const Wrapper = tw.div`flex grid justify-items-center flex-wrap lg:flex-nowrap p-4`;
+const Wrapper = tw.div`flex grid justify-items-center flex-wrap lg:flex-nowrap pt-2`;
 const CenteredBorder = tw.div`w-full lg:w-2/3 border rounded-xl`
 const PortfolioValue = tw.div`lg:justify-items-end justify-items-center grid text-xs w-full`
 const PortfolioValueContainer = tw.div`bg-gray-200 p-4 flex flex-col rounded-xl w-2/3 lg:w-1/2`
 const RefreshContainer = tw.div`text-3xl font-bold flex flex-col lg:flex-row`;
 const PortfolioTitle = tw.span`text-center lg:text-left`
 const HorizontalCenter = tw.div`pl-1 flex items-center justify-items-center grid w-full lg:ml-8`
-const Center = tw.div`w-full flex grid justify-items-center mb-3`
+const Center = tw.div`w-full flex grid justify-items-center`
+const BreadcrumbContainer = tw.div`lg:w-2/3 w-full flex mb-3 text-gray-700 hover:text-blue-600 dark:text-gray-400 dark:hover:text-white`
 
 
 export default () => {
@@ -50,7 +52,6 @@ export default () => {
     }
 
     function PoolingTab() {
-        console.log(protocolHooks.tabs);
         if (protocolHooks.tabs.find(element => element.name === 'Pooling' && element.selected === true)) {
             return <>
                 {
@@ -85,6 +86,19 @@ export default () => {
     } else {
         return (
             <>
+
+                <Wrapper>
+                    <BreadcrumbContainer>
+                        <MyBreadcrumbs>
+                            <Link underline="hover" color="inherit" href={'/protocols'}>
+                                Protocols
+                            </Link>
+                            <Link  underline="hover"  color={"inherit"} href={`/protocols/${protocol.slug}`}>
+                                {protocol.name}
+                            </Link>
+                        </MyBreadcrumbs>
+                    </BreadcrumbContainer>
+                </Wrapper>
                 <Wrapper>
                     <CenteredBorder>
                         <LeftColumn>
@@ -146,13 +160,13 @@ export default () => {
                 </Wrapper>
 
                 <Wrapper>
-                    <Center>
+                    <div tw="lg:w-2/3">
                         <Navbar items={
                             protocolHooks.tabs
                         }/>
-                    </Center>
-
+                    </div>
                 </Wrapper>
+
 
                 <FarmingTab/>
                 <PoolingTab/>

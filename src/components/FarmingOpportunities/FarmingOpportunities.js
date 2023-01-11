@@ -3,8 +3,6 @@ import SearchField from "../Search/SearchField";
 import tw from 'twin.macro';
 import {Button} from "@mui/material";
 import AssetTable from "../AssetTable/AssetTable";
-import {useHistory} from "react-router-dom";
-import PrimaryButton from "../Button/PrimaryButton";
 
 const Center = tw.div`w-full grid justify-items-center`
 const Container = tw.div`px-4 bg-white shadow-lg rounded-sm border border-gray-200 w-full lg:w-2/3 my-4 py-4`

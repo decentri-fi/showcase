@@ -1,17 +1,15 @@
 import React, {useEffect, useState} from "react";
 import SearchField from "../Search/SearchField";
-import {Pagination} from "../Pagination/Pagination";
 import tw from 'twin.macro';
-import FarmingRow from "./FarmingRow";
 import {Button} from "@mui/material";
-
-const ListContainer = tw.div`flex grid justify-items-center w-full bg-white mb-4`
-const List = tw.ul`flex flex-col w-full `
+import AssetTable from "../AssetTable/AssetTable";
+import {useHistory} from "react-router-dom";
+import PrimaryButton from "../Button/PrimaryButton";
 
 const Center = tw.div`w-full grid justify-items-center`
-const Container = tw.div`bg-white shadow-lg rounded-sm border border-gray-200 w-full lg:w-2/3 my-4 py-4`
-const Header = tw.div`px-5 py-4 border-b border-gray-100 font-semibold text-gray-800`
-const NetworkContainer = tw.div`px-5`
+const Container = tw.div`px-4 bg-white shadow-lg rounded-sm border border-gray-200 w-full lg:w-2/3 my-4 py-4`
+const Header = tw.div`py-4 border-b border-gray-100 font-semibold text-gray-800`
+const NetworkContainer = tw.div``
 const ButtonWrapper = tw.span`px-1`
 
 
@@ -20,7 +18,6 @@ export default function FarmingOpportunities({farmingOpportunities}) {
     const [searchFilter, setSearchFilter] = useState(null)
     const [networkFilter, setNetworkFilter] = useState([])
     const [networkButtons, setNetworkButtons] = useState([]);
-
 
     const networks = Array.from(
         new Set(
@@ -67,7 +64,7 @@ export default function FarmingOpportunities({farmingOpportunities}) {
         setNetworkButtons(buttons);
     }, [networkFilter]);
 
-    const rows = farmingOpportunities.filter(row => {
+    let opportunities = farmingOpportunities.filter(row => {
         if (searchFilter !== null && searchFilter.length > 0) {
             return row.stakedToken.name.toLowerCase().includes(searchFilter.toString().toLowerCase());
         } else {
@@ -77,10 +74,19 @@ export default function FarmingOpportunities({farmingOpportunities}) {
         return (networkFilter.includes(row.network.name))
     }).sort((row1, row2) => {
         return row2.marketSize - row1.marketSize
-    }).map((row, i) => {
-        return (
-            <FarmingRow key={i} farmingElement={row}/>
-        )
+    });
+
+    const entries = opportunities.map(element => {
+        return {
+            symbol: element.stakedToken.symbol,
+            detailUrl: `/staking/${element.network.name}/${element.protocol.slug}/${element.id}`,
+            name: element.name,
+            amount: element.amount,
+            apr: element.apr,
+            logo: element.protocol.logo,
+            networkLogo: element.network.logo,
+            dollarValue: element.marketSize,
+        }
     })
 
 
@@ -88,35 +94,26 @@ export default function FarmingOpportunities({farmingOpportunities}) {
         setSearchFilter(e.target.value)
     }
 
-    const {
-        pagination,
-        elements
-    } = Pagination(rows);
-
-    if (farmingOpportunities.length > 0) {
-        return (
+    return (
+        <>
             <Center>
                 <Container>
-                    <Header><h2>Farming Opportunities</h2></Header>
-                    <NetworkContainer>{networkButtons}</NetworkContainer>
-                    <Center>
-                        <SearchField onChange={search} onClick={e => console.log(e)}/>
-                    </Center>
-
-                    <ListContainer>
-                        <List>
-                            {elements}
-                        </List>
-                    </ListContainer>
-                    <Center>
-                        <div>
-                            {pagination}
-                        </div>
-                    </Center>
+                    <AssetTable
+                        usePagination={true}
+                        showPlaceholder={true}
+                        entries={entries}
+                        header={
+                            <>
+                                <Header><h2>Farming Opportunities</h2></Header>
+                                <NetworkContainer>{networkButtons}</NetworkContainer>
+                                <Center>
+                                    <SearchField onChange={search} onClick={e => console.log(e)}/>
+                                </Center>
+                            </>
+                        }
+                    />
                 </Container>
             </Center>
-        );
-    } else {
-        return <></>
-    }
+        </>
+    );
 }

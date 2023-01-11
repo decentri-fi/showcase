@@ -13,6 +13,9 @@ export default function useProtocolView() {
     const [poolingOpportunities, setPoolingOpportunities] = useState([]);
     const [farmingOpportunities, setFarmingOpportunities] = useState([]);
     const [lendingOpportunities, setLendingOpportunities] = useState([]);
+    const [scannedFarmingOpportunities, setScannedFarmingOpportunities] = useState(false);
+    const [scannedLendingOpportunities, setScannedLendingOpportunities] = useState(false);
+    const [scannedPoolingOpportunities, setScannedPoolingOpportunities] = useState(false);
 
     useEffect(() => {
         async function fetchData() {
@@ -35,6 +38,7 @@ export default function useProtocolView() {
                         return [...prevState]
                     })
                 }
+                setScannedPoolingOpportunities(true);
             })
         }
     }
@@ -49,6 +53,7 @@ export default function useProtocolView() {
                         return [...prevState]
                     })
                 }
+                setScannedLendingOpportunities(true);
             })
         }
     }
@@ -63,6 +68,7 @@ export default function useProtocolView() {
                         return [...prevState]
                     })
                 }
+                setScannedFarmingOpportunities(true);
             })
         }
     }
@@ -75,8 +81,18 @@ export default function useProtocolView() {
 
     return {
         protocol,
+        scannedFarmingOpportunities,
+        scannedLendingOpportunities,
+        scannedPoolingOpportunities,
         poolingOpportunities,
         farmingOpportunities,
-        lendingOpportunities
+        lendingOpportunities,
+        networks:  Array.from(
+            new Set(
+                (farmingOpportunities.concat(poolingOpportunities)).map((opportunity) => {
+                    return opportunity.network.name
+                })
+            )
+        )
     }
 }

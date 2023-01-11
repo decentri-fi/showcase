@@ -6,6 +6,7 @@ import tw from 'twin.macro';
 import PlaceholderLoading from "react-placeholder-loading";
 import {Subheading} from "../../../../components/misc/Headings";
 import SadWhalePic from "../../../../images/sad_whale.png";
+import {useHistory} from "react-router-dom";
 
 
 const CenterImage = tw.div`w-full flex justify-center my-2`
@@ -53,8 +54,14 @@ function Protocols({dashboardHooks}) {
 }
 
 function ProtocolElement({protocol}) {
+    const history = useHistory();
+
     return (
-        <FullRow>
+        <FullRow onClick={
+            () => {
+                history.push(`/protocols/${protocol.slug}`)
+            }
+        }>
             <DetailCard title={protocol.name}
                         centerHtml={<DollarLabel amount={protocol.totalDollarValue}/>}
                         icon={

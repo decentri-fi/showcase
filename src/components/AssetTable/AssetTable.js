@@ -6,6 +6,7 @@ import NumberFormat from "react-number-format";
 import APYLabel from "../Label/APYLabel";
 import DollarLabel from "../Label/DollarLabel";
 import PlaceholderLoading from "react-placeholder-loading";
+import {Pagination} from "../Pagination/Pagination";
 
 const Container = tw.div`w-full my-4`
 
@@ -13,7 +14,7 @@ const ListContainer = tw.div`flex flex-col w-full mx-auto items-center justify-c
 const List = tw.ul`flex flex-col w-full`
 
 const ListItem = tw.li`flex flex-row`
-const Row = tw.div`select-none cursor-pointer flex flex-1 items-center py-2 border-b`
+const Row = tw.div`select-none cursor-pointer flex flex-1 items-center py-2 border-b hover:bg-indigo-100`
 const IconColumn = tw.div`flex flex-col w-1/12 justify-center items-center mr-4 lg:block`;
 const IconBlock = tw.div`block relative`
 const FallbackImageContainer = tw.div`flex flex-nowrap`
@@ -33,6 +34,8 @@ const Hidden = tw.span`hidden lg:block`
 
 const ActionButton = tw.div`ml-4`
 
+const PaginationSection = tw.div`mt-4 flex flex-row justify-center w-full`
+const Center = tw.div`flex`
 
 function DummyList() {
     return (
@@ -44,24 +47,45 @@ function DummyList() {
     )
 }
 
-export default function ({entries = [], header, showPlaceholder = false}) {
+
+export default function ({entries = [], header, showPlaceholder = false, usePagination = false}) {
+    let filteredEntries = entries;
+    let pagination = null;
+
+    if (usePagination) {
+        const {
+            pagination: paginationSection,
+            elements
+        } = Pagination(entries);
+        filteredEntries = elements;
+        pagination = paginationSection;
+    }
 
     const list = () => {
         if (entries.length === 0 && showPlaceholder) {
             return <DummyList/>
         } else {
             return (
-                <ListContainer>
-                    <List>
-                        {
-                            entries.map((entry) => {
-                                return (
-                                    <ListEntry key={Math.random().toString(36).substring(7)} entry={entry}/>
-                                )
-                            })
-                        }
-                    </List>
-                </ListContainer>
+                <>
+                    <ListContainer>
+                        <List>
+                            {
+                                filteredEntries.map((entry) => {
+                                    return (
+                                        <ListEntry key={Math.random().toString(36).substring(7)} entry={entry}/>
+                                    )
+                                })
+                            }
+                        </List>
+
+                    </ListContainer>
+                    <PaginationSection>
+                        <Center>
+                            {pagination}
+                        </Center>
+                    </PaginationSection>
+                </>
+
             )
         }
     };
@@ -71,7 +95,6 @@ export default function ({entries = [], header, showPlaceholder = false}) {
             {header}
             {list()}
         </Container>
-
     );
 };
 

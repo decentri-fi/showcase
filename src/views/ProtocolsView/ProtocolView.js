@@ -28,7 +28,6 @@ const PortfolioValueContainer = tw.div`bg-gray-200 p-4 flex flex-col rounded-xl 
 const RefreshContainer = tw.div`text-3xl font-bold flex flex-col lg:flex-row`;
 const PortfolioTitle = tw.span`text-center lg:text-left`
 const HorizontalCenter = tw.div`pl-1 flex items-center justify-items-center grid w-full lg:ml-8`
-const Center = tw.div`w-full flex grid justify-items-center`
 const BreadcrumbContainer = tw.div`lg:w-2/3 w-full flex mb-3 text-gray-700 hover:text-blue-600 dark:text-gray-400 dark:hover:text-white`
 
 
@@ -38,7 +37,7 @@ export default () => {
     let protocol = protocolHooks.protocol;
 
     function LendingTab() {
-        if (protocolHooks.tabs.find(element => element.name === 'Lending' && element.selected === true)) {
+        if (protocolHooks.tabs.find(element => element.id === 'Lending' && element.selected === true)) {
             return <>
                 {
                     (!protocolHooks.scannedLendingOpportunities || protocolHooks.lendingOpportunities.length > 0) &&
@@ -52,7 +51,7 @@ export default () => {
     }
 
     function PoolingTab() {
-        if (protocolHooks.tabs.find(element => element.name === 'Pooling' && element.selected === true)) {
+        if (protocolHooks.tabs.find(element => element.id === 'Pooling' && element.selected === true)) {
             return <>
                 {
                     (!protocolHooks.scannedPoolingOpportunities || protocolHooks.poolingOpportunities.length > 0) &&
@@ -66,7 +65,7 @@ export default () => {
     }
 
     function FarmingTab() {
-        if (protocolHooks.tabs.find(element => element.name === 'Farming' && element.selected === true)) {
+        if (protocolHooks.tabs.find(element => element.id === 'Farming' && element.selected === true)) {
             return (
                 <>
                     {

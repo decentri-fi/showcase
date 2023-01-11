@@ -22,7 +22,7 @@ export default function useProtocolView() {
     function setActiveTab(tabName) {
         setTabs((prevState) => {
             return prevState.map((tab) => {
-                tab.selected = tab.name === tabName;
+                tab.selected = tab.id === tabName;
                 return tab;
             });
         });
@@ -31,18 +31,24 @@ export default function useProtocolView() {
     useEffect(() => {
         let t = [];
         if (poolingOpportunities.length > 0) {
-            t.push({name: 'Pooling', selected: true, onClick: () => setActiveTab('Pooling')});
+            t.push({
+                id: 'Pooling',
+                name: `Pooling (${poolingOpportunities.length})`, selected: true,
+                onClick: () => setActiveTab('Pooling')
+            });
         }
         if (lendingOpportunities.length > 0) {
             t.push({
-                name: 'Lending', onClick: (() => {
+                id: `Lending`,
+                name: `Lending (${lendingOpportunities.length})`, onClick: (() => {
                     setActiveTab('Lending')
                 })
             });
         }
         if (farmingOpportunities.length > 0) {
             t.push({
-                name: 'Farming', onClick: (() => {
+                id: 'Farming',
+                name: `Farming (${farmingOpportunities.length})`, onClick: (() => {
                     setActiveTab('Farming')
                 })
             });

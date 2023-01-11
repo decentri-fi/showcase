@@ -5,18 +5,15 @@ import FallbackImage from "../Image/FallbackImage";
 import NumberFormat from "react-number-format";
 import APYLabel from "../Label/APYLabel";
 import DollarLabel from "../Label/DollarLabel";
+import PlaceholderLoading from "react-placeholder-loading";
 
 const Container = tw.div`w-full my-4`
-const Header = tw.div`w-full flex items-center mb-2`
-const HeaderTextContainer = tw.div`lg:w-3/12 w-full`
-const HeaderText = tw.h3`shadow px-4 py-1 text-sm font-medium mb-2 bg-indigo-600 rounded-r  text-white`
-const BalanceText = tw.div`w-9/12 text-right`
 
 const ListContainer = tw.div`flex flex-col w-full mx-auto items-center justify-center bg-white dark:bg-gray-800`
 const List = tw.ul`flex flex-col w-full`
 
 const ListItem = tw.li`flex flex-row`
-const Row = tw.div`select-none cursor-pointer flex flex-1 items-center px-3 py-2 border-b`
+const Row = tw.div`select-none cursor-pointer flex flex-1 items-center py-2 border-b`
 const IconColumn = tw.div`flex flex-col w-1/12 justify-center items-center mr-4 lg:block`;
 const IconBlock = tw.div`block relative`
 const FallbackImageContainer = tw.div`flex flex-nowrap`
@@ -30,26 +27,49 @@ const TwoColumns = tw.div`grid grid-cols-2`
 const ThinGreen = tw.span`text-green-500 font-thin`
 
 const TotalColumn = tw.div`text-sm text-left text-gray-600 dark:text-gray-200 w-1/3 lg:w-1/5 justify-items-end grid`
-const PullRight = tw.div`flex flex-col grid justify-items-end`
+const PullRight = tw.div`flex items-center justify-items-end`
 const Bold = tw.span`font-bold text-sm`
 const Hidden = tw.span`hidden lg:block`
 
+const ActionButton = tw.div`ml-4`
 
-export default function ({entries = [], header}) {
+
+function DummyList() {
+    return (
+        <ListContainer>
+            <List>
+                <DummyRow key={1}/>
+            </List>
+        </ListContainer>
+    )
+}
+
+export default function ({entries = [], header, showPlaceholder = false}) {
+
+    const list = () => {
+        if (entries.length === 0 && showPlaceholder) {
+            return <DummyList/>
+        } else {
+            return (
+                <ListContainer>
+                    <List>
+                        {
+                            entries.map((entry) => {
+                                return (
+                                    <ListEntry key={Math.random().toString(36).substring(7)} entry={entry}/>
+                                )
+                            })
+                        }
+                    </List>
+                </ListContainer>
+            )
+        }
+    };
+
     return (
         <Container>
             {header}
-            <ListContainer>
-                <List>
-                    {
-                        entries.map((entry) => {
-                            return (
-                                <ListEntry key={Math.random().toString(36).substring(7)} entry={entry}/>
-                            )
-                        })
-                    }
-                </List>
-            </ListContainer>
+            {list()}
         </Container>
 
     );
@@ -99,12 +119,56 @@ function ListEntry({entry}) {
                 </AmountColumn>
                 <TotalColumn>
                     <PullRight>
+
                         <Bold>
                             <DollarLabel amount={entry.dollarValue}/>
                         </Bold>
+                        <ActionButton>
+                            {
+                                entry.actionButton &&
+                                entry['actionButton']
+                            }
+                        </ActionButton>
                     </PullRight>
                 </TotalColumn>
             </Row>
         </ListItem>
     )
+}
+
+function DummyRow() {
+    return (
+        <ListItem>
+            <Row>
+                <IconColumn>
+                    <IconBlock>
+                        <FallbackImageContainer>
+                            <Image>
+                                <PlaceholderLoading width={30} height={30} shape={"circle"}/>
+                            </Image>
+                        </FallbackImageContainer>
+                    </IconBlock>
+                </IconColumn>
+                <NameColumn>
+                    <PlaceholderLoading width={50} height={10} shape={"rect"}/>
+                </NameColumn>
+                <AmountColumn>
+                    <TwoColumns>
+                        <div>
+                            <PlaceholderLoading width={50} height={10} shape={"rect"}/>
+                        </div>
+                        <ThinGreen>
+                            <PlaceholderLoading width={50} height={10} shape={"rect"}/>
+                        </ThinGreen>
+                    </TwoColumns>
+                </AmountColumn>
+                <TotalColumn>
+                    <PullRight>
+                        <Bold>
+                        </Bold>
+                    </PullRight>
+                </TotalColumn>
+            </Row>
+        </ListItem>
+    );
 }

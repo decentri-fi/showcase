@@ -6,7 +6,6 @@ export default function useDashboardClaimableHooks(account, protocols, supportsC
     setDoneScanning
 }) {
     const [claimables, setClaimables] = useState([])
-    const [protocolsToScan, setProtocolstoScan] = useState([])
 
     function refresh() {
         localStorage.setItem(`claimable-elements-${account}`, null);
@@ -14,22 +13,15 @@ export default function useDashboardClaimableHooks(account, protocols, supportsC
         init();
     }
 
-    useEffect(() => {
-        console.log('protocols to scan: ', protocolsToScan);
-    }, [protocolsToScan])
-
-    function removeFromToScan(protocol) {
-        console.log('removing from to scan: ', protocol);
-        setProtocolstoScan((prev) => {
-            prev = prev.filter(element => element.slug != protocol.slug)
-            localStorage.setItem(`claimables-to-scan-${account}`, JSON.stringify(prev));
-            return [...prev]
-        });
+    function scanned(protocol) {
+        const scannedClaimables = JSON.parse(localStorage.getItem(`scanned-claimables-${account}`)) || [];
+        scannedClaimables.push(protocol.slug)
+        localStorage.setItem(`scanned-claimables-${account}`, JSON.stringify(scannedClaimables));
     }
 
 
     function init() {
-        const loadData = async () => {
+        const loadData = async (protocolsToScan) => {
             if (protocolsToScan.length > 0) {
                 console.log('still got protocols to scan: ', protocolsToScan.length);
                 setTotalScanning(prevTotalScanning => {
@@ -40,7 +32,7 @@ export default function useDashboardClaimableHooks(account, protocols, supportsC
                         setDoneScanning(prevState => {
                             return prevState + 1
                         });
-                        removeFromToScan(protocol);
+                        scanned(protocol);
                         if (retClaimable.length > 0) {
                             for (const claimable of retClaimable) {
                                 setClaimables(prevState => {
@@ -61,26 +53,28 @@ export default function useDashboardClaimableHooks(account, protocols, supportsC
         };
 
         if (supportsClaimables && account !== undefined) {
-
             const savedOne = JSON.parse(localStorage.getItem(`claimable-elements-${account}`));
             if (savedOne !== null) {
                 setClaimables(savedOne);
             }
 
-            let storedScannedProtocols = localStorage.getItem(`claimables-to-scan-${account}`);
-            if (storedScannedProtocols != null) {
-                console.log('stored wasnt null', storedScannedProtocols)
-                setProtocolstoScan(JSON.parse(storedScannedProtocols));
-            } else {
-                if (protocols.length > 0) {
-                    setProtocolstoScan(protocols);
-                }
-            }
+            const protocolsToScan = getProtocolsToScan();
 
             if (protocolsToScan.length > 0) {
-                loadData();
+                loadData(protocolsToScan);
             }
         }
+    }
+
+    function getProtocolsToScan() {
+        let protocolsToScan = protocols;
+        let storedScannedProtocols = JSON.parse(localStorage.getItem(`scanned-claimables-${account}`)) || [];
+        if (storedScannedProtocols != null) {
+            protocolsToScan = protocolsToScan.filter(element => {
+                return !storedScannedProtocols.includes(element.slug);
+            })
+        }
+        return protocolsToScan;
     }
 
     useEffect(() => {
@@ -90,6 +84,6 @@ export default function useDashboardClaimableHooks(account, protocols, supportsC
     return {
         claimables,
         refresh,
-        loading: protocolsToScan.length > 0
+        loading: getProtocolsToScan().length > 0
     }
 }

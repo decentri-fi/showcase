@@ -3,6 +3,7 @@ import SearchField from "../Search/SearchField";
 import tw from "twin.macro";
 import {Button} from "@mui/material";
 import AssetTable from "../AssetTable/AssetTable";
+import FallbackImage from "../Image/FallbackImage";
 
 const Center = tw.div`w-full grid justify-items-center`
 const Container = tw.div`px-4 bg-white shadow-lg rounded-sm border border-gray-200 w-full lg:w-2/3 my-4 py-4`
@@ -10,7 +11,7 @@ const Header = tw.div`px-5 py-4 border-b border-gray-100 font-semibold text-gray
 const NetworkContainer = tw.div``
 const ButtonWrapper = tw.span`px-1`
 
-export default({poolingOpportunities, title = "Pooling Opportunities"}) => {
+export default ({poolingOpportunities, title = "Pooling Opportunities"}) => {
 
     const [searchFilter, setSearchFilter] = useState(null)
     const [networkFilter, setNetworkFilter] = useState([])
@@ -23,6 +24,12 @@ export default({poolingOpportunities, title = "Pooling Opportunities"}) => {
             })
         )
     );
+
+    function getLogo(networkName) {
+        return poolingOpportunities.find((opportunity) => {
+            return opportunity.network.name === networkName
+        }).network.logo
+    }
 
     useEffect(() => {
         networks.forEach((network) => {
@@ -54,9 +61,13 @@ export default({poolingOpportunities, title = "Pooling Opportunities"}) => {
 
             return (
                 <ButtonWrapper>
-                    <Button onClick={onClick} variant={getVariant()} color={"success"}>{network}</Button>
+                    <Button onClick={onClick} variant={getVariant()} color={"success"}>
+                        <div tw="w-5 h-5 mr-2">
+                            <FallbackImage src={getLogo(network)}/>
+                        </div>
+                        {network}</Button>
                 </ButtonWrapper>
-            )
+            );
         })
         setNetworkButtons(buttons);
     }, [networkFilter]);
@@ -70,8 +81,8 @@ export default({poolingOpportunities, title = "Pooling Opportunities"}) => {
             return true;
         }
     }).filter((row) => {
-            return (networkFilter.includes(row.network.name))
-        }).sort((row1, row2) => {
+        return (networkFilter.includes(row.network.name))
+    }).sort((row1, row2) => {
         return row2.marketSize - row1.marketSize
     }).map(element => {
         return {

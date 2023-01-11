@@ -32,6 +32,7 @@ const Percentage = tw.div`h-full text-center text-xs text-white bg-purple-500 ro
 const HorizontalCenter = tw.div`pl-1 flex items-center justify-items-center grid w-full lg:ml-8`
 const PortfolioTitle = tw.span`text-center lg:text-left`
 
+const Synced = tw.span`mr-5`
 
 export default function DashboardHeader({dashboardHooks}) {
 
@@ -110,8 +111,8 @@ export default function DashboardHeader({dashboardHooks}) {
                                                                 stroke="#47ffa9" strokeWidth="1.2"></circle>
                                                     </g>
                                                 </svg>
-                                                Synced
-                                                <svg tw={"ml-5"} fill="#ffffff" height="8px" width="8px" version="1.1"
+                                                <Synced>Synced</Synced>
+                                                <svg fill="#ffffff" height="8px" width="8px" version="1.1"
                                                      id="Capa_1" viewBox="0 0 489.645 489.645">
                                                     <g id="SVGRepo_bgCarrier" strokeWidth="0"></g>
                                                     <g id="SVGRepo_tracerCarrier" strokeLinecap="round"

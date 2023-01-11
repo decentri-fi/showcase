@@ -3,6 +3,7 @@ import SearchField from "../Search/SearchField";
 import tw from 'twin.macro';
 import {Button} from "@mui/material";
 import AssetTable from "../AssetTable/AssetTable";
+import FallbackImage from "../Image/FallbackImage";
 
 const Center = tw.div`w-full grid justify-items-center`
 const Container = tw.div`px-4 bg-white shadow-lg rounded-sm border border-gray-200 w-full lg:w-2/3 my-4 py-4`
@@ -36,6 +37,12 @@ export default function FarmingOpportunities({farmingOpportunities}) {
         })
     }, [farmingOpportunities])
 
+    function getLogo(networkName) {
+        return farmingOpportunities.find((opportunity) => {
+            return opportunity.network.name === networkName
+        }).network.logo
+    }
+
     useEffect(() => {
         const buttons = networks.map((network) => {
             const onClick = () => {
@@ -55,7 +62,11 @@ export default function FarmingOpportunities({farmingOpportunities}) {
 
             return (
                 <ButtonWrapper>
-                    <Button onClick={onClick} variant={getVariant()} color={"success"}>{network}</Button>
+                    <Button onClick={onClick} variant={getVariant()} color={"success"}>
+                        <div tw="w-5 h-5 mr-2">
+                            <FallbackImage src={getLogo(network)}/>
+                        </div>
+                        {network}</Button>
                 </ButtonWrapper>
             )
         })

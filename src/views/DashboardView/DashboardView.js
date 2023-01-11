@@ -48,7 +48,7 @@ export default function DashboardView({dashboardHooks}) {
                             selected: false,
                             url: '/claimables',
                             onClick: () => {
-                                history.push('/claimables');
+                                history.push(`/${dashboardHooks.address}/claimables`);
                             }
                         }
                     ]

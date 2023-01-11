@@ -63,7 +63,7 @@ export default function ClaimableView({dashboardHooks}) {
                             selected: false,
                             url: '/dashboard',
                             onClick() {
-                                history.push('/dashboard')
+                                history.push(`/${dashboardHooks.address}/profile`)
                             }
                         },
                         {

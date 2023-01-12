@@ -75,7 +75,7 @@ export default function LendingOpportunities({lendingOpportunities}) {
     const entries = opportunities.map(element => {
         return {
             symbol: element.symbol,
-            detailUrl: `#`,
+            detailUrl: null,
             name: element.name,
             amount: element.amount,
             apr: element.apr,

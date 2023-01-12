@@ -9,7 +9,7 @@ const Center = tw.div`w-full grid justify-items-center`
 const Container = tw.div`px-4 bg-white shadow-lg rounded-sm border border-gray-200 w-full lg:w-2/3 my-4 py-4`
 const Header = tw.div`py-4 border-b border-gray-100 font-semibold text-gray-800`
 const NetworkContainer = tw.div``
-const ButtonWrapper = tw.span`px-1`
+const ButtonWrapper = tw.span`px-1 items-center`
 
 
 export default function FarmingOpportunities({farmingOpportunities}) {
@@ -63,7 +63,7 @@ export default function FarmingOpportunities({farmingOpportunities}) {
             return (
                 <ButtonWrapper>
                     <Button onClick={onClick} variant={getVariant()} color={"success"}>
-                        <div tw="w-5 h-5 mr-2">
+                        <div tw="w-3 h-3 mr-2">
                             <FallbackImage src={getLogo(network)}/>
                         </div>
                         {network}</Button>
@@ -88,7 +88,7 @@ export default function FarmingOpportunities({farmingOpportunities}) {
     const entries = opportunities.map(element => {
         return {
             symbol: element.stakedToken.symbol,
-            detailUrl: `/staking/${element.network.name}/${element.protocol.slug}/${element.id}`,
+            detailUrl: /*`/staking/${element.network.name}/${element.protocol.slug}/${element.id}` */ null,
             name: element.name,
             amount: element.amount,
             apr: element.apr,

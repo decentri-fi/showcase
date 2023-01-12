@@ -3,6 +3,7 @@ import {ReactComponent as WebsiteIcon} from "../../images/globe.svg";
 import {ReactComponent as ArrowIcon} from "../../images/arrow-right-icon.svg";
 import ProtocolsThreeColGrid from "../../components/cards/ProtocolsThreeColGrid";
 import useProtocolsviewHooks from "./hooks/protocolsview-hooks";
+import SearchField from "../../components/Search/SearchField";
 
 export default function ProtocolsView() {
 

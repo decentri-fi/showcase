@@ -107,7 +107,7 @@ export default function CustomHeader({onAddressChange, expanded = false, showUse
             <NavLink onClick={e => {
                 history.push('/dashboard');
             }}>
-                Profile
+                Dashboard
             </NavLink>
             <NavLink onClick={e => {
                 history.push('/protocols');

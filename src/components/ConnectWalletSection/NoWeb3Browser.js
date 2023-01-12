@@ -5,6 +5,7 @@ import {SectionHeading, Subheading as SubheadingBase} from "components/misc/Head
 import {PrimaryButton as PrimaryButtonBase} from "components/misc/Buttons.js";
 import StatsIllustrationSrc from "images/stats-illustration.svg";
 import {ReactComponent as SvgDotPattern} from "images/dot-pattern.svg";
+import PopularProtocols from "../PopularProtocols/PopularProtocols";
 
 const Container = tw.div`w-full grid justify-items-center`;
 const TwoColumn = tw.div`flex flex-col md:flex-row justify-between max-w-screen-xl mx-8 pb-12  md:py-24`;
@@ -52,7 +53,7 @@ export default function NoWeb3Browser({
                         <Heading>No web3 browser detected.</Heading>
                         <Description>
                             It would appear your browser doesn't support web3. That's alright!
-                            To fully appreciate this showcase, connect your wallet using a web3-enabled browser.
+                            To fully appreciate this dashboard, connect your wallet using a web3-enabled browser.
                         </Description>
                     </TextContent>
                 </TextColumn>

@@ -87,7 +87,7 @@ export default ({poolingOpportunities, title = "Pooling Opportunities"}) => {
     }).map(element => {
         return {
             symbol: element.symbol,
-            detailUrl: `/pooling/${element.network.name}/${element.protocol.slug}/${element.id}`,
+            detailUrl: /* `/pooling/${element.network.name}/${element.protocol.slug}/${element.id}` */ null,
             name: element.name,
             amount: element.amount,
             apr: element.apr,

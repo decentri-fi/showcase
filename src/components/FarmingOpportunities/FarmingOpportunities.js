@@ -11,6 +11,7 @@ const Header = tw.div`py-4 border-b border-gray-100 font-semibold text-gray-800`
 const NetworkContainer = tw.div``
 const ButtonWrapper = tw.span`px-1 items-center`
 
+const ButtonIcon = tw.div`w-3 h-3 mr-2`
 
 export default function FarmingOpportunities({farmingOpportunities}) {
 
@@ -63,9 +64,9 @@ export default function FarmingOpportunities({farmingOpportunities}) {
             return (
                 <ButtonWrapper>
                     <Button onClick={onClick} variant={getVariant()} color={"success"}>
-                        <div tw="w-3 h-3 mr-2">
+                        <ButtonIcon>
                             <FallbackImage src={getLogo(network)}/>
-                        </div>
+                        </ButtonIcon>
                         {network}</Button>
                 </ButtonWrapper>
             )

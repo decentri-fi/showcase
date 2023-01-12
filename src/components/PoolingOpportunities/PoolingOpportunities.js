@@ -11,6 +11,9 @@ const Header = tw.div`px-5 py-4 border-b border-gray-100 font-semibold text-gray
 const NetworkContainer = tw.div``
 const ButtonWrapper = tw.span`px-1`
 
+const ButtonIcon = tw.div`w-3 h-3 mr-2`
+
+
 export default ({poolingOpportunities, title = "Pooling Opportunities"}) => {
 
     const [searchFilter, setSearchFilter] = useState(null)
@@ -62,9 +65,9 @@ export default ({poolingOpportunities, title = "Pooling Opportunities"}) => {
             return (
                 <ButtonWrapper>
                     <Button onClick={onClick} variant={getVariant()} color={"success"}>
-                        <div tw="w-5 h-5 mr-2">
+                        <ButtonIcon>
                             <FallbackImage src={getLogo(network)}/>
-                        </div>
+                        </ButtonIcon>
                         {network}</Button>
                 </ButtonWrapper>
             );

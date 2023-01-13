@@ -2,7 +2,12 @@ import axios from "axios";
 import defitrack from "@defitrack/js-client";
 
 export const poolingPositions = async (address, protocol) => {
-    return await defitrack.pooling().positions(protocol.slug, address)
+    try {
+        return await defitrack.pooling().positions(protocol.slug, address)
+    } catch (ex) {
+        console.log(`unable to fetch pooling positions for ${protocol.slug} for address ${address}`);
+        return [];
+    }
 }
 
 export const fetchPoolingMarketsForToken = async (network, protocol, address) => {

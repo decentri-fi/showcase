@@ -2,7 +2,12 @@ import axios from "axios";
 import defitrack from "@defitrack/js-client";
 
 export const farmingPositions = async (address, protocol) => {
-    return await defitrack.farming().positions(protocol.slug, address);
+    try {
+        return await defitrack.farming().positions(protocol.slug, address);
+    } catch (ex) {
+        console.log(`unable to fetch farming positions for ${protocol.slug} for address ${address}`);
+        return [];
+    }
 }
 
 export const fetchStakingById = async (address, protocol, network, id) => {

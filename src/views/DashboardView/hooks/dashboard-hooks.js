@@ -31,7 +31,10 @@ export default function
 
     const {protocols} = useDashboardProtocolHooks();
     const {networks} = useDashboardNetworkHooks();
-    const {balanceElements, refresh: refreshWallet} = useDashboardWalletHooks(currentAccount, networks, supportsBalances);
+    const {
+        balanceElements,
+        refresh: refreshWallet
+    } = useDashboardWalletHooks(currentAccount, networks, supportsBalances);
     const {
         setDoneScanning,
         doneScanning,
@@ -39,14 +42,30 @@ export default function
         totalScanning
     } = useDashboardScanningProgressHooks();
 
-    const {stakings, refresh: refreshStakings} = useDashboardStakingHooks(currentAccount, protocols, supportsStaking, {setTotalScanning, setDoneScanning});
-    const {lendings, refresh: refreshLendings} = useDashboardLendingHooks(currentAccount, protocols, supportsLending, {setTotalScanning, setDoneScanning});
-    const {claimables, refresh: refreshClaimables, loading: claimableLoading} = useDashboardClaimableHooks(currentAccount, protocols, supportsClaimables, {
+    const {
+        stakings,
+        refresh: refreshStakings
+    } = useDashboardStakingHooks(currentAccount, protocols, supportsStaking, {setTotalScanning, setDoneScanning});
+    const {
+        lendings,
+        refresh: refreshLendings
+    } = useDashboardLendingHooks(currentAccount, protocols, supportsLending, {setTotalScanning, setDoneScanning});
+    const {
+        claimables,
+        refresh: refreshClaimables,
+        loading: claimableLoading
+    } = useDashboardClaimableHooks(currentAccount, protocols, supportsClaimables, {
         setTotalScanning,
         setDoneScanning
     });
-    const {borrowings, refresh: refreshBorrowings} = useDashboardBorrowingHooks(currentAccount, protocols, supportsDebt,{setTotalScanning, setDoneScanning});
-    const {lps} = useDashboardLPHooks(currentAccount, protocols, supportsPooling, {setTotalScanning, setDoneScanning});
+    const {
+        borrowings,
+        refresh: refreshBorrowings
+    } = useDashboardBorrowingHooks(currentAccount, protocols, supportsDebt, {setTotalScanning, setDoneScanning});
+    const {
+        lps,
+        refresh: refreshLps
+    } = useDashboardLPHooks(currentAccount, protocols, supportsPooling, {setTotalScanning, setDoneScanning});
 
     function totalStaking(protocol) {
         if (stakings == null || stakings.length === 0) {
@@ -206,6 +225,7 @@ export default function
         refreshClaimables();
         refreshLendings();
         refreshBorrowings();
+        refreshLps();
     }
 
     return {

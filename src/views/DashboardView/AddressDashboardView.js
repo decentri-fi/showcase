@@ -10,12 +10,7 @@ export default function AddressDashboardView() {
     const address = params.user;
     const history = useHistory();
     const dashboardHooks = useDashboardHooks(address, {
-        supportsPooling: true,
-        supportsLending: true,
-        supportsStaking: true,
         supportsClaimables: false,
-        supportsBalances: true,
-        supportsDebt: true
     });
 
     const onAddressChange = (address) => {

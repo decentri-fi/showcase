@@ -14,6 +14,27 @@ export default function useDashboardLPHooks(account, protocols, supportsPooling,
         init();
     }
 
+    function updatePoolings(poolings) {
+        setDoneScanning(prevState => {
+            return prevState + 1
+        })
+        if (poolings.length > 0) {
+            for (const pooling of poolings) {
+                console.log('pooling', pooling)
+                setLps(prevState => {
+                    prevState.push(pooling);
+                    localStorage.setItem(`lp-elements-${account}`, JSON.stringify(prevState));
+                    return [...prevState];
+                });
+            }
+        } else {
+            setLps(prevState => {
+                localStorage.setItem(`lp-elements-${account}`, JSON.stringify(prevState));
+                return [...prevState];
+            });
+        }
+    }
+
     function init() {
         const loadData = async () => {
             if (protocols.length > 0) {
@@ -22,23 +43,7 @@ export default function useDashboardLPHooks(account, protocols, supportsPooling,
                 })
                 for (const protocol of protocols) {
                     poolingPositions(account, protocol).then(poolings => {
-                        setDoneScanning(prevState => {
-                            return prevState + 1
-                        })
-                        if (poolings.length > 0) {
-                            for (const pooling of poolings) {
-                                setLps(prevState => {
-                                    prevState.push(pooling);
-                                    localStorage.setItem(`lp-elements-${account}`, JSON.stringify(prevState));
-                                    return [...prevState];
-                                });
-                            }
-                        } else {
-                            setLps(prevState => {
-                                localStorage.setItem(`lp-elements-${account}`, JSON.stringify(prevState));
-                                return [...prevState];
-                            });
-                        }
+                        updatePoolings(poolings);
                     })
                 }
             }

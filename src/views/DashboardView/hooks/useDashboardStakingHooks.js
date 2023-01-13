@@ -14,6 +14,26 @@ export default function useDashboardStakingHooks(account, protocols, supportsSta
         init();
     }
 
+    function updateStakes(retStakings) {
+        setDoneScanning(prevState => {
+            return prevState + 1
+        })
+        if (retStakings.length > 0) {
+            for (const staking of retStakings) {
+                setStakings(prevState => {
+                    prevState.push(staking)
+                    localStorage.setItem(`staking-elements-${account}`, JSON.stringify(prevState));
+                    return [...prevState];
+                })
+            }
+        } else {
+            setStakings(prevState => {
+                localStorage.setItem(`staking-elements-${account}`, JSON.stringify(prevState));
+                return [...prevState]
+            })
+        }
+    }
+
     function init() {
         const loadData = async () => {
             if (protocols.length > 0) {
@@ -22,24 +42,8 @@ export default function useDashboardStakingHooks(account, protocols, supportsSta
                 })
                 for (const protocol of protocols) {
                     farmingPositions(account, protocol).then(retStakings => {
-                        setDoneScanning(prevState => {
-                            return prevState + 1
-                        })
-                        if (retStakings.length > 0) {
-                            for (const staking of retStakings) {
-                                setStakings(prevState => {
-                                    prevState.push(staking)
-                                    localStorage.setItem(`staking-elements-${account}`, JSON.stringify(prevState));
-                                    return [...prevState];
-                                })
-                            }
-                        } else {
-                            setStakings(prevState => {
-                                localStorage.setItem(`staking-elements-${account}`, JSON.stringify(prevState));
-                                return prevState
-                            })
-                        }
-                    })
+                        updateStakes(retStakings)
+                    });
                 }
             }
         }

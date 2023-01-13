@@ -120,7 +120,7 @@ export default function CustomHeader({onAddressChange, expanded = false, showUse
             <NavLink target="_blank" href="https://docs.decentri.fi">
                 Documentation
             </NavLink>
-            <NavLink target="_blank" href="https://blockwiz.org">
+            <NavLink target="_blank" href="https://learn.decentri.fi">
                 Learn
             </NavLink>
         </NavLinks>,

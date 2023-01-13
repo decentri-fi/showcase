@@ -172,7 +172,7 @@ function LendingContent({lendingMarkets, searchFilter, setSearchFilter, selected
                     <div className="flex items-end space-x-2 my-6">
                         <p className="text-sm text-black dark:text-white font-bold">
                             Lending out assets allows you to generate yield on your principal. <br/><a
-                            className="underline" href="https://blockwiz.org/todo">Learn how to invest single
+                            className="underline" href="https://learn.decentri.fi">Learn how to invest single
                             assets.</a>
                         </p>
                     </div>

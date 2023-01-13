@@ -37,7 +37,7 @@ export function Footer() {
                         <h4 tw="text-2xl font-semibold text-white my-4">Follow us</h4>
                         <ul tw="flex justify-center text-white font-thin">
                             <li tw="mx-4">
-                                <a tw="text-4xl " target="_blank" href="https://twitter.com/theblockwiz">
+                                <a tw="text-4xl " target="_blank" href="https://twitter.com/decentrifi">
                                     {/*<GrTwitter/>*/}
                                 </a>
                             </li>

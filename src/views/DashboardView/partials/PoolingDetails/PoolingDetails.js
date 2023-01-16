@@ -17,7 +17,8 @@ export default function PoolingDetails({protocol, dashboardHooks}) {
         return pooling.protocol.slug === protocol.slug
     }).map(element => {
         return {
-            detailUrl: `/pooling/${element.network.name}/${element.protocol.slug}/${element.id}`,
+            onClick: () => {
+            },
             name: element.name,
             amount: element.amount,
             apr: element.apr,

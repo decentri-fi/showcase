@@ -17,7 +17,8 @@ export default function BorrowingDetails({protocol, dashboardHooks}) {
     }).map(element => {
         return {
             symbol: '',
-            detailUrl: `#`,
+            onClick: () => {
+            },
             name: element.name,
             amount: element.amount,
             apr: element.rate,

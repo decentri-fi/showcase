@@ -100,12 +100,9 @@ export default function ({entries = [], header, showPlaceholder = false, usePagi
 
 function ListEntry({entry}) {
 
-    const history = useHistory();
 
     return (
-        <ListItem onClick={() => {
-            history.push(entry.detailUrl)
-        }}>
+        <ListItem onClick={entry.onClick}>
             <Row>
                 <IconColumn>
                     <IconBlock>

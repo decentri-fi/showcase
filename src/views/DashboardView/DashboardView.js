@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect} from "react";
 import DashboardHeader from "./partials/DashboardHeader";
 import AccountBreakdown from "./partials/OverviewDetails";
 import BalanceDetails from "./partials/BalanceDetails";
@@ -31,6 +31,10 @@ export default function DashboardView({dashboardHooks}) {
     function hideSmallValues() {
         dashboardHooks.setHideSmallValues(true);
     }
+
+    useEffect(()=> {
+        document.title = "Dashboard - Decentrifi"
+    }, [])
 
 
     return <Container>

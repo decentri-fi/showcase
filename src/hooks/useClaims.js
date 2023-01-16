@@ -1,6 +1,4 @@
-import {useQuickswapClaims} from "./claims/useQuickswapClaims";
-import {useBalancerRewardClaims} from "./claims/useBalancerRewardClaims";
-import {getProviderOrSigner, getSigner} from "./withContract";
+import {getSigner} from "./withContract";
 
 export const useClaims = (web3) => {
 

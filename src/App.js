@@ -3,7 +3,7 @@ import "styles/globalStyles.css";
 
 import React from "react";
 import {Web3Provider} from '@ethersproject/providers'
-import {createWeb3ReactRoot, Web3ReactProvider} from "@web3-react/core";
+import {Web3ReactProvider} from "@web3-react/core";
 import {BrowserRouter as Router, Route, Switch} from 'react-router-dom';
 
 /*
@@ -34,7 +34,7 @@ import TermsOfServiceView from "./views/TermsOfServiceView/TermsOfServiceView";
 import Web3ClaimableView from "./views/ClaimableView/Web3ClaimableView";
 import AddressClaimableView from "./views/ClaimableView/AddressClaimableView";
 
-import { hooks as metaMaskHooks, metaMask } from 'hooks/metamask'
+import {hooks as metaMaskHooks, metaMask} from 'hooks/metamask'
 
 function getLibrary(provider) {
     const library = new Web3Provider(
@@ -76,7 +76,7 @@ export default function App() {
                         <FooterV2/>
                     </Route>
                     <Route path="/claimables">
-                        <Web3ClaimableView />
+                        <Web3ClaimableView/>
                         <FooterV2/>
                     </Route>
                     <Route exact path="/protocols">
@@ -111,7 +111,7 @@ export default function App() {
                         <FooterV2/>
                     </Route>
                     <Route path="/:user/claimables">
-                        <AddressClaimableView />
+                        <AddressClaimableView/>
                         <FooterV2/>
                     </Route>
                     <Route path="/tokens/:network/:token">

@@ -16,13 +16,7 @@ export default function useWeb3() {
     useEffect(() => {
 
         async function fetchData() {
-            /*
-            const authorized = await injected.isAuthorized()
-            if (authorized) {
-                await login()
-            }
-             */
-            await login();
+            //    await login();
         }
 
         fetchData()
@@ -32,11 +26,23 @@ export default function useWeb3() {
         return window.ethereum !== undefined
     };
 
+    const connect = async () => {
+        await metaMask.connectEagerly().catch(() => {
+            console.debug('Failed to connect eagerly to metamask')
+        })
+    }
+
     const login = async () => {
         try {
-            await metaMask.connectEagerly().catch(() => {
-                console.debug('Failed to connect eagerly to metamask')
-            })
+            if (window.ethereum.isMetaMask) {
+                console.log('logging in');
+                await ethereum.request({
+                    method: 'eth_requestAccounts',
+                })
+                await metaMask.connectEagerly().catch(() => {
+                    console.debug('Failed to connect eagerly to metamask')
+                })
+            }
         } catch (ex) {
             console.error(ex)
         }
@@ -45,6 +51,7 @@ export default function useWeb3() {
     return {
         ethereum: ethereum,
         login: login,
+        autoConnect: connect,
         isOnCorrectChain: isOnCorrectChain,
         hasAccount: metamaskHooks.useAccount()?.length > 0,
         active: metamaskHooks.useIsActive(),

@@ -4,6 +4,8 @@ import DollarLabel from "../../../../components/Label/DollarLabel";
 import PrimaryButton from "../../../../components/Button/PrimaryButton";
 import tw from "twin.macro";
 import AssetTable from "../../../../components/AssetTable/AssetTable";
+import {useClaims} from "../../../../hooks/useClaims";
+import useWeb3 from "../../../../hooks/web3";
 
 const Container = tw.div`w-full`
 const Header = tw.div`w-full flex items-center mb-2`
@@ -18,7 +20,7 @@ const Section = tw.div`w-full bg-white`
 const Hidden = tw.span`hidden lg:block`
 
 
-function doClaim(claimHook, claimable) {
+function claimingFunction(claimHook, claimable) {
 
     const claim = async (e) => {
         e.stopPropagation();
@@ -45,15 +47,15 @@ function doClaim(claimHook, claimable) {
     return claim;
 }
 
-function ClaimButton({claimable, claimHook}) {
-    const claim = doClaim(claimHook, claimable);
+function ClaimButton({claimable, }) {
+    const web3 = useWeb3();
+    const claim = useClaims(web3)
+    const claimFn = claimingFunction(claim, claimable);
 
     return (
-        <PrimaryButton onClick={claim} label="Claim"/>
+        <PrimaryButton onClick={claimFn} label="Claim"/>
     );
 }
-
-const HighlightedText = tw.span`text-primary-500`
 
 export default function ClaimableDetails({dashboardHooks, showPlaceholder = false}) {
     const claimables = dashboardHooks.claimables;

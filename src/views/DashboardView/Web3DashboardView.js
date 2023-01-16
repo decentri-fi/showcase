@@ -17,7 +17,7 @@ export default function Web3DashboardView() {
 
     const web3 = useWeb3();
     const history = useHistory();
-    const dashboardHooks = useDashboardHooks(web3.account,{
+    const dashboardHooks = useDashboardHooks(web3.account, {
         supportsClaimables: true,
     });
 
@@ -32,9 +32,16 @@ export default function Web3DashboardView() {
         });
     }, [])
 
+    useEffect(async () => {
+        if (web3.supported && !web3.active) {
+            await web3.autoConnect();
+        }
+    }, []);
+
     if (web3.account != null) {
         return (
             <>
+                <p>active: {web3.active ? 'active' : 'not active'}</p>
                 <CustomHeader onAddressChange={onAddressChange} showSearch={true}></CustomHeader>
                 <DashboardView dashboardHooks={dashboardHooks}/>
             </>
@@ -42,14 +49,16 @@ export default function Web3DashboardView() {
     } else {
         return (
             <>
+                <p>{web3.supported ? 'supported' : 'not supported'}</p>
+                <p>active: {web3.active ? 'active' : 'not active'}</p>
                 <CustomHeader showSearch={true} onAddressChange={onAddressChange}></CustomHeader>
                 <Container>
                     <Center>
                         {
-                            web3.supported &&  <ConnectWalletSection login={web3.login}/>
+                            web3.supported && <ConnectWalletSection login={web3.login}/>
                         }
                         {
-                            !web3.supported &&  <NoWeb3Browser />
+                            !web3.supported && <NoWeb3Browser/>
                         }
                     </Center>
                 </Container>

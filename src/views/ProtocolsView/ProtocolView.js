@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import useProtocolViewHooks from "./hooks/protocolview-hooks";
 import PoolingOpportunities from "../../components/PoolingOpportunities/PoolingOpportunities";
 import LendingOpportunities from "../../components/LendingOpportunities/LendingOpportunities";
@@ -35,6 +35,12 @@ export default () => {
 
     const protocolHooks = useProtocolViewHooks();
     let protocol = protocolHooks.protocol;
+
+    useEffect(()=> {
+        if (protocol) {
+            document.title = `${protocol.name} - Explore - Decentrifi`;
+        }
+    }, [protocol])
 
     function LendingTab() {
         if (protocolHooks.tabs.find(element => element.id === 'Lending' && element.selected === true)) {

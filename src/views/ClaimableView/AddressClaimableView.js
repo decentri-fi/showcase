@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {useHistory, useParams} from "react-router-dom";
 import useDashboardHooks from "../DashboardView/hooks/dashboard-hooks";
 import ClaimableView from "./ClaimableView";
@@ -8,6 +8,10 @@ export default function AddressClaimableView() {
     const params = useParams();
     const address = params.user;
     const history = useHistory();
+
+    useEffect(() => {
+        document.title = `Claimables for ${address} - Decentrifi`;
+    });
 
     const onAddressChange = (address) => {
         history.push(`/${address}/claimables`);

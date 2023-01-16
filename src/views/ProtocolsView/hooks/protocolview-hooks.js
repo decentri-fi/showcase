@@ -71,10 +71,11 @@ export default function useProtocolView() {
         }
 
         fetchData();
-    }, [params])
+    }, [])
 
     async function fetchPoolingMarkets() {
         if (protocol !== null) {
+            setPoolingOpportunities([]);
             defitrack.pooling().markets(protocol.slug).then(po => {
                 for (const element of po) {
                     setPoolingOpportunities((prevState) => {
@@ -90,6 +91,7 @@ export default function useProtocolView() {
 
     async function fetchLendingMarkets() {
         if (protocol !== null) {
+            setLendingOpportunities([]);
             defitrack.lending().markets(protocol.slug).then(lo => {
                 for (const element of lo) {
                     setLendingOpportunities((prevState) => {
@@ -105,6 +107,7 @@ export default function useProtocolView() {
 
     async function fetchFarmingMarkets() {
         if (protocol !== null) {
+            setFarmingOpportunities([]);
             defitrack.farming().markets(protocol.slug).then(fo => {
                 for (const element of fo) {
                     setFarmingOpportunities((prevState) => {

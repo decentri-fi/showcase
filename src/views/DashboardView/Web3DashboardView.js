@@ -41,7 +41,6 @@ export default function Web3DashboardView() {
     if (web3.account != null) {
         return (
             <>
-                <p>active: {web3.active ? 'active' : 'not active'}</p>
                 <CustomHeader onAddressChange={onAddressChange} showSearch={true}></CustomHeader>
                 <DashboardView dashboardHooks={dashboardHooks}/>
             </>
@@ -49,8 +48,6 @@ export default function Web3DashboardView() {
     } else {
         return (
             <>
-                <p>{web3.supported ? 'supported' : 'not supported'}</p>
-                <p>active: {web3.active ? 'active' : 'not active'}</p>
                 <CustomHeader showSearch={true} onAddressChange={onAddressChange}></CustomHeader>
                 <Container>
                     <Center>

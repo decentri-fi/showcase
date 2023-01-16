@@ -14,6 +14,6 @@ export function getProviderOrSigner(library, account) {
     return account ? getSigner(library, account) : library
 }
 
-export function getSigner(library, account) {
-    return library.getSigner(account).connectUnchecked()
+export function getSigner(provider, account) {
+    return provider.getSigner(account).connectUnchecked()
 }

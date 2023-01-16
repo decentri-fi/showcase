@@ -20,23 +20,19 @@ const Section = tw.div`w-full bg-white`
 const Hidden = tw.span`hidden lg:block`
 
 
-function claimingFunction(claimHook, claimable) {
+function claimingFunction(claimHook, claimable, refreshClaimables) {
 
     const claim = async (e) => {
         e.stopPropagation();
         try {
             const result = await claimHook.claim(claimable);
-            result.wait().then((receipt) => {
+            if (result) {
                 swal({
                     text: "Your rewards were successfully claimed",
                     icon: "success"
                 });
-            }).catch((err) => {
-                swal({
-                    text: err.message,
-                    icon: "error"
-                })
-            })
+                refreshClaimables();
+            }
         } catch (err) {
             swal({
                 text: err.message,
@@ -47,10 +43,10 @@ function claimingFunction(claimHook, claimable) {
     return claim;
 }
 
-function ClaimButton({claimable, }) {
+function ClaimButton({refreshClaimables, claimable}) {
     const web3 = useWeb3();
     const claim = useClaims(web3)
-    const claimFn = claimingFunction(claim, claimable);
+    const claimFn = claimingFunction(claim, claimable, refreshClaimables);
 
     return (
         <PrimaryButton onClick={claimFn} label="Claim"/>
@@ -75,7 +71,7 @@ export default function ClaimableDetails({dashboardHooks, showPlaceholder = fals
             networkLogo: element.network.logo,
             dollarValue: element.dollarValue,
             actionButton: (
-                <ClaimButton claimHook={dashboardHooks.claimHook} claimable={element}/>
+                <ClaimButton refreshClaimables={dashboardHooks.refreshClaimables} claimable={element}/>
             )
         }
     })

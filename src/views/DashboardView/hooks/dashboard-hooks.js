@@ -231,6 +231,7 @@ export default function
     return {
         claimableLoading,
         refresh,
+        refreshClaimables,
         searchAddress,
         setSearchAddress: setSearchAddress,
         address: currentAccount,

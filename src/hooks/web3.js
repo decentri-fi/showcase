@@ -1,26 +1,12 @@
-import {useWeb3React} from "@web3-react/core";
-
-import {useEffect, useState} from "react";
 import {hooks as metamaskHooks, metaMask} from "./metamask";
+import {useWeb3React} from '@web3-react/core'
+import {Web3Provider} from '@ethersproject/providers'
 
 export default function useWeb3() {
 
-    const web3React = useWeb3React()
-
     const {ethereum} = window
 
-    const isOnCorrectChain = (chainId) => {
-        return chainId === web3React.chainId;
-    }
-
-    useEffect(() => {
-
-        async function fetchData() {
-            //    await login();
-        }
-
-        fetchData()
-    }, []);
+    const web3React = useWeb3React();
 
     const supported = function () {
         return window.ethereum !== undefined
@@ -30,6 +16,7 @@ export default function useWeb3() {
         await metaMask.connectEagerly().catch(() => {
             console.debug('Failed to connect eagerly to metamask')
         })
+        console.log(metaMask.provider)
     }
 
     const login = async () => {
@@ -48,15 +35,43 @@ export default function useWeb3() {
         }
     };
 
+
+    function getLibrary(provider) {
+        const library = new Web3Provider(provider)
+        library.pollingInterval = 12000
+        return library
+    }
+
+    function decimalToHex(d, padding) {
+        let hex = Number(d).toString(16);
+        padding = typeof (padding) === "undefined" || padding === null ? padding = 2 : padding;
+
+        while (hex.length < padding) {
+            hex = "0" + hex;
+        }
+
+        return hex;
+    }
+
+
+    async function changeNetwork(networkId) {
+        let chainId = decimalToHex(networkId);
+        await ethereum.request({
+            method: 'wallet_switchEthereumChain',
+            params: [{chainId: "0x" + chainId}], // chainId must be in hexadecimal numbers
+        })
+    }
+
     return {
+        changeNetwork: changeNetwork,
         ethereum: ethereum,
         login: login,
         autoConnect: connect,
-        isOnCorrectChain: isOnCorrectChain,
         hasAccount: metamaskHooks.useAccount()?.length > 0,
         active: metamaskHooks.useIsActive(),
         supported: supported(),
         web3React: web3React,
+        provider: metaMask.provider,
         account: metamaskHooks.useAccount(),
     }
 };

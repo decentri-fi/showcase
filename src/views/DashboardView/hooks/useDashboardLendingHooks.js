@@ -15,7 +15,7 @@ export default function useDashboardLendingHooks(account, protocols, supportsLen
 
     function init() {
         const loadData = async () => {
-
+            console.log('loading new data');
             if (protocols.length > 0) {
                 setTotalScanning(prevTotalScanning => {
                     return prevTotalScanning + protocols.length
@@ -46,9 +46,11 @@ export default function useDashboardLendingHooks(account, protocols, supportsLen
 
         if (supportsLending && account !== undefined) {
             const savedOne = JSON.parse(localStorage.getItem(`lending-elements-${account}`))
+            console.log(savedOne);
             if (savedOne !== null) {
                 setLendings(savedOne);
             } else {
+                setLendings([]);
                 loadData();
             }
         }

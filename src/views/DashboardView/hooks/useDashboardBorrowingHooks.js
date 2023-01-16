@@ -52,6 +52,7 @@ export default function useDashboardBorrowingHooks(account, protocols, supportsD
             if (savedOne !== null) {
                 setBorrowings(savedOne);
             } else {
+                setBorrowings([]);
                 loadData();
             }
         }

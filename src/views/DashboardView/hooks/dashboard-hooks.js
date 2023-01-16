@@ -29,6 +29,10 @@ export default function
         }
     }, [account])
 
+    useEffect(() => {
+        console.log('current account changed to', currentAccount)
+    }, [currentAccount])
+
     const {protocols} = useDashboardProtocolHooks();
     const {networks} = useDashboardNetworkHooks();
     const {

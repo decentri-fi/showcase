@@ -1,9 +1,7 @@
 import "tailwindcss/dist/base.css";
 import "styles/globalStyles.css";
 
-import React from "react";
-import {Web3Provider} from '@ethersproject/providers'
-import {Web3ReactProvider} from "@web3-react/core";
+import React, {useEffect} from "react";
 import {BrowserRouter as Router, Route, Switch} from 'react-router-dom';
 
 /*
@@ -35,30 +33,7 @@ import Web3ClaimableView from "./views/ClaimableView/Web3ClaimableView";
 import AddressClaimableView from "./views/ClaimableView/AddressClaimableView";
 
 import {hooks as metaMaskHooks, metaMask} from 'hooks/metamask'
-
-function getLibrary(provider) {
-    const library = new Web3Provider(
-        provider,
-        typeof provider.chainId === 'number'
-            ? provider.chainId
-            : typeof provider.chainId === 'string'
-                ? parseInt(provider.chainId)
-                : 'any'
-    )
-    library.pollingInterval = 15_000
-    library.detectNetwork().then((network) => {
-        const networkPollingInterval = 15000
-        if (networkPollingInterval) {
-            console.debug('Setting polling interval', networkPollingInterval)
-            library.pollingInterval = networkPollingInterval
-        }
-    })
-    return library
-}
-
-const connectors = [
-    [metaMask, metaMaskHooks]
-]
+import useWeb3 from "./hooks/web3";
 
 export default function App() {
     ReactGA.initialize([
@@ -67,8 +42,16 @@ export default function App() {
         }
     ]);
 
+    const web3 = useWeb3();
+
+    useEffect(async () => {
+        if (web3.supported && !web3.active) {
+            await web3.autoConnect();
+        }
+    }, []);
+
     return (
-        <Web3ReactProvider connectors={connectors}>
+
             <Router>
                 <Switch>
                     <Route path="/dashboard">
@@ -136,6 +119,5 @@ export default function App() {
                     </Route>
                 </Switch>
             </Router>
-        </Web3ReactProvider>
     );
 }

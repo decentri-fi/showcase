@@ -13,10 +13,10 @@ export default function useWeb3() {
     };
 
     const connect = async () => {
+        console.log('autoconnecting')
         await metaMask.connectEagerly().catch(() => {
             console.debug('Failed to connect eagerly to metamask')
         })
-        console.log(metaMask.provider)
     }
 
     const login = async () => {

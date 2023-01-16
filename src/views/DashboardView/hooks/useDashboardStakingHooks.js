@@ -53,6 +53,7 @@ export default function useDashboardStakingHooks(account, protocols, supportsSta
             if (savedOne !== null) {
                 setStakings(savedOne);
             } else {
+                setStakings([]);
                 loadData();
             }
         }

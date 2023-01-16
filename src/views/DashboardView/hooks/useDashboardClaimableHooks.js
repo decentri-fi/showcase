@@ -9,7 +9,6 @@ export default function useDashboardClaimableHooks(account, protocols, supportsC
 
     function refresh() {
         localStorage.setItem(`claimable-elements-${account}`, null);
-        localStorage.setItem(`scanned-claimables-${account}`, null);
         setClaimables([]);
         init();
     }
@@ -24,7 +23,6 @@ export default function useDashboardClaimableHooks(account, protocols, supportsC
     function init() {
         const loadData = async (protocolsToScan) => {
             if (protocolsToScan.length > 0) {
-                console.log('still got protocols to scan: ', protocolsToScan.length);
                 setTotalScanning(prevTotalScanning => {
                     return prevTotalScanning + protocols.length
                 });

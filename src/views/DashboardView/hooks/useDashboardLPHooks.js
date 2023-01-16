@@ -20,7 +20,6 @@ export default function useDashboardLPHooks(account, protocols, supportsPooling,
         })
         if (poolings.length > 0) {
             for (const pooling of poolings) {
-                console.log('pooling', pooling)
                 setLps(prevState => {
                     prevState.push(pooling);
                     localStorage.setItem(`lp-elements-${account}`, JSON.stringify(prevState));
@@ -54,6 +53,7 @@ export default function useDashboardLPHooks(account, protocols, supportsPooling,
             if (savedOne !== null) {
                 setLps(savedOne);
             } else {
+                setLps([])
                 loadData();
             }
         }

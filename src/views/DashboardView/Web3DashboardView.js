@@ -32,12 +32,6 @@ export default function Web3DashboardView() {
         });
     }, [])
 
-    useEffect(async () => {
-        if (web3.supported && !web3.active) {
-            await web3.autoConnect();
-        }
-    }, []);
-
     if (web3.account != null) {
         return (
             <>

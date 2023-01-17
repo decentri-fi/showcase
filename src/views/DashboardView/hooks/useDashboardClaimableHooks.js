@@ -9,6 +9,7 @@ export default function useDashboardClaimableHooks(account, protocols, supportsC
 
     function refresh() {
         localStorage.setItem(`claimable-elements-${account}`, null);
+        localStorage.setItem(`scanned-claimables-${account}`, null);
         setClaimables([]);
         init();
     }

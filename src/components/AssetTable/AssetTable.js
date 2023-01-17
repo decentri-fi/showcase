@@ -1,6 +1,5 @@
 import React from 'react';
 import tw from "twin.macro";
-import {useHistory} from "react-router-dom";
 import FallbackImage from "../Image/FallbackImage";
 import NumberFormat from "react-number-format";
 import APYLabel from "../Label/APYLabel";
@@ -48,7 +47,11 @@ function DummyList() {
 }
 
 
-export default function ({entries = [], header, showPlaceholder = false, usePagination = false}) {
+export default function ({
+                             entries = [], header,
+                             showPlaceholder = false,
+                             usePagination = false
+                         }) {
     let filteredEntries = entries;
     let pagination = null;
 

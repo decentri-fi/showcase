@@ -83,7 +83,7 @@ export default function ClaimableView({dashboardHooks}) {
             </SectionWithBackground>
 
             <ClaimableSection>
-                <ClaimableDetails showPlaceholder={dashboardHooks.claimableLoading} dashboardHooks={dashboardHooks}/>
+                <ClaimableDetails showNothingFoundMessage={true} showPlaceholder={dashboardHooks.claimableLoading} dashboardHooks={dashboardHooks}/>
             </ClaimableSection>
             <FAQSection>
                 <FAQ
@@ -93,20 +93,6 @@ export default function ClaimableView({dashboardHooks}) {
                     heading={<>Any <HighlightedText>Questions ?</HighlightedText></>}
                 />
             </FAQSection>
-
-            {
-                dashboardHooks.hideSmallValues &&
-                <HideSmallValueFilter>Positions with small deposits are not displayed (&lt;$0.01). <u><a
-                    onClick={showSmallValues}>show
-                    everything</a></u></HideSmallValueFilter>
-            }
-
-            {
-                !dashboardHooks.hideSmallValues &&
-                <HideSmallValueFilter>Positions with small deposits are included (&lt;$0.01). <u><a
-                    onClick={hideSmallValues}>hide
-                    small values</a></u></HideSmallValueFilter>
-            }
         </DashboardWrapper>
     </Container>;
 }

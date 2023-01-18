@@ -23,7 +23,7 @@ export const useClaims = (web3) => {
                 }
             }
         } else {
-            if (claimable.claimTransaction.from === undefined || claimable.claimTransaction.from.toLowerCase() == web3.account.toLowerCase()) {
+            if (claimable.claimTransaction.from == null || claimable.claimTransaction.from.toLowerCase() == web3.account.toLowerCase()) {
                 return await getSigner(web3.web3React.provider, web3.account).sendTransaction(
                     {
                         to: claimable.claimTransaction.to,

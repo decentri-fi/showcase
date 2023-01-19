@@ -1,19 +1,19 @@
-import React from "react";
+import React, {useState} from "react";
 import tw from "twin.macro";
 import styled from "styled-components";
 import Header, {DesktopNavLinks, LogoLink, NavLink, NavLinks, NavToggle} from "../headers/light.js";
-import ResponsiveVideoEmbed from "../../helpers/ResponsiveVideoEmbed.js";
 import useWeb3 from "../../hooks/web3";
 import {Button} from "@mui/material";
-import makeBlockie from "ethereum-blockies-base64";
 import {useHistory} from "react-router-dom";
 import Search from "../../views/DashboardView/partials/Search/Search";
+import ReactGA from "react-ga4";
 
 const StyledHeader = styled(Header)`
   ${tw`pt-8 max-w-none lg:mt-8 pb-4`}
   ${DesktopNavLinks} ${NavLink}, ${LogoLink} {
     ${tw`text-gray-100 hover:border-gray-300 hover:text-gray-300`}
   }
+
   ${NavToggle}.closed {
     ${tw`text-gray-100 hover:text-primary-500`}
   }
@@ -32,6 +32,12 @@ const RightColumn = tw.div`w-full sm:w-5/6 lg:w-1/2 mt-16 lg:mt-0 lg:pl-8`;
 
 
 const SearchHolder = tw.div`px-4 flex justify-between items-center flex-col lg:flex-row`;
+
+const SearchContainer = tw.div`flex w-full border-2 focus-within:border focus-within:border-white border-blue-900 relative max-w-screen-xl text-gray-600 mb-4`;
+const SearchInput = tw.input`bg-transparent  w-11/12 h-10 px-5 text-sm focus:outline-none`
+const Caret = tw.div`flex items-center align-middle w-1/12`
+const OrText = tw.div`text-white my-4`
+const SearchTeaser = tw.div`lg:pl-8`
 
 const Heading = styled.h1`
   ${tw`text-3xl text-center lg:text-left sm:text-4xl lg:text-5xl xl:text-6xl font-black text-gray-100 leading-none`}
@@ -80,18 +86,57 @@ function UserLink({web3}) {
 }
 
 function Expansion({expanded}) {
+
+    const [searchField, setSearchField] = useState(null);
+
+    const search = function (e) {
+        setSearchField(e.target.value);
+    }
+
+    const history = useHistory();
+
     return expanded ?
         <TwoColumn>
             <LeftColumn>
                 <Notification>Discover. Research. Invest.</Notification>
                 <Heading>
-                    <span>Your gateway to</span>
+                    <span>Break down and manage your</span>
                     <br/>
-                    <SlantedBackground>Decentralized</SlantedBackground><br />
-                    Finance
+                    <SlantedBackground>Decentralized Finance</SlantedBackground><br/>
+                    Portfolio
                 </Heading>
             </LeftColumn>
             <RightColumn>
+                <SearchTeaser>
+                    <SearchContainer>
+                        <SearchInput
+                            onKeyDown={e => {
+                                if (e.key === 'Enter' && searchField !== null && searchField !== undefined && (searchField.length === 40 || searchField.length === 42)) {
+                                    ReactGA.event({
+                                        category: 'dashboard',
+                                        action: 'Search',
+                                        value: searchField
+                                    });
+                                    history.push(`/${searchField}/profile`);
+                                }
+                            }}
+                            onChange={search}
+                            type="search" name="search" placeholder={'Track your wallet address or ENS'}></SearchInput>
+                        <Caret>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor"
+                                 viewBox="0 0 256 256">
+                                <rect width="256" height="256" fill="none"></rect>
+                                <polyline points="96 48 176 128 96 208" fill="none" stroke="currentColor"
+                                          strokeLinecap="round" strokLinejoin="round" strokeWidth="24"></polyline>
+                            </svg>
+                        </Caret>
+                    </SearchContainer>
+                    <OrText>or</OrText>
+                    <Button variant={'outlined'} color={'primary'} onClick={() => {
+                        history.push('/dashboard');
+                    }
+                    }>Login with Web3</Button>
+                </SearchTeaser>
             </RightColumn>
         </TwoColumn>
         : <></>

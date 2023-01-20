@@ -27,7 +27,7 @@ const OpacityOverlay = tw.div`z-10 absolute inset-0 bg-primary-500 opacity-25`;
 
 const HeroContainer = tw.div`z-20 relative px-4 sm:px-8 max-w-screen-xl mx-auto`;
 const TwoColumn = tw.div`lg:pt-24 lg:pb-32 px-4 flex justify-between items-center flex-col lg:flex-row`;
-const LeftColumn = tw.div`flex flex-col items-center lg:block`;
+const LeftColumn = tw.div`flex flex-col items-center lg:block lg:w-1/2 w-full lg:pr-24`;
 const RightColumn = tw.div`w-full sm:w-5/6 lg:w-1/2 mt-16 lg:mt-0 lg:pl-8`;
 
 
@@ -36,8 +36,8 @@ const SearchHolder = tw.div`px-4 flex justify-between items-center flex-col lg:f
 const SearchContainer = tw.div`flex w-full border-2 focus-within:border focus-within:border-white border-blue-900 relative max-w-screen-xl text-gray-600 mb-4`;
 const SearchInput = tw.input`bg-transparent  w-11/12 h-10 px-5 text-sm focus:outline-none`
 const Caret = tw.div`flex items-center align-middle w-1/12`
-const OrText = tw.div`text-white my-4`
-const SearchTeaser = tw.div`lg:pl-8`
+const OrText = tw.div`text-white my-4 text-xl text-center lg:text-left font-black text-gray-100 leading-none`
+const SearchTeaser = tw.div`w-full`
 
 const Heading = styled.h1`
   ${tw`text-3xl text-center lg:text-left sm:text-4xl lg:text-5xl xl:text-6xl font-black text-gray-100 leading-none`}
@@ -99,14 +99,6 @@ function Expansion({expanded}) {
         <TwoColumn>
             <LeftColumn>
                 <Notification>Discover. Research. Invest.</Notification>
-                <Heading>
-                    <span>Break down and manage your</span>
-                    <br/>
-                    <SlantedBackground>Decentralized Finance</SlantedBackground><br/>
-                    Portfolio
-                </Heading>
-            </LeftColumn>
-            <RightColumn>
                 <SearchTeaser>
                     <SearchContainer>
                         <SearchInput
@@ -137,6 +129,15 @@ function Expansion({expanded}) {
                     }
                     }>Login with Web3</Button>
                 </SearchTeaser>
+            </LeftColumn>
+            <RightColumn>
+                <Heading>
+                    <span>Break down and manage your</span>
+                    <br/>
+                    <SlantedBackground>Decentralized Finance</SlantedBackground><br/>
+                    Portfolio
+
+                </Heading>
             </RightColumn>
         </TwoColumn>
         : <></>

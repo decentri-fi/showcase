@@ -138,7 +138,7 @@ export default function useProtocolView() {
         setActiveTab,
         networks: Array.from(
             new Set(
-                (farmingOpportunities.concat(poolingOpportunities)).map((opportunity) => {
+                (lendingOpportunities.concat(farmingOpportunities).concat(poolingOpportunities)).map((opportunity) => {
                     return opportunity.network.name
                 })
             )

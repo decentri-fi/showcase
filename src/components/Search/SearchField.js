@@ -4,7 +4,7 @@ import styled from "styled-components";
 import { css } from "styled-components/macro"; //eslint-disable-line
 
 const Left = tw.input`w-11/12 border-2 border-gray-300 bg-white h-10 px-5 pr-16 rounded-lg text-sm focus:outline-none`
-const Container = tw.div`px-4 pt-2 text-gray-600 flex flex-nowrap w-full lg:w-1/2`
+const Container = tw.div`mb-2 pt-2 text-gray-600 flex flex-nowrap w-full lg:w-1/2`
 const SearchButton = tw.button`w-1/12 ml-5`
 
 

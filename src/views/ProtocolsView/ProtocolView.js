@@ -26,6 +26,8 @@ const StatisticTitle = tw.span`text-center text-gray-700`
 const BreadcrumbContainer = tw.div`lg:w-2/3 w-full flex mb-3 text-gray-700 hover:text-blue-600 dark:text-gray-400 dark:hover:text-white`
 const Statistic = tw.div`w-1/2 lg:w-1/4 flex-col flex`
 
+const NavbarWrapper = tw.div`lg:w-2/3`
+
 export default () => {
 
     const protocolHooks = useProtocolViewHooks();
@@ -138,11 +140,11 @@ export default () => {
                 </Wrapper>
 
                 <Wrapper>
-                    <div tw="lg:w-2/3">
+                    <NavbarWrapper>
                         <Navbar items={
                             protocolHooks.tabs
                         }/>
-                    </div>
+                    </NavbarWrapper>
                 </Wrapper>
 
 

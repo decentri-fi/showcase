@@ -132,7 +132,7 @@ function ListEntry({entry}) {
                         </TwoColumns>
                         <div>
                             {
-                                entry.apr && <div>
+                                entry.apr != null && entry.apr > 0 && <div>
                                     <APYLabel amount={entry.apr * 100}/>
                                     <span>% APR</span>
                                 </div>

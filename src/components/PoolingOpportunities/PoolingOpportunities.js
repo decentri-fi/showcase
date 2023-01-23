@@ -7,7 +7,7 @@ import FallbackImage from "../Image/FallbackImage";
 
 const Center = tw.div`w-full grid justify-items-center`
 const Container = tw.div`px-4 bg-white shadow-lg rounded-sm border border-gray-200 w-full lg:w-2/3 my-4 py-4`
-const Header = tw.div`px-5 py-4 border-b border-gray-100 font-semibold text-gray-800`
+const Header = tw.div`py-4 border-b border-gray-100 font-semibold text-gray-800`
 const NetworkContainer = tw.div``
 const ButtonWrapper = tw.span`px-1`
 
@@ -115,10 +115,10 @@ export default ({poolingOpportunities, title = "Pooling Opportunities"}) => {
                         entries={entries}
                         header={
                             <>
-                                <Header><h2>Pooling Opportunities</h2></Header>
+                                <Header><h2>{title}</h2></Header>
                                 <NetworkContainer>{networkButtons}</NetworkContainer>
                                 <Center>
-                                    <SearchField onChange={search} onClick={e => console.log(e)}/>
+                                    <SearchField onChange={search} />
                                 </Center>
                             </>
                         }

@@ -34,6 +34,7 @@ import AddressClaimableView from "./views/ClaimableView/AddressClaimableView";
 
 import {hooks as metaMaskHooks, metaMask} from 'hooks/metamask'
 import useWeb3 from "./hooks/web3";
+import SignInWithEthereumView from "./views/SignInWithEthereumView";
 
 export default function App() {
     ReactGA.initialize([
@@ -71,6 +72,10 @@ export default function App() {
                         <CustomHeader/>
                         <ProtocolView/>
                         <FooterV2/>
+                    </Route>
+                    <Route path="/siwe">
+                        <CustomHeader showUserLink={false}/>
+                        <SignInWithEthereumView />
                     </Route>
                     <Route path="/defi-hub">
                         <CustomHeader showUserLink={false}/>

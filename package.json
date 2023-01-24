@@ -83,6 +83,7 @@
   },
   "devDependencies": {
     "eslint-config-react-app": "^6.0.0",
+    "react-spinners": "^0.13.8",
     "siwe": "^1.1.6"
   }
 }

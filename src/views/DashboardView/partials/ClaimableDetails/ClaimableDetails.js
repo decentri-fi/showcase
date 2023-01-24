@@ -1,13 +1,10 @@
 import React from 'react';
-import swal from 'sweetalert'
 import DollarLabel from "../../../../components/Label/DollarLabel";
-import PrimaryButton from "../../../../components/Button/PrimaryButton";
 import tw from "twin.macro";
 import AssetTable from "../../../../components/AssetTable/AssetTable";
-import {useClaims} from "../../../../hooks/useClaims";
-import useWeb3 from "../../../../hooks/web3";
 import {Subheading} from "../../../../components/misc/Headings";
 import SadWhalePic from "../../../../images/sad_whale.png";
+import ClaimButton from "./ClaimButton";
 
 const Container = tw.div`w-full items-center grid`
 const Header = tw.div`text-lg font-medium mb-2  `
@@ -26,52 +23,21 @@ const CenterImage = tw.div`w-full flex justify-center my-2`
 const SadWhaleImage = tw.img`w-10 h-10`
 const HeroDescription = tw.p`text-purple-400 text-lg`
 
-function claimingFunction(claimHook, claimable, refreshClaimables) {
-
-    const claim = async (e) => {
-        e.stopPropagation();
-        try {
-            const result = await claimHook.claim(claimable);
-            if (result) {
-                swal({
-                    text: "Your rewards were successfully claimed",
-                    icon: "success"
-                });
-                refreshClaimables();
-            }
-        } catch (err) {
-            swal({
-                text: err.message,
-                icon: "error"
-            })
-        }
-    };
-    return claim;
-}
-
-function ClaimButton({refreshClaimables, claimable}) {
-    const web3 = useWeb3();
-    const claim = useClaims(web3)
-    const claimFn = claimingFunction(claim, claimable, refreshClaimables);
-
-    return (
-        <PrimaryButton onClick={claimFn} label="Claim"/>
-    );
-}
 
 export default function ClaimableDetails({dashboardHooks, showPlaceholder = false, showNothingFoundMessage = false}) {
     const claimables = dashboardHooks.claimables;
 
-    if(claimables.length === 0 && !dashboardHooks.claimableLoading) {
-        if(showNothingFoundMessage) {
+    if (claimables.length === 0 && !dashboardHooks.claimableLoading) {
+        if (showNothingFoundMessage) {
             return <>
                 <Container>
                     <Hero>
                         <Header>We couldn't find any <Subheading>Claimables</Subheading></Header>
                         <CenterImage>
-                            <SadWhaleImage src={SadWhalePic} />
+                            <SadWhaleImage src={SadWhalePic}/>
                         </CenterImage>
-                        <HeroDescription>Unfortunately, we couldn't locate any claimables for this account.</HeroDescription>
+                        <HeroDescription>Unfortunately, we couldn't locate any claimables for this
+                            account.</HeroDescription>
                     </Hero>
                 </Container>
             </>

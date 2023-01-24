@@ -7,6 +7,7 @@ import {SectionDescription} from "../../components/misc/Typography";
 import FAQ from "../../components/faqs/SingleCol";
 import Navbar from "../../components/Navbar/Navbar";
 import {useHistory} from "react-router-dom";
+import GetStartedLight from "../../components/cta/GetStartedLight";
 
 const Container = tw.div`flex pt-8`
 
@@ -21,6 +22,7 @@ const Description = tw(SectionDescription)`w-full text-center mb-4`;
 const Center = tw.div`w-full flex grid justify-items-center mb-3`
 
 const SectionWithBackground = tw.div`grid w-full justify-items-center bg-defaultBackground pt-2`
+const Section = tw.div`grid w-full justify-items-center pt-2`
 
 const ClaimableSection = tw.div`py-4 lg:w-2/3 w-full px-4 mt-4`
 const FAQSection = tw.div`w-full px-4  bg-defaultBackground`
@@ -28,14 +30,6 @@ const FAQSection = tw.div`w-full px-4  bg-defaultBackground`
 export default function ClaimableView({dashboardHooks}) {
 
     const history = useHistory();
-
-    function showSmallValues() {
-        dashboardHooks.setHideSmallValues(false);
-    }
-
-    function hideSmallValues() {
-        dashboardHooks.setHideSmallValues(true);
-    }
 
     const faqs = [
         {
@@ -49,7 +43,7 @@ export default function ClaimableView({dashboardHooks}) {
         },
         {
             question: "Why does it take a while to load this page?",
-            answer: "We keep track of thousands of farms, pools and applications. In order to ensure we find everything, we scan for very possible reward."
+            answer: "We keep track of thousands of farms, pools and applications. In order to ensure we find everything, we scan for every possible reward."
         }
     ]
 
@@ -72,7 +66,7 @@ export default function ClaimableView({dashboardHooks}) {
                             url: '#'
                         }
                     ]
-                } />
+                }/>
             </Center>
 
             <SectionWithBackground>
@@ -83,8 +77,24 @@ export default function ClaimableView({dashboardHooks}) {
             </SectionWithBackground>
 
             <ClaimableSection>
-                <ClaimableDetails showNothingFoundMessage={true} showPlaceholder={dashboardHooks.claimableLoading} dashboardHooks={dashboardHooks}/>
+                <ClaimableDetails showNothingFoundMessage={true} showPlaceholder={dashboardHooks.claimableLoading}
+                                  dashboardHooks={dashboardHooks}/>
             </ClaimableSection>
+
+            <Section>
+                <Subheading>Be on the edge of innovation</Subheading>
+                <Heading>Get <HighlightedText>Notified</HighlightedText></Heading>
+                <Description>Empower your defi experience and enable notifications for new claimables.</Description>
+                <GetStartedLight
+                    primaryLinkUrl="https://docs.decentri.fi"
+                    primaryLinkText={"Enable Notifications"}
+                    secondaryLinkUrl="https://docs.decentri.fi"
+                    secondaryLinkText={"Learn More"}
+                    subheading="Be notified"
+                    heading="Be up to date with your investments"
+                />
+            </Section>
+
             <FAQSection>
                 <FAQ
                     description={""}

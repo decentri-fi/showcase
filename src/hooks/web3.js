@@ -19,7 +19,7 @@ export default function useWeb3() {
         })
     }
 
-    const login = async () => {
+    const metamaskLogin = async () => {
         try {
             if (window.ethereum.isMetaMask) {
                 console.log('logging in');
@@ -65,7 +65,7 @@ export default function useWeb3() {
     return {
         changeNetwork: changeNetwork,
         ethereum: ethereum,
-        login: login,
+        metamaskLogin,
         autoConnect: connect,
         hasAccount: metamaskHooks.useAccount()?.length > 0,
         active: metamaskHooks.useIsActive(),

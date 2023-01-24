@@ -46,7 +46,7 @@ export default function Web3DashboardView() {
                 <Container>
                     <Center>
                         {
-                            web3.supported && <ConnectWalletSection login={web3.login}/>
+                            web3.supported && <ConnectWalletSection login={web3.metamaskLogin}/>
                         }
                         {
                             !web3.supported && <NoWeb3Browser/>

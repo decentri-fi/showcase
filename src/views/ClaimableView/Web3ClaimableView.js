@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 
 
 import useWeb3 from "../../hooks/web3";
@@ -11,6 +11,7 @@ import ClaimableView from "./ClaimableView";
 import CustomHeader from "../../components/Header/CustomHeader";
 import {useHistory} from "react-router-dom";
 import {hooks} from "../../hooks/metamask";
+import Popup from "reactjs-popup";
 
 const Container = tw.div`px-2 flex pt-8 lg:pt-24 bg-defaultBackground`
 const Center = tw.div`w-full grid justify-items-center`;
@@ -58,13 +59,14 @@ export default function Web3ClaimableView() {
                 <Container>
                     <Center>
                         {
-                            web3.supported && <ConnectWalletSection login={web3.login}/>
+                            web3.supported && <ConnectWalletSection />
                         }
                         {
                             !web3.supported && <NoWeb3Browser/>
                         }
                     </Center>
                 </Container>
+
             </>
         )
     }

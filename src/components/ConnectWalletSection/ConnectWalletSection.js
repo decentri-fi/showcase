@@ -6,6 +6,9 @@ import {PrimaryButton as PrimaryButtonBase} from "components/misc/Buttons.js";
 import StatsIllustrationSrc from "images/stats-illustration.svg";
 import {ReactComponent as SvgDotPattern} from "images/dot-pattern.svg";
 import FoxWithWalletPic from "../../images/fox-with-wallet.png";
+import 'reactjs-popup/dist/index.css';
+import useWeb3 from "../../hooks/web3";
+import useConnectWalletPopup from "../ConnectWalletPopup/UseConnectWalletPopup";
 
 const Container = tw.div`w-full grid justify-items-center`;
 const TwoColumn = tw.div`flex flex-col md:flex-row justify-between max-w-screen-xl mx-8 pb-12  md:py-24`;
@@ -42,27 +45,45 @@ export default function ConnectWalletSection({
                                                  imageInsideDiv = true,
                                                  textOnLeft = true
                                              }) {
+
+    const web3 = useWeb3();
+
+    const {
+        html: connectWalletPopup,
+        open: openConnectWalletPopup
+    } = useConnectWalletPopup();
+
+
     return (
-        <Container>
-            <TwoColumn css={!imageInsideDiv && tw`md:items-center`}>
-                <ImageColumn css={imageContainerCss}>
-                    <Image imageSrc={FoxWithWalletPic} css={imageCss}/>
-                    <DecoratorBlob/>
-                </ImageColumn>
-                <TextColumn textOnLeft={textOnLeft}>
-                    <TextContent>
-                        <Subheading>Enabled your web3 wallet to fully appreciate this experience.</Subheading>
-                        <Heading>Connect your web3 wallet.</Heading>
-                        <Description>
-                            In order to view the positions related to your account, connect your web3 wallet. <br /><br />
-                            If you don't feel like doing this, you can just search any address using the search bar. We appreciate you being here either way.
-                        </Description>
-                        <PrimaryButton onClick={login}>
-                            Connect
-                        </PrimaryButton>
-                    </TextContent>
-                </TextColumn>
-            </TwoColumn>
-        </Container>
+        <>
+            <Container>
+                <TwoColumn css={!imageInsideDiv && tw`md:items-center`}>
+                    <ImageColumn css={imageContainerCss}>
+                        <Image imageSrc={FoxWithWalletPic} css={imageCss}/>
+                        <DecoratorBlob/>
+                    </ImageColumn>
+                    <TextColumn textOnLeft={textOnLeft}>
+                        <TextContent>
+                            <Subheading>Enabled your web3 wallet to fully appreciate this experience.</Subheading>
+                            <Heading>Connect your web3 wallet.</Heading>
+                            <Description>
+                                In order to view the positions related to your account, connect your web3
+                                wallet. <br/><br/>
+                                If you don't feel like doing this, you can just search any address using the search bar.
+                                We appreciate you being here either way.
+                            </Description>
+                            <PrimaryButton onClick={() => {
+                                openConnectWalletPopup();
+                            }
+                            }>
+                                Connect
+                            </PrimaryButton>
+                        </TextContent>
+                    </TextColumn>
+                </TwoColumn>
+            </Container>
+            {connectWalletPopup}
+        </>
+
     );
 };

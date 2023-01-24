@@ -7,6 +7,7 @@ import {Button} from "@mui/material";
 import {useHistory} from "react-router-dom";
 import Search from "../../views/DashboardView/partials/Search/Search";
 import ReactGA from "react-ga4";
+import useConnectWalletPopup from "../ConnectWalletPopup/UseConnectWalletPopup";
 
 const StyledHeader = styled(Header)`
   ${tw`pt-8 max-w-none lg:mt-8 pb-4`}
@@ -60,13 +61,15 @@ const PrimaryAction = tw.button`px-8 py-3 mt-10 text-sm sm:text-base sm:mt-16 sm
 
 function UserLink({web3}) {
 
+    const {
+        html: connectWalletPopup,
+        open: openConnectWalletPopup,
+    } = useConnectWalletPopup();
+
     const sliceAccount = function (address) {
         return `${address.slice(0, 6)}...${address.slice(-6, address.length)}`;
     };
 
-    const login = async () => {
-        await web3.login()
-    }
 
     if (web3.account != null) {
         return (
@@ -78,9 +81,12 @@ function UserLink({web3}) {
         );
     } else {
         return (
-            <Button variant={"contained"} color={"secondary"} onClick={login}>
-                Connect Wallet
-            </Button>
+            <>
+                <Button variant={"contained"} color={"secondary"} onClick={openConnectWalletPopup}>
+                    Connect Wallet
+                </Button>
+                {connectWalletPopup}
+            </>
         );
     }
 }

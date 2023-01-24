@@ -4,6 +4,7 @@ import tw from "twin.macro";
 import AssetTable from "../../../../components/AssetTable/AssetTable";
 import Popup from "reactjs-popup";
 import 'reactjs-popup/dist/index.css';
+import {Button} from "@mui/material";
 
 const Header = tw.div`w-full flex items-center mb-2`
 const HeaderTextContainer = tw.div`lg:w-3/12 w-full`
@@ -12,6 +13,9 @@ const BalanceText = tw.div`w-9/12 text-right`
 const PullRight = tw.div`flex flex-col grid justify-items-end`
 const Hidden = tw.span`hidden lg:block`
 
+const CloseContainer = tw.div`grid w-full justify-items-center`
+const CloseIcon = tw.div`p-4 w-full`
+const ActionContainer = tw.div`w-full grid justify-items-center mb-4`
 
 export default function StakingDetails({protocol, dashboardHooks}) {
 
@@ -77,6 +81,10 @@ export default function StakingDetails({protocol, dashboardHooks}) {
                                 </Header>
                             }
                         />
+
+                        <ActionContainer>
+                            <Button variant={"contained"}>Exit Position</Button>
+                        </ActionContainer>
                     </>
                 )
                 setOpen(true);
@@ -101,14 +109,16 @@ export default function StakingDetails({protocol, dashboardHooks}) {
     return (
         <>
             <Popup modal open={open} onClose={closeModal}>
-                <div tw="grid w-full justify-items-center">
-                    <div tw="p-4 w-full">
+                <CloseContainer>
+                    <CloseIcon>
                         <a className="close" onClick={closeModal}>
                             &times;
                         </a>
+                    </CloseIcon>
+                    <div tw="w-full px-4">
+                        {popupData}
                     </div>
-                    {popupData}
-                </div>
+                </CloseContainer>
             </Popup>
             <AssetTable
                 entries={elements}

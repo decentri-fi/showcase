@@ -1,17 +1,12 @@
 import React, {useEffect} from 'react';
-import ConnectWalletSection from "../../components/ConnectWalletSection/ConnectWalletSection";
 import useDashboardHooks from "./hooks/dashboard-hooks";
 import useWeb3 from "../../hooks/web3";
 import DashboardView from "./DashboardView";
 import ReactGA from "react-ga4";
 
-import tw from 'twin.macro';
-import NoWeb3Browser from "../../components/ConnectWalletSection/NoWeb3Browser";
 import CustomHeader from "../../components/Header/CustomHeader";
 import {useHistory} from "react-router-dom";
-
-const Container = tw.div`px-2 flex pt-8 lg:pt-24 bg-defaultBackground`
-const Center = tw.div`w-full grid justify-items-center`;
+import ConnectWalletView from "../ConnectWalletView/ConnectWalletView";
 
 export default function Web3DashboardView() {
 
@@ -41,19 +36,7 @@ export default function Web3DashboardView() {
         );
     } else {
         return (
-            <>
-                <CustomHeader showSearch={true} onAddressChange={onAddressChange}></CustomHeader>
-                <Container>
-                    <Center>
-                        {
-                            web3.supported && <ConnectWalletSection login={web3.metamaskLogin}/>
-                        }
-                        {
-                            !web3.supported && <NoWeb3Browser/>
-                        }
-                    </Center>
-                </Container>
-            </>
+            <ConnectWalletView onAddressChange={onAddressChange}/>
         )
     }
 };

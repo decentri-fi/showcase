@@ -27,7 +27,6 @@ export default function useTokenviewHooks(networkName, tokenAddress) {
         });
     }
 
-
     const web3 = useWeb3();
 
     useEffect(() => {
@@ -58,7 +57,6 @@ export default function useTokenviewHooks(networkName, tokenAddress) {
                 const result = await fetchTokenBalance(token.address, web3.account, networkName);
                 if (result > 0) {
                     const number = BigNumber.from(String(result))
-                    console.log(number);
                     setDecimalUserBalance(
                         ethers.utils.formatUnits(number, token.decimals)
                     )

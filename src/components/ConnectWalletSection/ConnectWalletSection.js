@@ -38,15 +38,12 @@ const DecoratorBlob = styled(SvgDotPattern)(props => [
 
 
 export default function ConnectWalletSection({
-                                                 login,
                                                  imageSrc = StatsIllustrationSrc,
                                                  imageCss = null,
                                                  imageContainerCss = null,
                                                  imageInsideDiv = true,
                                                  textOnLeft = true
                                              }) {
-
-    const web3 = useWeb3();
 
     const {
         html: connectWalletPopup,
@@ -64,7 +61,7 @@ export default function ConnectWalletSection({
                     </ImageColumn>
                     <TextColumn textOnLeft={textOnLeft}>
                         <TextContent>
-                            <Subheading>Enabled your web3 wallet to fully appreciate this experience.</Subheading>
+                            <Subheading>Enable your web3 wallet to fully appreciate this experience.</Subheading>
                             <Heading>Connect your web3 wallet.</Heading>
                             <Description>
                                 In order to view the positions related to your account, connect your web3

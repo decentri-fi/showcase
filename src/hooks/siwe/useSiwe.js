@@ -21,22 +21,23 @@ export default function useSiwe() {
 
     async function createMessage() {
         const signer = web3.web3React.provider.getSigner();
-        let s = createSiweMessage(
-            signer.getAddress(),
+        let address = await signer.getAddress();
+        localStorage.setItem('siwe_address', address)
+        return createSiweMessage(
+            address,
             'Sign in with Ethereum to https://decentri.fi.'
         );
-        console.log(s);
-        return s;
     }
 
     async function createSignature() {
         const signer = web3.web3React.provider.getSigner();
-        return await signer.signMessage(await createMessage());
+        return await signer.signMessage(await getMessage());
     }
 
-    async function getMessage(address) {
+    async function getMessage() {
         if (localStorage.getItem(`siwe_message`) == null) {
-            localStorage.setItem(`siwe_message`, await createMessage(address));
+            let value = await createMessage();
+            localStorage.setItem(`siwe_message`, value);
         }
         return localStorage.getItem(`siwe_message`);
     }
@@ -49,7 +50,9 @@ export default function useSiwe() {
     }
 
     return {
+        getAddress: () => localStorage.getItem('siwe_address'),
         getMessage,
-        getSignature
+        getSignature,
+        isAuthenticated: () => localStorage.getItem(`siwe_signature`) != null
     }
 }

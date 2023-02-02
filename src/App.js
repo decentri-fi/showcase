@@ -35,6 +35,7 @@ import AddressClaimableView from "./views/ClaimableView/AddressClaimableView";
 import {hooks as metaMaskHooks, metaMask} from 'hooks/metamask'
 import useWeb3 from "./hooks/web3";
 import SignInWithEthereumView from "./views/SignInWithEthereumView";
+import HistoryView from "./views/HistoryView/HistoryView";
 
 export default function App() {
     ReactGA.initialize([
@@ -100,6 +101,10 @@ export default function App() {
                     </Route>
                     <Route path="/:user/claimables">
                         <AddressClaimableView/>
+                        <FooterV2/>
+                    </Route>
+                    <Route path="/:user/history">
+                        <HistoryView/>
                         <FooterV2/>
                     </Route>
                     <Route path="/tokens/:network/:token">

@@ -2,7 +2,6 @@ import React from 'react';
 import BigNumber from "bignumber.js";
 import OrDivider from "../../../components/Divider/OrDivider";
 import RequiresApprovalInformation from "./RequiresApprovalInformation";
-import BeefyVaultActions from "./actions/BeefyVaultActions";
 import HasApprovalInformation from "./HasApprovalInformation";
 import {Box, Button, Step, StepLabel, Stepper, Tab, Tabs} from "@mui/material";
 import PropTypes from 'prop-types';
@@ -81,18 +80,12 @@ function NativeDepositActions({farmingViewHooks}) {
     }
 }
 
-function FarmSpecificActions({token, farmingElement}) {
-    if (farmingElement.vaultType === 'beefyVaultV6') {
-        return (
-            <BeefyVaultActions token={token} farmingElement={farmingElement}/>
-        )
-    } else {
-        return (
-            <>
-                <p>There are currently no specific actions for this farm</p>
-            </>
-        );
-    }
+function FarmSpecificActions() {
+    return (
+        <>
+            <p>There are currently no specific actions for this farm</p>
+        </>
+    );
 }
 
 /*

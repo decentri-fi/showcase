@@ -64,7 +64,15 @@ export default function ClaimableView({dashboardHooks}) {
                             name: "Claimables",
                             selected: true,
                             url: '#'
-                        }
+                        },
+                        {
+                            name: "History",
+                            selected: false,
+                            url: '#',
+                            onClick() {
+                                history.push(`/${dashboardHooks.address}/history`)
+                            }
+                        },
                     ]
                 }/>
             </Center>

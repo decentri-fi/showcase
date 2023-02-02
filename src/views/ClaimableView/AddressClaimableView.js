@@ -3,6 +3,7 @@ import {useHistory, useParams} from "react-router-dom";
 import useDashboardHooks from "../DashboardView/hooks/dashboard-hooks";
 import ClaimableView from "./ClaimableView";
 import CustomHeader from "../../components/Header/CustomHeader";
+
 export default function AddressClaimableView() {
 
     const params = useParams();
@@ -11,7 +12,7 @@ export default function AddressClaimableView() {
 
     useEffect(() => {
         document.title = `Claimables for ${address} - Decentrifi`;
-    });
+    }, []);
 
     const onAddressChange = (address) => {
         history.push(`/${address}/claimables`);

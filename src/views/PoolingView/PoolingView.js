@@ -2,7 +2,6 @@ import React, {useEffect} from 'react';
 import PositionInformation from "./partials/PositionInformation";
 import usePoolingViewHooks from "./hooks/poolingview-hooks";
 import PoolingOpportunities from "../../components/PoolingOpportunities/PoolingOpportunities";
-import Actions from "./partials/Actions/Actions";
 import tw from "twin.macro";
 import ReactGA from "react-ga4";
 

@@ -6,20 +6,23 @@ const ListItem = tw.li`flex flex-row`
 const Row = tw.div`select-none cursor-pointer flex flex-1 items-center py-4 hover:bg-indigo-100`
 
 const TransactionHash = tw.div`w-2/4 pl-1 flex-1 font-medium text-indigo-600 dark:text-gray-200 text-xs font-mono`
+const TimeColumn = tw.div`w-1/4 text-gray-700 font-medium leading-relaxed text-secondary-100`
+const ActionColumn = tw.div`w-1/12`
+const ViewIcon = tw.div`w-8 h-8`
 export default function TransactionEntry({entry, address}) {
     const [showDetails, setShowDetails] = useState(false);
 
     return <>
         <ListItem>
             <Row>
-                <div tw="w-1/4 text-gray-700 font-medium leading-relaxed text-secondary-100">
+                <TimeColumn>
                     {new Date(entry.time).toLocaleString("en-US")}
-                </div>
+                </TimeColumn>
                 <TransactionHash>
                     {entry.id}
                 </TransactionHash>
-                <div tw="w-1/12">
-                    <div tw="w-8 h-8" onClick={() => {
+                <ActionColumn>
+                    <ViewIcon onClick={() => {
                         setShowDetails((prevValue) => {
                             return !prevValue;
                         });
@@ -37,8 +40,8 @@ export default function TransactionEntry({entry, address}) {
                                     stroke="#33363F" strokeWidth="2" strokeLinecap="round"></path>
                             </g>
                         </svg>
-                    </div>
-                </div>
+                    </ViewIcon>
+                </ActionColumn>
             </Row>
         </ListItem>
         {showDetails &&

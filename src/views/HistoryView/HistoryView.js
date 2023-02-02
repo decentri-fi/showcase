@@ -21,7 +21,7 @@ const Description = tw(SectionDescription)`w-full text-center mb-4`;
 const SectionWithBackground = tw.div`grid w-full justify-items-center bg-defaultBackground pt-2`
 const HighlightedText = tw.span`text-primary-500`
 
-const ListContainer = tw.div`flex flex-col w-full mx-auto items-center justify-center bg-white dark:bg-gray-800`
+const ListContainer = tw.div`flex flex-col w-2/3 mx-auto items-center justify-center bg-white dark:bg-gray-800`
 const List = tw.ul`flex flex-col w-full`
 
 const Section = tw.div`grid w-full justify-items-center pt-2`
@@ -74,13 +74,11 @@ export default function HistoryView() {
                     entries?.length > 0 &&
 
                     <Center>
-                        <div tw="w-2/3">
                             <ListContainer>
                                 <List>
                                     {entries}
                                 </List>
                             </ListContainer>
-                        </div>
                     </Center>
                 }
 

@@ -89,7 +89,6 @@ export default function LendingOpportunities({lendingOpportunities}) {
         setSearchFilter(e.target.value)
     }
 
-
     return (
         <Center>
             <Container>

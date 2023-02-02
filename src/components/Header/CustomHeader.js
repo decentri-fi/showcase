@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useRef, useState} from "react";
 import tw from "twin.macro";
 import styled from "styled-components";
 import Header, {DesktopNavLinks, LogoLink, NavLink, NavLinks, NavToggle} from "../headers/light.js";
@@ -93,11 +93,7 @@ function UserLink({web3}) {
 
 function Expansion({expanded}) {
 
-    const [searchField, setSearchField] = useState(null);
-
-    const search = function (e) {
-        setSearchField(e.target.value);
-    }
+    const searchField = useRef(null);
 
     const history = useHistory();
 
@@ -108,8 +104,8 @@ function Expansion({expanded}) {
                 <SearchTeaser>
                     <SearchContainer>
                         <SearchInput
-                            onKeyDown={e => {
-                                if (e.key === 'Enter' && searchField !== null && searchField !== undefined && (searchField.length === 40 || searchField.length === 42)) {
+                            onSubmit={e => {
+                                if (searchField.length === 40 || searchField.length === 42) {
                                     ReactGA.event({
                                         category: 'dashboard',
                                         action: 'Search',
@@ -118,14 +114,13 @@ function Expansion({expanded}) {
                                     history.push(`/${searchField}/profile`);
                                 }
                             }}
-                            onChange={search}
                             type="search" name="search" placeholder={'Track your wallet address or ENS'}></SearchInput>
                         <Caret>
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor"
                                  viewBox="0 0 256 256">
                                 <rect width="256" height="256" fill="none"></rect>
                                 <polyline points="96 48 176 128 96 208" fill="none" stroke="currentColor"
-                                          strokeLinecap="round" strokLinejoin="round" strokeWidth="24"></polyline>
+                                          strokeLinecap="round" strokeLinejoin="round" strokeWidth="24"></polyline>
                             </svg>
                         </Caret>
                     </SearchContainer>

@@ -1,20 +1,18 @@
 import React from 'react';
 import tw from "twin.macro";
-import styled from "styled-components";
-import { css } from "styled-components/macro"; //eslint-disable-line
 
 const Left = tw.input`w-11/12 border-2 border-gray-300 bg-white h-10 px-5 pr-16 rounded-lg text-sm focus:outline-none`
 const Container = tw.div`mb-2 pt-2 text-gray-600 flex flex-nowrap w-full lg:w-1/2`
 const SearchButton = tw.button`w-1/12 ml-5`
 const SearchSVG = tw.svg`text-gray-600 h-4 w-4 fill-current`
 
-export default function SearchField({onClick, onChange}) {
+export default function SearchField({onChange}) {
     return (
         <Container>
             <Left
                 onChange={onChange}
                 type="search" name="search" placeholder="Search"/>
-            <SearchButton onClick={onClick} type="submit">
+            <SearchButton type="submit">
                 <SearchSVG xmlns="http://www.w3.org/2000/svg"
                      id="Capa_1" x="0px" y="0px"
                      viewBox="0 0 56.966 56.966"

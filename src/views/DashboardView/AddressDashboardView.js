@@ -10,7 +10,7 @@ export default function AddressDashboardView() {
     const address = params.user;
     const history = useHistory();
     const dashboardHooks = useDashboardHooks(address, {
-        supportsClaimables: false,
+        supportsClaimables: true,
     });
 
     const onAddressChange = (address) => {

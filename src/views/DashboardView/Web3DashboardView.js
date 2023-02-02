@@ -1,10 +1,7 @@
 import React, {useEffect} from 'react';
 import useDashboardHooks from "./hooks/dashboard-hooks";
 import useWeb3 from "../../hooks/web3";
-import DashboardView from "./DashboardView";
 import ReactGA from "react-ga4";
-
-import CustomHeader from "../../components/Header/CustomHeader";
 import {useHistory} from "react-router-dom";
 import ConnectWalletView from "../ConnectWalletView/ConnectWalletView";
 
@@ -12,9 +9,6 @@ export default function Web3DashboardView() {
 
     const web3 = useWeb3();
     const history = useHistory();
-    const dashboardHooks = useDashboardHooks(web3.account, {
-        supportsClaimables: true,
-    });
 
     const onAddressChange = (address) => {
         history.push(`/${address}/profile`);
@@ -28,12 +22,8 @@ export default function Web3DashboardView() {
     }, [])
 
     if (web3.account != null) {
-        return (
-            <>
-                <CustomHeader onAddressChange={onAddressChange} showSearch={true}></CustomHeader>
-                <DashboardView dashboardHooks={dashboardHooks}/>
-            </>
-        );
+        history.push(`/${web3.account}/profile`);
+        return <></>
     } else {
         return (
             <ConnectWalletView onAddressChange={onAddressChange}/>

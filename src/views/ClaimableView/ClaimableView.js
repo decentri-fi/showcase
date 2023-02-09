@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 import ClaimableDetails from "../DashboardView/partials/ClaimableDetails";
 
 import tw from 'twin.macro';
@@ -8,6 +8,10 @@ import FAQ from "../../components/faqs/SingleCol";
 import Navbar from "../../components/Navbar/Navbar";
 import {useHistory} from "react-router-dom";
 import GetStartedLight from "../../components/cta/GetStartedLight";
+import DollarLabel from "../../components/Label/DollarLabel";
+import {getFish} from "../../api/whalespotter/fish/fish";
+import useSiwe from "../../hooks/siwe/useSiwe";
+import NoFishYet from "../HistoryView/NoFishYet";
 
 const Container = tw.div`flex pt-8`
 
@@ -25,9 +29,21 @@ const SectionWithBackground = tw.div`grid w-full justify-items-center bg-default
 const Section = tw.div`grid w-full justify-items-center pt-2`
 
 const ClaimableSection = tw.div`py-4 lg:w-2/3 w-full px-4 mt-4`
-const FAQSection = tw.div`w-full px-4  bg-defaultBackground`
+const FAQSection = tw.div`w-full px-4  bg-white`
 
 export default function ClaimableView({dashboardHooks}) {
+
+    const siwe = useSiwe();
+    const [hasAddedAsFish, setHasAddedAsFish] = useState(true);
+
+    useEffect(async () => {
+        if (dashboardHooks.address != null) {
+            const fish = await getFish(siwe.getAddress());
+            setHasAddedAsFish(fish.map(f => {
+                return f.address.toLowerCase()
+            }).includes(dashboardHooks.address.toLowerCase()));
+        }
+    }, [dashboardHooks.address])
 
     const history = useHistory();
 
@@ -77,31 +93,40 @@ export default function ClaimableView({dashboardHooks}) {
                 }/>
             </Center>
 
-            <SectionWithBackground>
-                <Subheading>Don't forget your rewards</Subheading>
-                <Heading>Outstanding <HighlightedText>Claims</HighlightedText></Heading>
-                <Description>Find out if you have any unclaimed yields, rewards, NFTs or airdrops!
-                    We automatically check your wallet for any unclaimed reward.</Description>
-            </SectionWithBackground>
+            {
+                !dashboardHooks.claimableLoading &&
+                <Section>
+                    <Subheading>Rewards are waiting for you</Subheading>
+                    <Heading>You've got <HighlightedText><DollarLabel amount={
+                        dashboardHooks.totalClaimables
+                    }/></HighlightedText> of
+                        outstanding <HighlightedText>rewards</HighlightedText></Heading>
+                    <Description></Description>
+                </Section>
+            }
 
-            <ClaimableSection>
-                <ClaimableDetails showNothingFoundMessage={true} showPlaceholder={dashboardHooks.claimableLoading}
-                                  dashboardHooks={dashboardHooks}/>
-            </ClaimableSection>
+            {
+                dashboardHooks.claimableLoading &&
+                <SectionWithBackground>
+                    <Subheading>Don't forget your rewards</Subheading>
+                    <Heading>Outstanding <HighlightedText>Rewards</HighlightedText></Heading>
+                    <Description>Find out if you have any unclaimed yields, rewards, NFTs or airdrops!
+                        We automatically check your wallet for any unclaimed reward.</Description>
+                </SectionWithBackground>
+            }
 
-            <Section>
-                <Subheading>Be on the edge of innovation</Subheading>
-                <Heading>Get <HighlightedText>Notified</HighlightedText></Heading>
-                <Description>Empower your defi experience and enable notifications for new claimables.</Description>
-                <GetStartedLight
-                    primaryLinkUrl="https://docs.decentri.fi"
-                    primaryLinkText={"Enable Notifications"}
-                    secondaryLinkUrl="https://docs.decentri.fi"
-                    secondaryLinkText={"Learn More"}
-                    subheading="Be notified"
-                    heading="Be up to date with your investments"
-                />
-            </Section>
+            {
+                hasAddedAsFish && siwe.getAddress() != null &&
+                <ClaimableSection>
+                    <ClaimableDetails showNothingFoundMessage={true} showPlaceholder={dashboardHooks.claimableLoading}
+                                      dashboardHooks={dashboardHooks}/>
+                </ClaimableSection>
+            }
+
+            {
+                !hasAddedAsFish && siwe.getAddress() != null &&
+                <NoFishYet address={dashboardHooks.address} target={`/${dashboardHooks.address}/claimables`}/>
+            }
 
             <FAQSection>
                 <FAQ

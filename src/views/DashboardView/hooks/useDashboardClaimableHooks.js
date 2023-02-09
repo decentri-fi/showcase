@@ -98,6 +98,6 @@ export default function useDashboardClaimableHooks(account, protocols, supportsC
     return {
         claimables: filteredClaimables(),
         refresh,
-        loading: getProtocolsToScan().length > 0
+        loading: getProtocolsToScan(account).length > 0
     }
 }

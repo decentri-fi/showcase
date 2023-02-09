@@ -27,13 +27,11 @@ const Header = tw.h1`text-lg font-black text-purple-600`
 const ConnectList = tw.div`flex flex-col w-full mx-2 mb-8`
 const ConnectListItem = tw.div`items-center my-2 hover:border-blue-500 border-2 font-bold text-gray-700 hover:text-blue-500 hover:border-2 w-full flex flex-row rounded rounded-lg p-4`
 const ConnectItemLogo = tw.img`w-8 h-8 mr-4`
-export default function NoFishYet({address}) {
+export default function NoFishYet({address, target = `/${address}/history`}) {
 
     const siwe = useSiwe();
     const [open, setOpen] = useState(false);
     const closeModal = () => setOpen(false);
-
-    const target = `/${address}/history`;
 
     async function addAddress() {
         setOpen(true);

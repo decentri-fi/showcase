@@ -10,35 +10,41 @@ export default function useDashboardWalletHooks(account, networks, supportsBalan
         init();
     }
 
-    function init() {
-        if (supportsBalances && account != null && networks != null && networks.length > 0) {
-            const savedOne = JSON.parse(localStorage.getItem(`balance-elements-${account}`));
+    function init(_account) {
+        if (supportsBalances && _account != null && networks != null && networks.length > 0) {
+            const savedOne = JSON.parse(localStorage.getItem(`balance-elements-${_account}`));
             if (savedOne != null) {
                 setBalanceElements(savedOne)
             } else {
                 setBalanceElements([]);
-                fetchNativeBalance(account).then(nativeBalance => {
+                fetchNativeBalance(_account).then(nativeBalance => {
                     for (const balanceElement of nativeBalance) {
                         setBalanceElements(prevState => {
-                            prevState.push(balanceElement);
-                            localStorage.setItem(`balance-elements-${account}`, JSON.stringify(prevState));
+                            prevState.push({
+                                ...balanceElement,
+                                owner: _account
+                            });
+                            localStorage.setItem(`balance-elements-${_account}`, JSON.stringify(prevState));
                             return [...prevState];
                         })
                     }
                 });
                 for (const network of networks) {
-                    fetchTokenBalance(account, network.name).then(tokenBalance => {
+                    fetchTokenBalance(_account, network.name).then(tokenBalance => {
                         if (tokenBalance.length > 0) {
                             for (const balanceElement of tokenBalance) {
                                 setBalanceElements(prevState => {
-                                    prevState.push(balanceElement);
-                                    localStorage.setItem(`balance-elements-${account}`, JSON.stringify(prevState));
+                                    prevState.push({
+                                        ...balanceElement,
+                                        owner: _account
+                                    });
+                                    localStorage.setItem(`balance-elements-${_account}`, JSON.stringify(prevState));
                                     return [...prevState];
                                 })
                             }
                         } else {
                             setBalanceElements(prevState => {
-                                localStorage.setItem(`balance-elements-${account}`, JSON.stringify(prevState));
+                                localStorage.setItem(`balance-elements-${_account}`, JSON.stringify(prevState));
                                 return prevState
                             })
                         }
@@ -51,13 +57,21 @@ export default function useDashboardWalletHooks(account, networks, supportsBalan
     }
 
     useEffect(() => {
-        init();
+        init(account);
     }, [account, networks])
 
+    const filteredBalanceElements = () => {
+        if (balanceElements == null || balanceElements.length === 0) {
+            return [];
+        } else {
+            return balanceElements.filter(claimable => claimable.owner === account);
+        }
+    }
+
     return {
-        balanceElements: balanceElements?.sort((a, b) => {
+        balanceElements: filteredBalanceElements().sort((a, b) => {
             return b.dollarValue - a.dollarValue
-        }) || [],
+        }),
         refresh
     }
 };

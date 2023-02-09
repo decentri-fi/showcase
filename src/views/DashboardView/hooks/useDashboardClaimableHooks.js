@@ -14,30 +14,33 @@ export default function useDashboardClaimableHooks(account, protocols, supportsC
         init();
     }
 
-    function scanned(protocol) {
-        const scannedClaimables = JSON.parse(localStorage.getItem(`scanned-claimables-${account}`)) || [];
+    function scanned(protocol, _account) {
+        const scannedClaimables = JSON.parse(localStorage.getItem(`scanned-claimables-${_account}`)) || [];
         scannedClaimables.push(protocol.slug)
-        localStorage.setItem(`scanned-claimables-${account}`, JSON.stringify(scannedClaimables));
+        localStorage.setItem(`scanned-claimables-${_account}`, JSON.stringify(scannedClaimables));
     }
 
 
     function init() {
-        const loadData = async (protocolsToScan) => {
+        const loadData = async (protocolsToScan, _account) => {
             if (protocolsToScan.length > 0) {
                 setTotalScanning(prevTotalScanning => {
                     return prevTotalScanning + protocols.length
                 });
                 for (const protocol of protocolsToScan) {
-                    fetchClaimables(account, protocol).then(retClaimable => {
+                    fetchClaimables(_account, protocol).then(retClaimable => {
                         setDoneScanning(prevState => {
                             return prevState + 1
                         });
-                        scanned(protocol);
+                        scanned(protocol, _account);
                         if (retClaimable.length > 0) {
                             for (const claimable of retClaimable) {
                                 setClaimables(prevState => {
-                                    prevState.push(claimable);
-                                    localStorage.setItem(`claimable-elements-${account}`, JSON.stringify(prevState));
+                                    prevState.push({
+                                        ...claimable,
+                                        owner: _account
+                                    });
+                                    localStorage.setItem(`claimable-elements-${_account}`, JSON.stringify(prevState));
                                     return [...prevState];
                                 })
                             }
@@ -58,17 +61,17 @@ export default function useDashboardClaimableHooks(account, protocols, supportsC
                 setClaimables(savedOne);
             }
 
-            const protocolsToScan = getProtocolsToScan();
+            const protocolsToScan = getProtocolsToScan(account);
 
             if (protocolsToScan.length > 0) {
-                loadData(protocolsToScan);
+                loadData(protocolsToScan, account);
             }
         }
     }
 
-    function getProtocolsToScan() {
+    function getProtocolsToScan(_account) {
         let protocolsToScan = protocols;
-        let storedScannedProtocols = JSON.parse(localStorage.getItem(`scanned-claimables-${account}`)) || [];
+        let storedScannedProtocols = JSON.parse(localStorage.getItem(`scanned-claimables-${_account}`)) || [];
         if (storedScannedProtocols != null) {
             protocolsToScan = protocolsToScan.filter(element => {
                 return !storedScannedProtocols.includes(element.slug);
@@ -81,8 +84,19 @@ export default function useDashboardClaimableHooks(account, protocols, supportsC
         init();
     }, [protocols, account])
 
+    const filteredClaimables = () => {
+        if (claimables == null || claimables.length === 0) {
+            return [];
+        } else {
+            return [...claimables.reduce((a, c) => {
+                a.set(c.id, c);
+                return a;
+            }, new Map()).values()].filter(claimable => claimable.owner === account);
+        }
+    }
+
     return {
-        claimables,
+        claimables: filteredClaimables(),
         refresh,
         loading: getProtocolsToScan().length > 0
     }

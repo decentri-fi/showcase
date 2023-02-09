@@ -8,6 +8,7 @@ import {useHistory} from "react-router-dom";
 import Search from "../../views/DashboardView/partials/Search/Search";
 import ReactGA from "react-ga4";
 import useConnectWalletPopup from "../ConnectWalletPopup/UseConnectWalletPopup";
+import {PrimaryButton} from "../misc/Buttons";
 
 const StyledHeader = styled(Header)`
   ${tw`pt-8 max-w-none lg:mt-8 pb-4`}
@@ -34,7 +35,7 @@ const RightColumn = tw.div`w-full sm:w-5/6 lg:w-1/2 mt-16 lg:mt-0 lg:pl-8`;
 
 const SearchHolder = tw.div`px-4 flex justify-between items-center flex-col lg:flex-row`;
 
-const SearchContainer = tw.div`flex w-full border-2 focus-within:border focus-within:border-white border-blue-900 relative max-w-screen-xl text-gray-600 mb-4`;
+const SearchContainer = tw.div`flex w-full border-2 focus-within:border-2 focus-within:border-blue-400 border-purple-200 relative max-w-screen-xl text-gray-600 mb-4`;
 const SearchInput = tw.input`bg-transparent  w-11/12 h-10 px-5 text-sm focus:outline-none`
 const Caret = tw.div`flex items-center align-middle w-1/12`
 const OrText = tw.div`text-white my-4 text-xl text-center lg:text-left font-black text-gray-100 leading-none`
@@ -125,10 +126,10 @@ function Expansion({expanded}) {
                         </Caret>
                     </SearchContainer>
                     <OrText>or</OrText>
-                    <Button variant={'outlined'} color={'primary'} onClick={() => {
+                    <PrimaryButton  onClick={() => {
                         history.push('/dashboard');
                     }
-                    }>Login with Web3</Button>
+                    }>Login with Web3</PrimaryButton>
                 </SearchTeaser>
             </LeftColumn>
             <RightColumn>

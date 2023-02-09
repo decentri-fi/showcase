@@ -7,7 +7,7 @@ export default function useDashboardWalletHooks(account, networks, supportsBalan
     function refresh() {
         localStorage.setItem(`balance-elements-${account}`, null);
         setBalanceElements([]);
-        init();
+        init(account);
     }
 
     function init(_account) {
@@ -18,6 +18,7 @@ export default function useDashboardWalletHooks(account, networks, supportsBalan
             } else {
                 setBalanceElements([]);
                 fetchNativeBalance(_account).then(nativeBalance => {
+                    console.log('native', nativeBalance)
                     for (const balanceElement of nativeBalance) {
                         setBalanceElements(prevState => {
                             prevState.push({
@@ -44,6 +45,7 @@ export default function useDashboardWalletHooks(account, networks, supportsBalan
                             }
                         } else {
                             setBalanceElements(prevState => {
+
                                 localStorage.setItem(`balance-elements-${_account}`, JSON.stringify(prevState));
                                 return prevState
                             })
@@ -64,7 +66,7 @@ export default function useDashboardWalletHooks(account, networks, supportsBalan
         if (balanceElements == null || balanceElements.length === 0) {
             return [];
         } else {
-            return balanceElements.filter(claimable => claimable.owner === account);
+            return balanceElements.filter(balance => balance.owner === account);
         }
     }
 

@@ -33,7 +33,7 @@ const LeftColumn = tw.div`flex flex-col items-center lg:block lg:w-1/2 w-full lg
 const RightColumn = tw.div`w-full sm:w-5/6 lg:w-1/2 mt-16 lg:mt-0 lg:pl-8`;
 
 
-const SearchHolder = tw.div`px-4 flex justify-between items-center flex-col lg:flex-row`;
+const SearchHolder = tw.div`flex justify-between items-center flex-col lg:flex-row`;
 
 const SearchContainer = tw.div`flex w-full border-2 focus-within:border-2 focus-within:border-blue-400 border-purple-200 relative max-w-screen-xl text-gray-600 mb-4`;
 const SearchInput = tw.input`bg-transparent  w-11/12 h-10 px-5 text-sm focus:outline-none`

@@ -162,7 +162,7 @@ export default function BalanceDetails({dashboardHooks}) {
             <Section>
                 <AssetHeader>
                     <HeaderTextContainer>
-                        <HeaderText>Wallet</HeaderText>
+                        <HeaderText>WALLET</HeaderText>
                     </HeaderTextContainer>
                     <BalanceText>
                         <Hidden>

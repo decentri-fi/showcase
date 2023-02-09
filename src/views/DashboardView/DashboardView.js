@@ -9,7 +9,7 @@ import Navbar from "../../components/Navbar/Navbar";
 import DefiPositions from "./partials/DefiPositions";
 import {useHistory} from "react-router-dom";
 
-const Container = tw.div`flex`
+const Container = tw.div`flex pt-8 grid`
 const DashboardWrapper = tw.div`w-full`
 const HorizontalCenter = tw.div`pl-1 flex items-center w-full`
 const HideSmallValueFilter = tw.p`text-xs`
@@ -19,7 +19,7 @@ const Column = tw.div`w-full lg:w-1/2 px-4`
 
 const CenterText = tw.div`text-center w-full`
 const Center = tw.div`w-full flex grid justify-items-center mt-3 mb-1`
-
+const NewLabel = tw.span`text-xs align-text-top font-thin text-teal-500`
 export default function DashboardView({dashboardHooks}) {
 
     const history = useHistory();
@@ -56,7 +56,7 @@ export default function DashboardView({dashboardHooks}) {
                             }
                         },
                         {
-                            name: <span>History <span tw="text-xs align-text-top font-thin text-teal-500">new</span></span>,
+                            name: <span>History <NewLabel>new</NewLabel></span>,
                             selected: false,
                             onClick() {
                                 history.push(`/${dashboardHooks.address}/history`)

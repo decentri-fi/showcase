@@ -56,7 +56,7 @@ export default function DashboardView({dashboardHooks}) {
                             }
                         },
                         {
-                            name: "History",
+                            name: <span>History <span tw="text-xs align-text-top font-thin text-teal-500">new</span></span>,
                             selected: false,
                             onClick() {
                                 history.push(`/${dashboardHooks.address}/history`)

@@ -1,6 +1,8 @@
 import "tailwindcss/dist/base.css";
 import "styles/globalStyles.css";
 
+// Path: src/styles/globalStyles.css
+
 import React, {useEffect} from "react";
 import {BrowserRouter as Router, Route, Switch} from 'react-router-dom';
 

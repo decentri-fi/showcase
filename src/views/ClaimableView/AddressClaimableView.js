@@ -29,7 +29,7 @@ export default function AddressClaimableView() {
 
     return (
         <>
-            <CustomHeader onAddressChange={onAddressChange}></CustomHeader>
+            <CustomHeader showSearch={true} onAddressChange={onAddressChange}></CustomHeader>
             <ClaimableView dashboardHooks={dashboardHooks}/>
         </>
     )

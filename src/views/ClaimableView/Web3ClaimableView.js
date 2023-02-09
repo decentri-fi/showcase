@@ -46,28 +46,22 @@ export default function Web3ClaimableView() {
     }, [])
 
     if (web3.account != null) {
-        return (
-            <>
-                <CustomHeader onAddressChange={onAddressChange}></CustomHeader>
-                <ClaimableView dashboardHooks={dashboardHooks}/>
-            </>
-        );
+        history.push(`/${web3.account}/claimables`);
+        return <></>;
     } else {
-        return (
-            <>
-                <CustomHeader showSearch={true} onAddressChange={onAddressChange}></CustomHeader>
-                <Container>
-                    <Center>
-                        {
-                            web3.supported && <ConnectWalletSection />
-                        }
-                        {
-                            !web3.supported && <NoWeb3Browser/>
-                        }
-                    </Center>
-                </Container>
+        return <>
+            <CustomHeader showSearch={true} onAddressChange={onAddressChange}></CustomHeader>
+            <Container>
+                <Center>
+                    {
+                        web3.supported && <ConnectWalletSection />
+                    }
+                    {
+                        !web3.supported && <NoWeb3Browser/>
+                    }
+                </Center>
+            </Container>
 
-            </>
-        )
+        </>
     }
 };

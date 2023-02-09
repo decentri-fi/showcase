@@ -18,7 +18,6 @@ export default function useDashboardWalletHooks(account, networks, supportsBalan
             } else {
                 setBalanceElements([]);
                 fetchNativeBalance(_account).then(nativeBalance => {
-                    console.log('native', nativeBalance)
                     for (const balanceElement of nativeBalance) {
                         setBalanceElements(prevState => {
                             prevState.push({

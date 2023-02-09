@@ -37,7 +37,6 @@ export default function HistoryView() {
     const siwe = useSiwe();
 
     const [hasAddedAsFish, setHasAddedAsFish] = useState(true);
-    const [transactions, setTransactions] = useState([]);
     const [events, setEvents] = useState([]);
 
     useEffect(async () => {
@@ -142,7 +141,7 @@ export default function HistoryView() {
 
 
     return <>
-        <CustomHeader onAddressChange={onAddressChange}></CustomHeader>
+        <CustomHeader showSearch={true} onAddressChange={onAddressChange}></CustomHeader>
         <Container>
             <DashboardWrapper>
                 <Center>

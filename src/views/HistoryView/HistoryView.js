@@ -6,11 +6,11 @@ import tw from "twin.macro";
 import {getEvents} from "../../api/whalespotter/transactions/transactions.js";
 import {SectionHeading, Subheading as SubheadingBase} from "../../components/misc/Headings";
 import {SectionDescription} from "../../components/misc/Typography";
-import {getFish} from "../../api/whalespotter/fish/fish";
-import NoFishYet from "./NoFishYet";
+import RequiresFishTracking from "../../components/RequiresFishTracking";
 import useSiwe from "../../hooks/siwe/useSiwe";
 import TwoColSingleFeatureWithStats2 from "../../components/features/TwoColSingleFeatureWithStats2";
 import HistoryDetail from "./components/HistoryDetail";
+import DashboardNavbar from "../../components/DashboardNavbar";
 
 const Container = tw.div`flex pt-8 grid`
 const DashboardWrapper = tw.div`w-full grid justify-items-center`
@@ -36,26 +36,19 @@ export default function HistoryView() {
 
     const siwe = useSiwe();
 
-    const [hasAddedAsFish, setHasAddedAsFish] = useState(true);
     const [events, setEvents] = useState([]);
 
     useEffect(async () => {
-        const fish = await getFish(siwe.getAddress());
-        setHasAddedAsFish(fish.map(f => {
-            return f.address
-        }).includes(address));
-    }, [])
-
-    useEffect(async () => {
         document.title = `History for ${address} - Decentrifi`;
-        const events = await getEvents(address, siwe.getAddress())
-        setEvents(events);
+        if (address) {
+            const events = await getEvents(address, siwe.getAddress());
+            setEvents(events);
+        }
     }, []);
 
     const onAddressChange = (address) => {
         history.push(`/${address}/history`);
     };
-
 
     const eventsPerTransaction = events.reduce((acc, event) => {
         if (acc[event.transaction.id] == null) {
@@ -73,8 +66,6 @@ export default function HistoryView() {
         }
         return acc
     }, {});
-
-    console.log(transactionsPerId)
 
     const entries = Object.keys(eventsPerTransaction).map((key) => {
         const events = eventsPerTransaction[key];
@@ -104,8 +95,8 @@ export default function HistoryView() {
         )
     });
 
-    const details = hasAddedAsFish && siwe.getAddress() != null ?
-        <>
+    const details =
+        <RequiresFishTracking address={address}>
             <SectionWithBackground>
                 <Subheading>A little bit of history</Subheading>
                 <Heading><HighlightedText>DEFI</HighlightedText> ACTIVITIES</Heading>
@@ -136,40 +127,14 @@ export default function HistoryView() {
                     </Section>
                 }
             </DashboardWrapper>
-        </>
-        : <NoFishYet address={address}/>
-
+        </RequiresFishTracking>
 
     return <>
         <CustomHeader showSearch={true} onAddressChange={onAddressChange}></CustomHeader>
         <Container>
             <DashboardWrapper>
                 <Center>
-                    <Navbar items={
-                        [
-                            {
-                                name: "Profile",
-                                selected: false,
-                                url: '/dashboard',
-                                onClick() {
-                                    history.push(`/${address}/profile`)
-                                }
-                            },
-                            {
-                                name: "Claimables",
-                                selected: false,
-                                url: '#',
-                                onClick() {
-                                    history.push(`/${address}/claimables`)
-                                }
-                            },
-                            {
-                                name: "History",
-                                selected: true,
-                                url: '#'
-                            }
-                        ]
-                    }/>
+                    <DashboardNavbar address={address} selected={"history"} />
                 </Center>
             </DashboardWrapper>
 

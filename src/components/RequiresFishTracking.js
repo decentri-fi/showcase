@@ -1,14 +1,13 @@
 import tw from "twin.macro";
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 
 
-import useSiwe from "../../hooks/siwe/useSiwe";
-import Siwe from "../../components/siwe/Siwe";
-import {PrimaryButton} from "../../components/misc/Buttons";
-import {SectionHeading, Subheading as SubheadingBase} from "../../components/misc/Headings";
-import {SectionDescription} from "../../components/misc/Typography";
-import {addFish} from "../../api/whalespotter/fish/fish";
-import {useHistory} from "react-router-dom";
+import useSiwe from "../hooks/siwe/useSiwe";
+import Siwe from "./siwe/Siwe";
+import {PrimaryButton} from "./misc/Buttons";
+import {SectionHeading, Subheading as SubheadingBase} from "./misc/Headings";
+import {SectionDescription} from "./misc/Typography";
+import {addFish, getFish} from "../api/whalespotter/fish/fish";
 import Popup from "reactjs-popup";
 import ClipLoader from "react-spinners/ClipLoader";
 
@@ -27,25 +26,38 @@ const Header = tw.h1`text-lg font-black text-purple-600`
 const ConnectList = tw.div`flex flex-col w-full mx-2 mb-8`
 const ConnectListItem = tw.div`items-center my-2 hover:border-blue-500 border-2 font-bold text-gray-700 hover:text-blue-500 hover:border-2 w-full flex flex-row rounded rounded-lg p-4`
 const ConnectItemLogo = tw.img`w-8 h-8 mr-4`
-export default function NoFishYet({address, target = `/${address}/history`}) {
+export default function RequiresFishTracking({address, target = `/${address}/history`, children}) {
 
     const siwe = useSiwe();
     const [open, setOpen] = useState(false);
+
+    const [hasAddedAsFish, setHasAddedAsFish] = useState(true);
+
     const closeModal = () => setOpen(false);
 
     async function addAddress() {
         setOpen(true);
         addFish(siwe.getAddress(), address).then(() => {
-            console.log("done");
             window.location.reload(false);
         });
     }
+
+    useEffect(async () => {
+        if (siwe.getAddress() && address) {
+            const fish = await getFish(siwe.getAddress());
+            setHasAddedAsFish(fish.map(f => {
+                return f.address.toLowerCase()
+            }).includes(address.toLowerCase()));
+        }
+    }, []);
+
+    console.log('has added fish', hasAddedAsFish);
 
     if (!siwe.isAuthenticated()) {
         return (
             <Siwe target={target}/>
         );
-    } else {
+    } else if (!hasAddedAsFish) {
         return (
             <>
                 <Popup modal open={open} onClose={closeModal}>
@@ -81,8 +93,8 @@ export default function NoFishYet({address, target = `/${address}/history`}) {
                     </Container>
                 </SectionWithBackground>
             </>
-
-
         );
+    } else {
+        return children
     }
 };

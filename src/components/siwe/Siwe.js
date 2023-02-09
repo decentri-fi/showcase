@@ -35,7 +35,7 @@ export default function Siwe({target}) {
                 <Heading> <HighlightedText>Sign in</HighlightedText> with Ethereum</Heading>
                 <Description>In order to get your history, we'll need to have you sign in with Ethereum.
                     <br/>
-                    This extra security measure is in place to limit the stress on our endpoints.
+                    You only need to do this once.
                 </Description>
                 <ActionContainer>
                     <PrimaryButton onClick={handleClick}>Sign in With Ethereum</PrimaryButton>

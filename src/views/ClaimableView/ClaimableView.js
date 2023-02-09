@@ -7,11 +7,11 @@ import {SectionDescription} from "../../components/misc/Typography";
 import FAQ from "../../components/faqs/SingleCol";
 import Navbar from "../../components/Navbar/Navbar";
 import {useHistory} from "react-router-dom";
-import GetStartedLight from "../../components/cta/GetStartedLight";
 import DollarLabel from "../../components/Label/DollarLabel";
 import {getFish} from "../../api/whalespotter/fish/fish";
 import useSiwe from "../../hooks/siwe/useSiwe";
-import NoFishYet from "../HistoryView/NoFishYet";
+import RequiresFishTracking from "../../components/RequiresFishTracking";
+import DashboardNavbar from "../../components/DashboardNavbar";
 
 const Container = tw.div`flex pt-8`
 
@@ -32,21 +32,6 @@ const ClaimableSection = tw.div`py-4 lg:w-2/3 w-full px-4 mt-4`
 const FAQSection = tw.div`w-full px-4  bg-white`
 
 export default function ClaimableView({dashboardHooks}) {
-
-    const siwe = useSiwe();
-    const [hasAddedAsFish, setHasAddedAsFish] = useState(true);
-
-    useEffect(async () => {
-        if (dashboardHooks.address != null) {
-            const fish = await getFish(siwe.getAddress());
-            setHasAddedAsFish(fish.map(f => {
-                return f.address.toLowerCase()
-            }).includes(dashboardHooks.address.toLowerCase()));
-        }
-    }, [dashboardHooks.address])
-
-    const history = useHistory();
-
     const faqs = [
         {
             question: "How do we know what is claimable for your address?",
@@ -66,35 +51,12 @@ export default function ClaimableView({dashboardHooks}) {
     return <Container>
         <DashboardWrapper>
             <Center>
-                <Navbar items={
-                    [
-                        {
-                            name: "Profile",
-                            selected: false,
-                            url: '/dashboard',
-                            onClick() {
-                                history.push(`/${dashboardHooks.address}/profile`)
-                            }
-                        },
-                        {
-                            name: "Claimables",
-                            selected: true,
-                            url: '#'
-                        },
-                        {
-                            name: "History",
-                            selected: false,
-                            url: '#',
-                            onClick() {
-                                history.push(`/${dashboardHooks.address}/history`)
-                            }
-                        },
-                    ]
-                }/>
+               <DashboardNavbar selected={"claimables"} address={dashboardHooks.address} />
             </Center>
 
             {
                 !dashboardHooks.claimableLoading &&
+                <>
                 <Section>
                     <Subheading>Rewards are waiting for you</Subheading>
                     <Heading>You've got <HighlightedText><DollarLabel amount={
@@ -103,6 +65,14 @@ export default function ClaimableView({dashboardHooks}) {
                         outstanding <HighlightedText>rewards</HighlightedText></Heading>
                     <Description></Description>
                 </Section>
+
+                <RequiresFishTracking address={dashboardHooks.address} target={`/${dashboardHooks.address}/claimables`}>
+                <ClaimableSection>
+                <ClaimableDetails showNothingFoundMessage={true} showPlaceholder={dashboardHooks.claimableLoading}
+                dashboardHooks={dashboardHooks}/>
+                </ClaimableSection>
+                </RequiresFishTracking>
+                </>
             }
 
             {
@@ -113,19 +83,6 @@ export default function ClaimableView({dashboardHooks}) {
                     <Description>Find out if you have any unclaimed yields, rewards, NFTs or airdrops!
                         We automatically check your wallet for any unclaimed reward.</Description>
                 </SectionWithBackground>
-            }
-
-            {
-                hasAddedAsFish && siwe.getAddress() != null &&
-                <ClaimableSection>
-                    <ClaimableDetails showNothingFoundMessage={true} showPlaceholder={dashboardHooks.claimableLoading}
-                                      dashboardHooks={dashboardHooks}/>
-                </ClaimableSection>
-            }
-
-            {
-                !hasAddedAsFish && siwe.getAddress() != null &&
-                <NoFishYet address={dashboardHooks.address} target={`/${dashboardHooks.address}/claimables`}/>
             }
 
             <FAQSection>

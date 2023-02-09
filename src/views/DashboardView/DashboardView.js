@@ -4,12 +4,11 @@ import AccountBreakdown from "./partials/OverviewDetails";
 import BalanceDetails from "./partials/BalanceDetails";
 
 import tw from 'twin.macro';
-import ClaimableDetails from "./partials/ClaimableDetails";
-import Navbar from "../../components/Navbar/Navbar";
 import DefiPositions from "./partials/DefiPositions";
 import {useHistory} from "react-router-dom";
+import DashboardNavbar from "../../components/DashboardNavbar";
 
-const Container = tw.div`flex pt-8 grid`
+const Container = tw.div`flex pt-5 grid`
 const DashboardWrapper = tw.div`w-full`
 const HorizontalCenter = tw.div`pl-1 flex items-center w-full`
 const HideSmallValueFilter = tw.p`text-xs`
@@ -19,7 +18,6 @@ const Column = tw.div`w-full lg:w-1/2 px-4`
 
 const CenterText = tw.div`text-center w-full`
 const Center = tw.div`w-full flex grid justify-items-center mt-3 mb-1`
-const NewLabel = tw.span`text-xs align-text-top font-thin text-teal-500`
 export default function DashboardView({dashboardHooks}) {
 
     const history = useHistory();
@@ -32,7 +30,7 @@ export default function DashboardView({dashboardHooks}) {
         dashboardHooks.setHideSmallValues(true);
     }
 
-    useEffect(()=> {
+    useEffect(() => {
         document.title = "Dashboard - Decentrifi"
     }, [])
 
@@ -40,37 +38,14 @@ export default function DashboardView({dashboardHooks}) {
     return <Container>
         <DashboardWrapper>
             <Center>
-                <Navbar items={
-                    [
-                        {
-                            name: "Profile",
-                            selected: true,
-                            url: '#'
-                        },
-                        {
-                            name: "Claimables",
-                            selected: false,
-                            url: '/claimables',
-                            onClick: () => {
-                                history.push(`/${dashboardHooks.address}/claimables`);
-                            }
-                        },
-                        {
-                            name: <span>History <NewLabel>new</NewLabel></span>,
-                            selected: false,
-                            onClick() {
-                                history.push(`/${dashboardHooks.address}/history`)
-                            }
-                        },
-                    ]
-                }/>
+                <DashboardNavbar address={dashboardHooks.address} selected={"profile"}/>
             </Center>
 
             <DashboardHeader dashboardHooks={dashboardHooks}/>
 
             <Full>
                 <Column>
-                    <ClaimableDetails dashboardHooks={dashboardHooks}/>
+
                     <BalanceDetails dashboardHooks={dashboardHooks}/>
 
                     <HorizontalCenter>

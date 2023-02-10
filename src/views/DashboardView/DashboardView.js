@@ -7,6 +7,19 @@ import tw from 'twin.macro';
 import DefiPositions from "./partials/DefiPositions";
 import {useHistory} from "react-router-dom";
 import DashboardNavbar from "../../components/DashboardNavbar";
+import TwoColWithSteps from "../../components/features/TwoColWithSteps";
+import TwoColWithButton from "../../components/features/TwoColWithButton";
+import VerticalWithAlternateImageAndText from "../../components/features/VerticalWithAlternateImageAndText";
+import TwoColWithTwoFeaturesAndButtons from "../../components/features/TwoColWithTwoFeaturesAndButtons";
+import TwoColSingleFeatureWithStats2 from "../../components/features/TwoColSingleFeatureWithStats2";
+import TabCardGrid from "../../components/cards/TabCardGrid";
+import TwoTrendingPreviewCardsWithImage from "../../components/cards/TwoTrendingPreviewCardsWithImage";
+import GetStarted from "../../components/cta/GetStarted";
+import GetStartedLight from "../../components/cta/GetStartedLight";
+import DownloadApp from "../../components/cta/DownloadApp";
+import FullWidthWithImage from "../../components/hero/FullWidthWithImage";
+import TwoColumnWithPrimaryBackground from "../../components/hero/TwoColumnWithPrimaryBackground";
+import ClaimableTeaser from "./ClaimableTeaser";
 
 const Container = tw.div`flex pt-5 grid`
 const DashboardWrapper = tw.div`w-full`
@@ -42,7 +55,7 @@ export default function DashboardView({dashboardHooks}) {
             </Center>
 
             <DashboardHeader dashboardHooks={dashboardHooks}/>
-
+            <ClaimableTeaser owner={dashboardHooks.address} amount={dashboardHooks.totalClaimables} />
             <Full>
                 <Column>
 

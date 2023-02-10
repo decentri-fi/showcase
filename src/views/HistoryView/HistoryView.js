@@ -107,6 +107,7 @@ export default function HistoryView() {
                         entries?.length === 0 &&
                         <Section>
                             <TwoColSingleFeatureWithStats2
+                                statistics={[]}
                                 subheading={"History unavailable"}
                                 heading={"Unable to locate history for this specific address"}
                                 description={"We are unable to locate any history for this address. Please check the address and try again."}

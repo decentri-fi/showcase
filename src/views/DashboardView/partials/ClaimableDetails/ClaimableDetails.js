@@ -7,7 +7,7 @@ import SadWhalePic from "../../../../images/sad_whale.png";
 import ClaimButton from "./ClaimButton";
 
 const Container = tw.div`w-full items-center grid`
-const Header = tw.div`w-full flex text-lg font-medium mb-2  `
+const Header = tw.div`w-full flex text-lg font-medium mb-2 grid justify-items-center`
 const HeaderTextContainer = tw.div`lg:w-3/12 w-full`
 const HeaderText = tw.h3`shadow px-4 py-1 text-sm font-medium mb-2 bg-green-600 rounded-r  text-white`
 const BalanceText = tw.div`w-9/12 text-right`

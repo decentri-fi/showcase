@@ -31,7 +31,7 @@ export default function RequiresFishTracking({address, target = `/${address}/his
     const siwe = useSiwe();
     const [open, setOpen] = useState(false);
 
-    const [hasAddedAsFish, setHasAddedAsFish] = useState(true);
+    const [hasAddedAsFish, setHasAddedAsFish] = useState(null);
 
     const closeModal = () => setOpen(false);
 
@@ -42,6 +42,7 @@ export default function RequiresFishTracking({address, target = `/${address}/his
         });
     }
 
+
     useEffect(async () => {
         if (siwe.getAddress() && address) {
             const fish = await getFish(siwe.getAddress());
@@ -49,14 +50,17 @@ export default function RequiresFishTracking({address, target = `/${address}/his
                 return f.address.toLowerCase()
             }).includes(address.toLowerCase()));
         }
-    }, []);
-
-    console.log('has added fish', hasAddedAsFish);
+    }, [address, siwe.getAddress()]);
 
     if (!siwe.isAuthenticated()) {
         return (
             <Siwe target={target}/>
         );
+    }
+    else if (hasAddedAsFish == null) {
+        return <>
+
+        </>
     } else if (!hasAddedAsFish) {
         return (
             <>
@@ -95,6 +99,6 @@ export default function RequiresFishTracking({address, target = `/${address}/his
             </>
         );
     } else {
-        return children
+        return children;
     }
 };

@@ -72,6 +72,14 @@ export default function DashboardHeader({dashboardHooks}) {
         }
     }
 
+    const ens = (function () {
+        if (dashboardHooks.ens != null) {
+            return dashboardHooks.ens
+        } else {
+            return "No ENS name linked."
+        }
+    })();
+
 
     return (
         <Wrapper>
@@ -85,7 +93,7 @@ export default function DashboardHeader({dashboardHooks}) {
                                 <AddressText>
                                     <Address>{address}</Address>
                                     <ShortAddress>{sliceAccount(address)}</ShortAddress>
-                                    <ENS>No ENS name linked.</ENS>
+                                    <ENS>{ens}</ENS>
                                 </AddressText>
                             </AddressInfo>
                         }

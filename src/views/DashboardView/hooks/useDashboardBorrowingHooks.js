@@ -42,6 +42,11 @@ export default function useDashboardBorrowingHooks(account, protocols, supportsD
                                 return [...prevState];
                             })
                         }
+                    }).catch(() => {
+                        setDoneScanning(prevState => {
+                            return prevState + 1
+                        })
+                        console.log("error trying to fetch borrowing positions");
                     });
                 }
             }

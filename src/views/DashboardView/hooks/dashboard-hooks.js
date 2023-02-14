@@ -9,6 +9,7 @@ import useDashboardClaimableHooks from "./useDashboardClaimableHooks";
 import useDashboardBorrowingHooks from "./useDashboardBorrowingHooks";
 import useDashboardLPHooks from "./useDashboardLPHooks";
 import useDashboardNetworkHooks from "./useDashboardNetworkHooks";
+import useEnsHooks from "./useEnsHooks";
 
 export default function
     useDashboardHooks(account, {
@@ -70,6 +71,10 @@ export default function
         lps,
         refresh: refreshLps
     } = useDashboardLPHooks(currentAccount, protocols, supportsPooling, {setTotalScanning, setDoneScanning});
+
+    const {
+        ens
+    } = useEnsHooks(currentAccount);
 
     function totalStaking(protocol) {
         if (stakings == null || stakings.length === 0) {
@@ -233,6 +238,7 @@ export default function
     }
 
     return {
+        ens,
         claimableLoading,
         refresh,
         refreshClaimables,

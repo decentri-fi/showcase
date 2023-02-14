@@ -43,7 +43,10 @@ export default function useDashboardLPHooks(account, protocols, supportsPooling,
                 for (const protocol of protocols) {
                     poolingPositions(account, protocol).then(poolings => {
                         updatePoolings(poolings);
-                    })
+                    }).catch(() => {
+                        updatePoolings([]);
+                        console.log("error trying to fetch pooling positions");
+                    });
                 }
             }
         }

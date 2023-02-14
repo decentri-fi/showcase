@@ -38,6 +38,11 @@ export default function useDashboardLendingHooks(account, protocols, supportsLen
                                 return [...prevState];
                             })
                         }
+                    }).catch(() => {
+                        setDoneScanning(prevState => {
+                            return prevState + 1
+                        })
+                        console.log("error trying to fetch lending positions");
                     });
                 }
             }

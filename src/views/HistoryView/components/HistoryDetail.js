@@ -11,9 +11,9 @@ export default function HistoryDetail({event, owner}) {
 
     const result = function toDetail() {
         if (event.type === "TRANSFER") {
-            return <TransferDetail owner={owner} event={event}/>
+            return TransferDetail({event, owner});
         } else if (event.type === "APPROVAL") {
-            return <ApprovalDetail owner={owner} event={event}/>
+            return ApprovalDetail({event, owner});
         } else {
             return null
         }

@@ -50,6 +50,11 @@ export default function useDashboardClaimableHooks(account, protocols, supportsC
                                 return [...prevState];
                             });
                         }
+                    }).catch(() => {
+                        setDoneScanning(prevState => {
+                            return prevState + 1
+                        });
+                        console.log("error trying to fetch claimables");
                     })
                 }
             }

@@ -1,4 +1,4 @@
-import React, {useRef, useState} from "react";
+import React, {useEffect, useRef, useState} from "react";
 import tw from "twin.macro";
 import styled from "styled-components";
 import Header, {DesktopNavLinks, LogoLink, NavLink, NavLinks, NavToggle} from "../headers/light.js";
@@ -9,6 +9,7 @@ import Search from "../../views/DashboardView/partials/Search/Search";
 import ReactGA from "react-ga4";
 import useConnectWalletPopup from "../ConnectWalletPopup/UseConnectWalletPopup";
 import {PrimaryButton} from "../misc/Buttons";
+import {getReverseEns} from "../../api/defitrack/ens/ens";
 
 const StyledHeader = styled(Header)`
   ${tw`pt-8 max-w-none lg:mt-8 pb-4`}
@@ -62,6 +63,17 @@ const PrimaryAction = tw.button`px-8 py-3 mt-10 text-sm sm:text-base sm:mt-16 sm
 
 function UserLink({web3}) {
 
+    const [ens, setEns] = useState(null);
+
+    useEffect(() => {
+        if (web3.account) {
+            getReverseEns(web3.account).then(result => {
+                setEns(result.name)
+            }).catch(e => {
+            });
+        }
+    }, [web3.account])
+
     const {
         html: connectWalletPopup,
         open: openConnectWalletPopup,
@@ -71,12 +83,18 @@ function UserLink({web3}) {
         return `${address.slice(0, 6)}...${address.slice(-6, address.length)}`;
     };
 
-
     if (web3.account != null) {
+        const buttonText = (function () {
+            if (ens != null) {
+                return ens;
+            } else {
+                return sliceAccount(web3.account)
+            }
+        })();
         return (
             <>
                 <Button color={"secondary"} variant={"contained"}>
-                    {sliceAccount(web3.account)}
+                    {buttonText}
                 </Button>
             </>
         );
@@ -105,8 +123,9 @@ function Expansion({expanded}) {
                 <SearchTeaser>
                     <SearchContainer>
                         <SearchInput
-                            onSubmit={e => {
-                                if (searchField.length === 40 || searchField.length === 42) {
+                            ref={searchField}
+                            onKeyDown={e => {
+                                if (searchField.current.value === 40 || searchField.current.value === 42) {
                                     ReactGA.event({
                                         category: 'dashboard',
                                         action: 'Search',
@@ -126,7 +145,7 @@ function Expansion({expanded}) {
                         </Caret>
                     </SearchContainer>
                     <OrText>or</OrText>
-                    <PrimaryButton  onClick={() => {
+                    <PrimaryButton onClick={() => {
                         history.push('/dashboard');
                     }
                     }>Login with Web3</PrimaryButton>

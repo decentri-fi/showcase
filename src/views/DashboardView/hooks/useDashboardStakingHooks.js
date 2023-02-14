@@ -43,6 +43,8 @@ export default function useDashboardStakingHooks(account, protocols, supportsSta
                 for (const protocol of protocols) {
                     farmingPositions(account, protocol).then(retStakings => {
                         updateStakes(retStakings)
+                    }).catch(() => {
+                        updateStakes([]);
                     });
                 }
             }

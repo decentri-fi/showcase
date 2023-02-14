@@ -40,7 +40,13 @@ export default function TransferDetail({event, owner}) {
     })();
 
     if (!new BigNumber(0).isLessThan(new BigNumber(event.metadata.amount))) {
-        return <></>
+        return null;
+    }
+
+    if(event.metadata.from.toLowerCase() != owner.toLowerCase() &&
+        event.metadata.to.toLowerCase() != owner.toLowerCase()
+    ) {
+        return null;
     }
 
     return (

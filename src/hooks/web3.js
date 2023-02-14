@@ -1,12 +1,17 @@
 import {hooks as metamaskHooks, metaMask} from "./metamask";
 import {useWeb3React} from '@web3-react/core'
 import {Web3Provider} from '@ethersproject/providers'
+import {useEffect, useState} from "react";
+import {getReverseEns} from "../api/defitrack/ens/ens";
 
 export default function useWeb3() {
 
     const {ethereum} = window
 
     const web3React = useWeb3React();
+    const acc = metamaskHooks.useAccount()
+
+
 
     const supported = function () {
         return window.ethereum !== undefined

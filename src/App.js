@@ -2,7 +2,6 @@ import "tailwindcss/dist/base.css";
 import "styles/globalStyles.css";
 
 // Path: src/styles/globalStyles.css
-
 import React, {useEffect} from "react";
 import {BrowserRouter as Router, Route, Switch} from 'react-router-dom';
 
@@ -33,11 +32,10 @@ import ProtocolView from "./views/ProtocolsView/ProtocolView";
 import TermsOfServiceView from "./views/TermsOfServiceView/TermsOfServiceView";
 import Web3ClaimableView from "./views/ClaimableView/Web3ClaimableView";
 import AddressClaimableView from "./views/ClaimableView/AddressClaimableView";
-
-import {hooks as metaMaskHooks, metaMask} from 'hooks/metamask'
 import useWeb3 from "./hooks/web3";
 import SignInWithEthereumView from "./views/SignInWithEthereumView";
 import HistoryView from "./views/HistoryView/HistoryView";
+import {QueryClient, QueryClientProvider} from "@tanstack/react-query";
 
 export default function App() {
     ReactGA.initialize([
@@ -46,6 +44,7 @@ export default function App() {
         }
     ]);
 
+    const queryClient = new QueryClient()
     const web3 = useWeb3();
 
     useEffect(async () => {
@@ -55,6 +54,7 @@ export default function App() {
     }, []);
 
     return (
+        <QueryClientProvider client={queryClient}>
 
             <Router>
                 <Switch>
@@ -78,7 +78,7 @@ export default function App() {
                     </Route>
                     <Route path="/siwe">
                         <CustomHeader showUserLink={false}/>
-                        <SignInWithEthereumView />
+                        <SignInWithEthereumView/>
                     </Route>
                     <Route path="/defi-hub">
                         <CustomHeader showUserLink={false}/>
@@ -131,5 +131,6 @@ export default function App() {
                     </Route>
                 </Switch>
             </Router>
+        </QueryClientProvider>
     );
 }

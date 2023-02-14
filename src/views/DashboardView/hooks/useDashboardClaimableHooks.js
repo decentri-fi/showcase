@@ -1,108 +1,73 @@
-import {useEffect, useState} from "react";
 import {fetchClaimables} from "../../../api/defitrack/claimable/claimable";
+import {useQueries, useQueryClient} from "@tanstack/react-query";
 
 export default function useDashboardClaimableHooks(account, protocols, supportsClaimables, {
     setTotalScanning,
     setDoneScanning
 }) {
-    const [claimables, setClaimables] = useState([])
+    const queryClient = useQueryClient();
 
-    function refresh() {
-        localStorage.setItem(`claimable-elements-${account}`, null);
-        localStorage.setItem(`scanned-claimables-${account}`, null);
-        setClaimables([]);
-        init();
-    }
-
-    function scanned(protocol, _account) {
-        const scannedClaimables = JSON.parse(localStorage.getItem(`scanned-claimables-${_account}`)) || [];
-        scannedClaimables.push(protocol.slug)
-        localStorage.setItem(`scanned-claimables-${_account}`, JSON.stringify(scannedClaimables));
-    }
-
-
-    function init() {
-        const loadData = async (protocolsToScan, _account) => {
-            if (protocolsToScan.length > 0) {
-                setTotalScanning(prevTotalScanning => {
-                    return prevTotalScanning + protocols.length
-                });
-                for (const protocol of protocolsToScan) {
-                    fetchClaimables(_account, protocol).then(retClaimable => {
-                        setDoneScanning(prevState => {
-                            return prevState + 1
-                        });
-                        scanned(protocol, _account);
-                        if (retClaimable.length > 0) {
-                            for (const claimable of retClaimable) {
-                                setClaimables(prevState => {
-                                    prevState.push({
-                                        ...claimable,
-                                        owner: _account
-                                    });
-                                    localStorage.setItem(`claimable-elements-${_account}`, JSON.stringify(prevState));
-                                    return [...prevState];
-                                })
-                            }
-                        } else {
-                            setClaimables(prevState => {
-                                localStorage.setItem(`claimable-elements-${account}`, JSON.stringify(prevState));
-                                return [...prevState];
-                            });
-                        }
-                    }).catch(() => {
-                        setDoneScanning(prevState => {
-                            return prevState + 1
-                        });
-                        console.log("error trying to fetch claimables");
-                    })
-                }
+    async function getClaimables(protocol) {
+        console.log('fetching from api')
+        const claimables = (await fetchClaimables(account, protocol)).map(claimable => {
+            return {
+                ...claimable,
+                owner: account
             }
+        });
+        persist(account, protocol, claimables);
+        return claimables;
+    }
+
+    function query(protocol) {
+        return async () => {
+            return getFromLocalStorage(account, protocol) || await getClaimables(protocol);
         };
+    }
 
-        if (supportsClaimables && account !== undefined) {
-            const savedOne = JSON.parse(localStorage.getItem(`claimable-elements-${account}`));
-            if (savedOne !== null) {
-                setClaimables(savedOne);
+    const queries = useQueries({
+        queries: protocols.map((protocol) => {
+            return {
+                queryKey: ['claimables', account, protocol],
+                queryFn: query(protocol),
             }
+        })
+    });
 
-            const protocolsToScan = getProtocolsToScan(account);
-
-            if (protocolsToScan.length > 0) {
-                loadData(protocolsToScan, account);
-            }
-        }
+    function persist(account, protocol, claimables) {
+        localStorage.setItem(`claimables-${account}-${protocol.name}`, JSON.stringify(claimables));
     }
 
-    function getProtocolsToScan(_account) {
-        let protocolsToScan = protocols;
-        let storedScannedProtocols = JSON.parse(localStorage.getItem(`scanned-claimables-${_account}`)) || [];
-        if (storedScannedProtocols != null) {
-            protocolsToScan = protocolsToScan.filter(element => {
-                return !storedScannedProtocols.includes(element.slug);
-            })
-        }
-        return protocolsToScan;
+    function getFromLocalStorage(account, protocol) {
+        return JSON.parse(localStorage.getItem(`claimables-${account}-${protocol.name}`));
     }
 
-    useEffect(() => {
-        init();
-    }, [protocols, account])
 
-    const filteredClaimables = () => {
-        if (claimables == null || claimables.length === 0) {
-            return [];
-        } else {
-            return [...claimables.reduce((a, c) => {
-                a.set(c.id, c);
-                return a;
-            }, new Map()).values()].filter(claimable => claimable.owner === account);
-        }
+
+    const refresh = () => {
+        protocols.forEach(async (protocol) => {
+            await queryClient.invalidateQueries(['claimables', account, protocol]);
+            persist(account, protocol, null);
+        });
+        queries.forEach(async query => {
+            console.log('invalidating', query)
+            await query.refetch();
+        })
     }
+
+    const fetchedClaimables = queries.map((query) => {
+        return query.data
+    }).filter(data => {
+        return data != null
+    }).flat();
+
 
     return {
-        claimables: filteredClaimables(),
-        refresh,
-        loading: getProtocolsToScan(account).length > 0
+        claimables: [...fetchedClaimables.reduce((a, c) => {
+            a.set(c.id, c);
+            return a;
+        }, new Map()).values()].filter(claimable => claimable.owner === account),
+        refresh: refresh,
+        loading: queries.map(query => query.isLoading).reduce((a, c) => a || c, false),
     }
 }

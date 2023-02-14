@@ -8,7 +8,6 @@ export default function useDashboardClaimableHooks(account, protocols, supportsC
     const queryClient = useQueryClient();
 
     async function getClaimables(protocol) {
-        console.log('fetching from api')
         const claimables = (await fetchClaimables(account, protocol)).map(claimable => {
             return {
                 ...claimable,
@@ -50,7 +49,6 @@ export default function useDashboardClaimableHooks(account, protocols, supportsC
             persist(account, protocol, null);
         });
         queries.forEach(async query => {
-            console.log('invalidating', query)
             await query.refetch();
         })
     }

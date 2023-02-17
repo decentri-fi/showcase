@@ -1,8 +1,10 @@
 import {useEffect, useState} from "react";
 import {poolingPositions} from "../../../api/defitrack/pools/pools";
+import useProtocols from "./useProtocols";
 
-export default function useDashboardLPHooks(account, protocols, supportsPooling, {setTotalScanning, setDoneScanning}) {
+export default function useDashboardLPHooks(account, supportsPooling, {setTotalScanning, setDoneScanning}) {
     const [lps, setLps] = useState([]);
+    const {protocols} = useProtocols();
 
     function getStoredElements() {
         return JSON.parse(localStorage.getItem(`lp-elements-${account}`));

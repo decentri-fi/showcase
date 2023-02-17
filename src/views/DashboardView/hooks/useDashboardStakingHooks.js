@@ -1,12 +1,14 @@
 import {useEffect, useState} from "react";
 import {farmingPositions} from "../../../api/defitrack/staking/staking";
+import useProtocols from "./useProtocols";
 
-export default function useDashboardStakingHooks(account, protocols, supportsStaking, {
+export default function useDashboardStakingHooks(account, supportsStaking, {
     setTotalScanning,
     setDoneScanning
 }) {
 
     const [stakings, setStakings] = useState([]);
+    const {protocols} = useProtocols();
 
     function refresh() {
         localStorage.setItem(`staking-elements-${account}`, null);

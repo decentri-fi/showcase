@@ -1,10 +1,11 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import DollarLabel from "../../../../components/Label/DollarLabel";
 import tw from "twin.macro";
 import AssetTable from "../../../../components/AssetTable/AssetTable";
 import {Subheading} from "../../../../components/misc/Headings";
 import SadWhalePic from "../../../../images/sad_whale.png";
 import ClaimButton from "./ClaimButton";
+import {DashboardContext} from "../../../../App";
 
 const Container = tw.div`w-full items-center grid`
 const Header = tw.div`w-full flex text-lg font-medium mb-2 grid justify-items-center`
@@ -24,10 +25,16 @@ const SadWhaleImage = tw.img`w-10 h-10`
 const HeroDescription = tw.p`text-purple-400 text-lg`
 
 
-export default function ClaimableDetails({dashboardHooks, showPlaceholder = false, showNothingFoundMessage = false}) {
-    const claimables = dashboardHooks.claimables;
+export default function ClaimableDetails({showPlaceholder = false, showNothingFoundMessage = false}) {
 
-    if (claimables.length === 0 && !dashboardHooks.claimableLoading) {
+    const {
+        claimables,
+        claimableLoading,
+        refreshClaimables,
+        totalClaimables
+    } = useContext(DashboardContext);
+
+    if (claimables.length === 0 && !claimableLoading) {
         if (showNothingFoundMessage) {
             return <>
                 <Container>
@@ -59,7 +66,7 @@ export default function ClaimableDetails({dashboardHooks, showPlaceholder = fals
                     networkLogo: element.network.logo,
                     dollarValue: element.dollarValue,
                     actionButton: (
-                        <ClaimButton refreshClaimables={dashboardHooks.refreshClaimables} claimable={element}/>
+                        <ClaimButton refreshClaimables={refreshClaimables} claimable={element}/>
                     )
                 }
             });
@@ -82,7 +89,7 @@ export default function ClaimableDetails({dashboardHooks, showPlaceholder = fals
                                                 <PullRight>
                                                     <HeaderText>
                                                         <DollarLabel
-                                                            amount={dashboardHooks.totalClaimables}/>
+                                                            amount={totalClaimables}/>
                                                     </HeaderText>
                                                 </PullRight>
                                             </Hidden>

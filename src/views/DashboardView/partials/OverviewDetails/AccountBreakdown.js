@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useContext} from "react";
 import DollarLabel from "../../../../components/Label/DollarLabel";
 import {CurrencyDollarIcon} from "@heroicons/react/outline";
 import DetailCard from "../../../../components/Card/DetailCard"; //eslint-disable-line
@@ -7,6 +7,7 @@ import PlaceholderLoading from "react-placeholder-loading";
 import {Subheading} from "../../../../components/misc/Headings";
 import SadWhalePic from "../../../../images/sad_whale.png";
 import {useHistory} from "react-router-dom";
+import {DashboardContext} from "../../../../App";
 
 
 const CenterImage = tw.div`w-full flex justify-center my-2`
@@ -32,16 +33,18 @@ const HeaderText = tw.h3`shadow px-4 py-1 text-sm font-medium mb-2 bg-green-600 
 const Logo = tw.img`h-8 w-8`
 const FullRow = tw.div`w-full`
 
-const AccountOverviewWrapper = tw.div`mb-2`
+function Protocols() {
 
-function Protocols({dashboardHooks}) {
+    const {
+        usedProtocols
+    } = useContext(DashboardContext)
 
     const getElements = () => {
-        if (dashboardHooks.usedProtocols.length > 0) {
-            return dashboardHooks.usedProtocols.map(protocol => {
-                return <ProtocolElement dashboardHooks={dashboardHooks} protocol={protocol} key={protocol.name}/>
+        if (usedProtocols.length > 0) {
+            return usedProtocols.map(protocol => {
+                return <ProtocolElement protocol={protocol} key={protocol.name}/>
             })
-        } else if(dashboardHooks) {
+        } else {
             return <DummyCard/>
         }
     }
@@ -81,24 +84,19 @@ function DummyCard() {
     )
 }
 
-export default function AccountBreakdown(
-    {
-        dashboardHooks
-    }
-) {
-
+export default function AccountBreakdown() {
 
     return (
         <>
             <Container>
-                <AccountOverview dashboardHooks={dashboardHooks} />
-                <DefiOverview dashboardHooks={dashboardHooks}/>
+                <AccountOverview/>
+                <DefiOverview/>
             </Container>
         </>
     );
 }
 
-function AccountOverview({dashboardHooks}) {
+function AccountOverview() {
 
     const {
         hasFinishedScanning,
@@ -107,7 +105,7 @@ function AccountOverview({dashboardHooks}) {
         totalStaking,
         totalPooling,
         totalBorrowing,
-    } = dashboardHooks
+    } = useContext(DashboardContext)
 
 
     function totalDollarValue() {
@@ -220,16 +218,23 @@ function AccountOverview({dashboardHooks}) {
 const Hero = tw.div`justify-self-center bg-gray-100 w-full border p-4 mb-4 text-center`
 const HeroDescription = tw.p`text-gray-500 text-lg`
 
-function DefiOverview({dashboardHooks}) {
-    if (dashboardHooks.usedProtocols.length === 0 && dashboardHooks.hasFinishedScanning) {
+function DefiOverview() {
+
+    const {
+        usedProtocols,
+        hasFinishedScanning
+    } = useContext(DashboardContext)
+
+    if (usedProtocols.length === 0 && hasFinishedScanning) {
         return <>
             <Container>
                 <Hero>
                     <Header>We couldn't find any <Subheading>Active Defi Application</Subheading></Header>
                     <CenterImage>
-                        <SadWhaleImage src={SadWhalePic} />
+                        <SadWhaleImage src={SadWhalePic}/>
                     </CenterImage>
-                    <HeroDescription>Unfortunately, we couldn't identify any participation in a defi application for this specific address. It might be a fresh account or simply not exist at all.</HeroDescription>
+                    <HeroDescription>Unfortunately, we couldn't identify any participation in a defi application for
+                        this specific address. It might be a fresh account or simply not exist at all.</HeroDescription>
                 </Hero>
             </Container>
         </>
@@ -239,7 +244,7 @@ function DefiOverview({dashboardHooks}) {
         <>
             <HeaderText>Defi Positions</HeaderText>
             <Table>
-                <Protocols dashboardHooks={dashboardHooks}/>
+                <Protocols/>
             </Table>
         </>
     );

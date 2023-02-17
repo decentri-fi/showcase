@@ -21,7 +21,7 @@ export default function () {
     }
 
     const query = useQuery({
-        queryKey: ["protocols"],
+        queryKey: ["protocol-stats"],
         queryFn: async () => {
             return await fetchStatistics();
         }

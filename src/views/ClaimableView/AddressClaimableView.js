@@ -3,6 +3,7 @@ import {useHistory, useParams} from "react-router-dom";
 import useDashboardHooks from "../DashboardView/hooks/dashboard-hooks";
 import ClaimableView from "./ClaimableView";
 import CustomHeader from "../../components/Header/CustomHeader";
+import {DashboardContext} from "../../App";
 
 export default function AddressClaimableView() {
 
@@ -28,9 +29,9 @@ export default function AddressClaimableView() {
     });
 
     return (
-        <>
+        <DashboardContext.Provider value={dashboardHooks}>
             <CustomHeader showSearch={true} onAddressChange={onAddressChange}></CustomHeader>
-            <ClaimableView dashboardHooks={dashboardHooks}/>
-        </>
+            <ClaimableView />
+        </DashboardContext.Provider>
     )
 };

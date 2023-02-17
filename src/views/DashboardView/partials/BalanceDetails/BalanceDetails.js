@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import NumberFormat from "react-number-format";
 import DollarLabel from "../../../../components/Label/DollarLabel";
 import FallbackImage from "../../../../components/Image/FallbackImage";
@@ -8,6 +8,7 @@ import tw from "twin.macro"
 import PlaceholderLoading from "react-placeholder-loading";
 import {Subheading} from "../../../../components/misc/Headings";
 import SadWhalePic from "../../../../images/sad_whale.png";
+import {DashboardContext} from "../../../../App";
 
 const ListContainer = tw.div`flex flex-col w-full mx-auto items-center justify-center bg-white`
 const List = tw.ul`flex flex-col w-full `
@@ -105,36 +106,36 @@ function BalanceList({balances}) {
 
 function DummyElement() {
     return (
-    <ListItem>
-        <Row>
-            <IconColumn>
-                <IconBlock>
-                    <FallbackImageContainer>
-                        <Image>
-                           <PlaceholderLoading width={30} height={30} shape={"circle"} />
-                        </Image>
-                    </FallbackImageContainer>
-                </IconBlock>
-            </IconColumn>
-            <NameColumn>
-                <PlaceholderLoading width={"100%"} height={"30"} shape={"rect"} />
-            </NameColumn>
-            <AmountColumn>
-                <TwoColumns>
-                    <PlaceholderLoading width={"100%"} height={"30"} shape={"rect"} />
-                    <PlaceholderLoading width={"100%"} height={"30"} shape={"rect"} />
-                </TwoColumns>
-            </AmountColumn>
-            <TotalColumn>
-                <PullRight>
-                    <Bold>
-                        <PlaceholderLoading width={"100%"} height={"30"} shape={"rect"} />
-                    </Bold>
-                </PullRight>
-            </TotalColumn>
-        </Row>
-    </ListItem>
-)
+        <ListItem>
+            <Row>
+                <IconColumn>
+                    <IconBlock>
+                        <FallbackImageContainer>
+                            <Image>
+                                <PlaceholderLoading width={30} height={30} shape={"circle"}/>
+                            </Image>
+                        </FallbackImageContainer>
+                    </IconBlock>
+                </IconColumn>
+                <NameColumn>
+                    <PlaceholderLoading width={"100%"} height={"30"} shape={"rect"}/>
+                </NameColumn>
+                <AmountColumn>
+                    <TwoColumns>
+                        <PlaceholderLoading width={"100%"} height={"30"} shape={"rect"}/>
+                        <PlaceholderLoading width={"100%"} height={"30"} shape={"rect"}/>
+                    </TwoColumns>
+                </AmountColumn>
+                <TotalColumn>
+                    <PullRight>
+                        <Bold>
+                            <PlaceholderLoading width={"100%"} height={"30"} shape={"rect"}/>
+                        </Bold>
+                    </PullRight>
+                </TotalColumn>
+            </Row>
+        </ListItem>
+    )
 }
 
 const Container = tw.div`w-full mr-4 flex flex-wrap`
@@ -143,16 +144,24 @@ const Header = tw.h3`text-lg font-medium mb-2  `
 const Hero = tw.div`justify-self-center bg-gray-100 w-full border p-4 mb-4 text-center`
 const HeroDescription = tw.p`text-gray-400 text-lg`
 
-export default function BalanceDetails({dashboardHooks}) {
-    if (dashboardHooks.hasFinishedScanning && dashboardHooks.balanceElements.length === 0) {
+export default function BalanceDetails() {
+
+    const {
+        hasFinishedScanning,
+        balanceElements,
+        totalWalletBalance,
+    } = useContext(DashboardContext)
+
+    if (hasFinishedScanning && balanceElements.length === 0) {
         return (
             <Container>
                 <Hero>
-                        <Header>We couldn't find any <Subheading>Active Assets</Subheading></Header>
-                        <CenterImage>
-                            <SadWhaleImage src={SadWhalePic} />
-                        </CenterImage>
-                        <HeroDescription>Unfortunately, we couldn't locate assets for this specific account. It might be a fresh account or simply not exist at all.</HeroDescription>
+                    <Header>We couldn't find any <Subheading>Active Assets</Subheading></Header>
+                    <CenterImage>
+                        <SadWhaleImage src={SadWhalePic}/>
+                    </CenterImage>
+                    <HeroDescription>Unfortunately, we couldn't locate assets for this specific account. It might be a
+                        fresh account or simply not exist at all.</HeroDescription>
                 </Hero>
             </Container>
         )
@@ -169,12 +178,12 @@ export default function BalanceDetails({dashboardHooks}) {
                             <PullRight>
                                 <HeaderText>
                                     <DollarLabel
-                                        amount={dashboardHooks.totalWalletBalance}/></HeaderText>
+                                        amount={totalWalletBalance}/></HeaderText>
                             </PullRight>
                         </Hidden>
                     </BalanceText>
                 </AssetHeader>
-                <BalanceList balances={dashboardHooks.balanceElements}/>
+                <BalanceList balances={balanceElements}/>
             </Section>
         </Center>
     );

@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useContext} from "react";
 import ClaimableDetails from "../DashboardView/partials/ClaimableDetails";
 
 import tw from 'twin.macro';
@@ -10,6 +10,7 @@ import RequiresFishTracking from "../../components/RequiresFishTracking";
 import DashboardNavbar from "../../components/DashboardNavbar";
 import FullWidthWithImage from "../../components/hero/FullWidthWithImage";
 import TwoColumnWithPrimaryBackground from "../../components/hero/TwoColumnWithPrimaryBackground";
+import {DashboardContext} from "../../App";
 
 const Container = tw.div`flex pt-8`
 
@@ -29,7 +30,10 @@ const Section = tw.div`grid w-full justify-items-center pt-2`
 const ClaimableSection = tw.div`py-4 lg:w-2/3 w-full px-4 mt-4`
 const FAQSection = tw.div`w-full px-4  bg-white`
 
-export default function ClaimableView({dashboardHooks}) {
+export default function ClaimableView() {
+
+    const dashboardHooks = useContext(DashboardContext)
+
     const faqs = [
         {
             question: "How do we know what is claimable for your address?",
@@ -50,7 +54,7 @@ export default function ClaimableView({dashboardHooks}) {
         <Container>
             <DashboardWrapper>
                 <Center>
-                    <DashboardNavbar selected={"claimables"} address={dashboardHooks.address}/>
+                    <DashboardNavbar address={dashboardHooks.address} selected={"claimables"} />
                 </Center>
 
                 {
@@ -72,8 +76,7 @@ export default function ClaimableView({dashboardHooks}) {
                                               target={`/${dashboardHooks.address}/claimables`}>
                             <ClaimableSection>
                                 <ClaimableDetails showNothingFoundMessage={true}
-                                                  showPlaceholder={dashboardHooks.claimableLoading}
-                                                  dashboardHooks={dashboardHooks}/>
+                                                  showPlaceholder={dashboardHooks.claimableLoading} />
                             </ClaimableSection>
                         </RequiresFishTracking>
                     </>

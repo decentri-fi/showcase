@@ -1,5 +1,4 @@
 import React, {useEffect} from 'react';
-import useDashboardHooks from "./hooks/dashboard-hooks";
 import useWeb3 from "../../hooks/web3";
 import ReactGA from "react-ga4";
 import {useHistory} from "react-router-dom";

@@ -1,11 +1,13 @@
 import {useEffect, useState} from "react";
 import {lendingPositions} from "../../../api/defitrack/lending/lending";
+import useProtocols from "./useProtocols";
 
-export default function useDashboardLendingHooks(account, protocols, supportsLending, {
+export default function useDashboardLendingHooks(account, supportsLending, {
     setTotalScanning,
     setDoneScanning
 }) {
     const [lendings, setLendings] = useState([]);
+    const {protocols} = useProtocols();
 
     function refresh() {
         localStorage.setItem(`lending-elements-${account}`, null);

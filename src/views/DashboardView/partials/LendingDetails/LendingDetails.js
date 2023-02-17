@@ -1,7 +1,8 @@
-import React from "react";
+import React, {useContext} from "react";
 import tw from "twin.macro";
 import DollarLabel from "../../../../components/Label/DollarLabel";
-import AssetTable from "../../../../components/AssetTable/AssetTable"; //eslint-disable-line
+import AssetTable from "../../../../components/AssetTable/AssetTable";
+import {DashboardContext} from "../../../../App"; //eslint-disable-line
 
 const Header = tw.div`w-full flex items-center mb-2`
 const HeaderTextContainer = tw.div`lg:w-3/12 w-full`
@@ -10,9 +11,14 @@ const BalanceText = tw.div`w-9/12 text-right`
 const PullRight = tw.div`flex flex-col grid justify-items-end`
 const Hidden = tw.span`hidden lg:block`
 
-export default function LendingDetails({protocol, dashboardHooks}) {
+export default function LendingDetails({protocol}) {
 
-    const elements = dashboardHooks.lendings.filter(lending => {
+    const {
+        lendings,
+        totalLendingForProtocol
+    } = useContext(DashboardContext)
+
+    const elements = lendings.filter(lending => {
         return lending.protocol.slug === protocol.slug
     }).map(element => {
         return {
@@ -48,7 +54,7 @@ export default function LendingDetails({protocol, dashboardHooks}) {
                             <PullRight>
                                 <HeaderText>
                                     <DollarLabel
-                                        amount={dashboardHooks.totalLendingForProtocol(protocol)}/>
+                                        amount={totalLendingForProtocol(protocol)}/>
                                 </HeaderText>
                             </PullRight>
                         </Hidden>

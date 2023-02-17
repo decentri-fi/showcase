@@ -1,7 +1,7 @@
 import {fetchNetworks} from "../../../api/defitrack/networks/networks";
 import {useEffect, useState} from "react";
 
-export default function useDashboardNetworkHooks() {
+export default function useNetworks() {
     const [networks, setNetworks] = useState([])
 
     useEffect(() => {

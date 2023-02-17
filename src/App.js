@@ -2,7 +2,7 @@ import "tailwindcss/dist/base.css";
 import "styles/globalStyles.css";
 
 // Path: src/styles/globalStyles.css
-import React, {useEffect} from "react";
+import React, {createContext, useEffect} from "react";
 import {BrowserRouter as Router, Route, Switch} from 'react-router-dom';
 
 /*
@@ -37,6 +37,8 @@ import SignInWithEthereumView from "./views/SignInWithEthereumView";
 import HistoryView from "./views/HistoryView/HistoryView";
 import {QueryClient, QueryClientProvider} from "@tanstack/react-query";
 import ExploreView from "./views/ExploreView/ExploreView";
+
+export const DashboardContext = createContext(null);
 
 export default function App() {
     ReactGA.initialize([

@@ -2,8 +2,9 @@ import StakingDetails from "./StakingDetails";
 import PoolingDetails from "./PoolingDetails";
 import LendingDetails from "./LendingDetails";
 import BorrowingDetails from "./BorrowingDetails";
-import React from "react";
+import React, {useContext} from "react";
 import tw from "twin.macro";
+import {DashboardContext} from "../../../App";
 
 
 const ProtocolSection = tw.section`w-full grid justify-items-start mb-6 rounded py-4 rounded-lg border p-4`
@@ -15,9 +16,14 @@ const HorizontalCenter = tw.div`pl-1 flex items-center w-full`
 
 const ProtocolTitle = tw.div`flex`
 
-export default function DefiPositions({dashboardHooks}) {
+export default function DefiPositions() {
 
-    const DefiBreakdown = dashboardHooks.usedProtocols.map((proto, index) => {
+    const {
+        usedProtocols,
+
+    } = useContext(DashboardContext)
+
+    const DefiBreakdown = usedProtocols.map((proto, index) => {
         return (
             <ProtocolSection key={index}>
                 <ProtocolSectionHeader href={proto.website} target="_blank">
@@ -38,10 +44,10 @@ export default function DefiPositions({dashboardHooks}) {
                 </ProtocolSectionHeader>
 
                 <ProtocolDetails>
-                    <StakingDetails protocol={proto} dashboardHooks={dashboardHooks}/>
-                    <PoolingDetails protocol={proto} dashboardHooks={dashboardHooks}/>
-                    <LendingDetails protocol={proto} dashboardHooks={dashboardHooks}/>
-                    <BorrowingDetails protocol={proto} dashboardHooks={dashboardHooks}/>
+                    <StakingDetails protocol={proto}/>
+                    <PoolingDetails protocol={proto}/>
+                    <LendingDetails protocol={proto}/>
+                    <BorrowingDetails protocol={proto}/>
                 </ProtocolDetails>
             </ProtocolSection>
         )

@@ -7,19 +7,9 @@ import tw from 'twin.macro';
 import DefiPositions from "./partials/DefiPositions";
 import {useHistory} from "react-router-dom";
 import DashboardNavbar from "../../components/DashboardNavbar";
-import TwoColWithSteps from "../../components/features/TwoColWithSteps";
-import TwoColWithButton from "../../components/features/TwoColWithButton";
-import VerticalWithAlternateImageAndText from "../../components/features/VerticalWithAlternateImageAndText";
-import TwoColWithTwoFeaturesAndButtons from "../../components/features/TwoColWithTwoFeaturesAndButtons";
-import TwoColSingleFeatureWithStats2 from "../../components/features/TwoColSingleFeatureWithStats2";
-import TabCardGrid from "../../components/cards/TabCardGrid";
-import TwoTrendingPreviewCardsWithImage from "../../components/cards/TwoTrendingPreviewCardsWithImage";
-import GetStarted from "../../components/cta/GetStarted";
-import GetStartedLight from "../../components/cta/GetStartedLight";
-import DownloadApp from "../../components/cta/DownloadApp";
-import FullWidthWithImage from "../../components/hero/FullWidthWithImage";
-import TwoColumnWithPrimaryBackground from "../../components/hero/TwoColumnWithPrimaryBackground";
 import ClaimableTeaser from "./ClaimableTeaser";
+import {DashboardContext} from "../../App";
+import useDashboardHooks from "./hooks/dashboard-hooks";
 
 const Container = tw.div`flex pt-5 grid`
 const DashboardWrapper = tw.div`w-full`
@@ -31,9 +21,11 @@ const Column = tw.div`w-full lg:w-1/2 px-4`
 
 const CenterText = tw.div`text-center w-full`
 const Center = tw.div`w-full flex grid justify-items-center mt-3 mb-1`
-export default function DashboardView({dashboardHooks}) {
+export default function DashboardView({address}) {
 
-    const history = useHistory();
+    const dashboardHooks = useDashboardHooks(address, {
+        supportsClaimables: true,
+    });
 
     function showSmallValues() {
         dashboardHooks.setHideSmallValues(false);
@@ -44,48 +36,53 @@ export default function DashboardView({dashboardHooks}) {
     }
 
     useEffect(() => {
-        document.title = "Dashboard - Decentrifi"
+        document.title = `Profile for ${address} - Decentrifi`
     }, [])
 
 
-    return <Container>
-        <DashboardWrapper>
-            <Center>
-                <DashboardNavbar address={dashboardHooks.address} selected={"profile"}/>
-            </Center>
+    return (
+        <DashboardContext.Provider value={dashboardHooks}>
+            <Container>
+                <DashboardWrapper>
+                    <Center>
+                        <DashboardNavbar address={dashboardHooks.address} selected={"profile"}/>
+                    </Center>
 
-            <DashboardHeader dashboardHooks={dashboardHooks}/>
-            <ClaimableTeaser owner={dashboardHooks.address} amount={dashboardHooks.totalClaimables} />
-            <Full>
-                <Column>
+                    <DashboardHeader />
+                    <ClaimableTeaser owner={dashboardHooks.address} amount={dashboardHooks.totalClaimables}/>
+                    <Full>
+                        <Column>
 
-                    <BalanceDetails dashboardHooks={dashboardHooks}/>
+                            <BalanceDetails />
 
-                    <HorizontalCenter>
-                        <CenterText>
-                            {
-                                dashboardHooks.hideSmallValues &&
-                                <HideSmallValueFilter>Positions with small deposits are not displayed (&lt;$0.01). <u><a
-                                    onClick={showSmallValues}>show
-                                    everything</a></u></HideSmallValueFilter>
-                            }
+                            <HorizontalCenter>
+                                <CenterText>
+                                    {
+                                        dashboardHooks.hideSmallValues &&
+                                        <HideSmallValueFilter>Positions with small deposits are not displayed
+                                            (&lt;$0.01). <u><a
+                                                onClick={showSmallValues}>show
+                                                everything</a></u></HideSmallValueFilter>
+                                    }
 
-                            {
-                                !dashboardHooks.hideSmallValues &&
-                                <HideSmallValueFilter>Positions with small deposits are included (&lt;$0.01). <u><a
-                                    onClick={hideSmallValues}>hide
-                                    small values</a></u></HideSmallValueFilter>
-                            }
-                        </CenterText>
-                    </HorizontalCenter>
-                </Column>
-                <Column>
-                    <AccountBreakdown dashboardHooks={dashboardHooks}/>
-                    <DefiPositions dashboardHooks={dashboardHooks}/>
-                </Column>
-
-            </Full>
-        </DashboardWrapper>
-    </Container>;
+                                    {
+                                        !dashboardHooks.hideSmallValues &&
+                                        <HideSmallValueFilter>Positions with small deposits are included
+                                            (&lt;$0.01). <u><a
+                                                onClick={hideSmallValues}>hide
+                                                small values</a></u></HideSmallValueFilter>
+                                    }
+                                </CenterText>
+                            </HorizontalCenter>
+                        </Column>
+                        <Column>
+                            <AccountBreakdown />
+                            <DefiPositions />
+                        </Column>
+                    </Full>
+                </DashboardWrapper>
+            </Container>
+        </DashboardContext.Provider>
+    )
 }
 

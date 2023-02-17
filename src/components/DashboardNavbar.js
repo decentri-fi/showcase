@@ -1,10 +1,11 @@
 import Navbar from "./Navbar/Navbar";
-import React from "react";
+import React, {useContext} from "react";
 import {useHistory} from "react-router-dom";
 import tw from "twin.macro";
+import {DashboardContext} from "../App";
 const NewLabel = tw.span`text-xs align-text-top font-thin text-teal-500`
 
-export default function DashboardNavbar({address, selected = "profile"}) {
+export default function DashboardNavbar({address , selected = "profile"}) {
 
     const history = useHistory();
 

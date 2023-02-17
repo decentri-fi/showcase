@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useContext} from "react";
 
 import FallbackImage from "../../../../components/Image/FallbackImage";
 import makeBlockie from "ethereum-blockies-base64";
@@ -6,6 +6,7 @@ import makeBlockie from "ethereum-blockies-base64";
 import tw from "twin.macro";
 import DollarLabel from "../../../../components/Label/DollarLabel";
 import {Button} from "@mui/material";
+import {DashboardContext} from "../../../../App";
 
 const Address = tw.span`hidden lg:block font-bold text-base text-black dark:text-white ml-2`
 const ShortAddress = tw.span`lg:hidden block font-bold text-base text-black dark:text-white ml-2 border-b`
@@ -34,15 +35,17 @@ const PortfolioTitle = tw.span`text-center lg:text-left`
 
 const Synced = tw.span`mr-5`
 
-export default function DashboardHeader({dashboardHooks}) {
+export default function DashboardHeader() {
 
     const {
         hasFinishedScanning,
         doneScanning,
         totalScanning,
-        address
-    }
-        = dashboardHooks;
+        totalBalance,
+        address,
+        ens,
+        refresh
+    } = useContext(DashboardContext);
 
     const sliceAccount = function (address) {
         if (address && address.length > 6) {
@@ -72,15 +75,6 @@ export default function DashboardHeader({dashboardHooks}) {
         }
     }
 
-    const ens = (function () {
-        if (dashboardHooks.ens != null) {
-            return dashboardHooks.ens
-        } else {
-            return "No ENS name linked."
-        }
-    })();
-
-
     return (
         <Wrapper>
             <Center>
@@ -93,7 +87,7 @@ export default function DashboardHeader({dashboardHooks}) {
                                 <AddressText>
                                     <Address>{address}</Address>
                                     <ShortAddress>{sliceAccount(address)}</ShortAddress>
-                                    <ENS>{ens}</ENS>
+                                    <ENS>{ens || "No ENS name linked."}</ENS>
                                 </AddressText>
                             </AddressInfo>
                         }
@@ -102,14 +96,14 @@ export default function DashboardHeader({dashboardHooks}) {
                             <PortfolioValueContainer>
                                 <PortfolioTitle>Portfolio Value</PortfolioTitle>
                                 <RefreshContainer>
-                                    <PortfolioTitle><DollarLabel amount={dashboardHooks.totalBalance}/></PortfolioTitle>
+                                    <PortfolioTitle><DollarLabel amount={totalBalance}/></PortfolioTitle>
                                     {
                                         hasFinishedScanning &&
                                         <HorizontalCenter>
                                             <Button
                                                 variant={"contained"}
                                                 color={"primary"}
-                                                size={"small"} onClick={() => dashboardHooks.refresh()}>
+                                                size={"small"} onClick={() => refresh()}>
                                                 <svg viewBox="0 0 25 25" height={"24px"} width="24px" fill="none">
                                                     <g id="SVGRepo_bgCarrier" strokeWidth="0"></g>
                                                     <g id="SVGRepo_tracerCarrier" strokeLinecap="round"

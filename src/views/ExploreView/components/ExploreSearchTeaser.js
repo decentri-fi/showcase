@@ -41,8 +41,6 @@ const DecoratorBlob1 = styled(SvgDecoratorBlob1)`
   ${tw`pointer-events-none opacity-5 absolute left-0 bottom-0 h-64 w-64 transform -translate-x-2/3 -z-10`}
 `;
 
-const LargeImage = tw.img`min-w-0 w-full max-w-lg xl:max-w-3xl`
-
 export default ({roundedHeaderButton}) => {
 
     const web3 = useWeb3();

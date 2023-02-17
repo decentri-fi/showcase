@@ -1,8 +1,14 @@
 import {useEffect, useState} from "react";
 import {fetchProtocols} from "../../../api/defitrack/protocols/protocols";
+import {useQuery} from "@tanstack/react-query";
 
-export default function useDashboardProtocolHooks() {
+export default function useProtocols() {
     const [protocols, setProtocols] = useState([])
+    const query = useQuery({
+        queryKey: ['protocols'], queryFn: async () => {
+            return await fetchProtocols()
+        }
+    })
 
     useEffect(() => {
         async function fetchData() {
@@ -14,6 +20,7 @@ export default function useDashboardProtocolHooks() {
     }, [])
 
     return {
-        protocols
+        protocols,
+        allProtocols: query.data || []
     }
 };

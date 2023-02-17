@@ -1,12 +1,14 @@
 import {useEffect, useState} from "react";
 import {fetchBorrowingsV2} from "../../../api/defitrack/borrowing/borrowing";
+import useProtocols from "./useProtocols";
 
 
-export default function useDashboardBorrowingHooks(account, protocols, supportsDebt, {
+export default function useDashboardBorrowingHooks(account, supportsDebt, {
     setTotalScanning,
     setDoneScanning
 }) {
     const [borrowings, setBorrowings] = useState([]);
+    const {protocols} = useProtocols();
 
     function refresh() {
         localStorage.setItem(`borrowing-elements-${account}`, null);

@@ -77,9 +77,10 @@ export default function TokenStats({token, userBalance, network}) {
                     </>
                 }
 
-                <TokenChart token={token}/>
 
             </StatsContainer>
+            <TokenChart token={token}/>
+
         </Center>
     )
 

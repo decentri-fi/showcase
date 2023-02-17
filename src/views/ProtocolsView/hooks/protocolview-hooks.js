@@ -46,9 +46,6 @@ export default function useProtocolView() {
 
 
     function getTabs() {
-        console.log('activetab', activeTab)
-        console.log("'Pooling' == activeTab", 'Pooling' == activeTab)
-        console.log("'Farming' == activeTab", 'Farming' == activeTab)
         let t = [];
         if (poolingOpportunities.length > 0) {
             t.push({

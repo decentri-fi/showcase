@@ -14,7 +14,6 @@ const ButtonWrapper = tw.span`px-1`
 export default function LendingOpportunities({lendingOpportunities}) {
     const [searchFilter, setSearchFilter] = useState(null)
     const [networkFilter, setNetworkFilter] = useState([])
-    const [networkButtons, setNetworkButtons] = useState([]);
     const networks = Array.from(
         new Set(
             lendingOpportunities.map((opportunity) => {
@@ -34,31 +33,28 @@ export default function LendingOpportunities({lendingOpportunities}) {
         })
     }, [lendingOpportunities])
 
-    useEffect(() => {
-        const buttons = networks.map((network) => {
-            const onClick = () => {
-                setNetworkFilter((prevState) => {
-                    if (prevState.includes(network)) {
-                        return [...prevState.filter(x => x !== network)]
-                    } else {
-                        prevState.push(network);
-                        return [...prevState];
-                    }
-                });
-            }
+    const networkButtons = networks.map((network) => {
+        const onClick = () => {
+            setNetworkFilter((prevState) => {
+                if (prevState.includes(network)) {
+                    return [...prevState.filter(x => x !== network)]
+                } else {
+                    prevState.push(network);
+                    return [...prevState];
+                }
+            });
+        }
 
-            const getVariant = () => {
-                return networkFilter.includes(network) ? "contained" : "outlined"
-            }
+        const getVariant = () => {
+            return networkFilter.includes(network) ? "contained" : "outlined"
+        }
 
-            return (
-                <ButtonWrapper>
-                    <Button onClick={onClick} variant={getVariant()} color={"success"}>{network}</Button>
-                </ButtonWrapper>
-            )
-        })
-        setNetworkButtons(buttons);
-    }, [networkFilter]);
+        return (
+            <ButtonWrapper>
+                <Button onClick={onClick} variant={getVariant()} color={"success"}>{network}</Button>
+            </ButtonWrapper>
+        )
+    })
 
     let opportunities = lendingOpportunities.filter(row => {
         if (searchFilter !== null && searchFilter.length > 0) {

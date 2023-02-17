@@ -13,12 +13,10 @@ const ButtonWrapper = tw.span`px-1`
 
 const ButtonIcon = tw.div`w-3 h-3 mr-2`
 
-
 export default ({poolingOpportunities, title = "Pooling Opportunities"}) => {
 
     const [searchFilter, setSearchFilter] = useState(null)
     const [networkFilter, setNetworkFilter] = useState([])
-    const [networkButtons, setNetworkButtons] = useState([]);
 
     const networks = Array.from(
         new Set(
@@ -45,35 +43,33 @@ export default ({poolingOpportunities, title = "Pooling Opportunities"}) => {
         })
     }, [poolingOpportunities])
 
-    useEffect(() => {
-        const buttons = networks.map((network) => {
-            const onClick = () => {
-                setNetworkFilter((prevState) => {
-                    if (prevState.includes(network)) {
-                        return [...prevState.filter(x => x !== network)]
-                    } else {
-                        prevState.push(network);
-                        return [...prevState];
-                    }
-                });
-            }
+    const networkButtons = networks.map((network) => {
+        const onClick = () => {
+            setNetworkFilter((prevState) => {
+                if (prevState.includes(network)) {
+                    return [...prevState.filter(x => x !== network)]
+                } else {
+                    prevState.push(network);
+                    return [...prevState];
+                }
+            });
+        }
 
-            const getVariant = () => {
-                return networkFilter.includes(network) ? "contained" : "outlined"
-            }
+        const getVariant = () => {
+            return networkFilter.includes(network) ? "contained" : "outlined"
+        }
 
-            return (
-                <ButtonWrapper>
-                    <Button onClick={onClick} variant={getVariant()} color={"success"}>
-                        <ButtonIcon>
-                            <FallbackImage src={getLogo(network)}/>
-                        </ButtonIcon>
-                        {network}</Button>
-                </ButtonWrapper>
-            );
-        })
-        setNetworkButtons(buttons);
-    }, [networkFilter]);
+        return (
+            <ButtonWrapper>
+                <Button onClick={onClick} variant={getVariant()} color={"success"}>
+                    <ButtonIcon>
+                        <FallbackImage src={getLogo(network)}/>
+                    </ButtonIcon>
+                    {network}
+                </Button>
+            </ButtonWrapper>
+        );
+    })
 
     const entries = poolingOpportunities.filter((row) => {
         if (searchFilter && searchFilter.length > 0) {
@@ -118,7 +114,7 @@ export default ({poolingOpportunities, title = "Pooling Opportunities"}) => {
                                 <Header><h2>{title}</h2></Header>
                                 <NetworkContainer>{networkButtons}</NetworkContainer>
                                 <Center>
-                                    <SearchField onChange={search} />
+                                    <SearchField onChange={search}/>
                                 </Center>
                             </>
                         }

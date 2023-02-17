@@ -9,6 +9,9 @@ import tw from "twin.macro";
 import ReactGA from "react-ga4";
 import Navbar from "../../components/Navbar/Navbar";
 import TokenStats from "./partials/TokenStats";
+import {Line, LineChart} from "recharts";
+import {useQuery} from "@tanstack/react-query";
+import {fetchHistoricalData} from "../../hooks/useCoinGecko";
 
 const Wrapper = tw.div`flex grid justify-items-center flex-wrap lg:flex-nowrap pt-4`;
 const NavbarWrapper = tw.div`lg:w-2/3`
@@ -94,6 +97,7 @@ export default function TokenView() {
     }, [])
 
 
+
     const detail = function () {
         if (token == null) {
             return <></>
@@ -101,6 +105,8 @@ export default function TokenView() {
             return (
                 <>
                     <TokenStats network={network} token={token} userBalance={userBalance}/>
+
+
                     <Wrapper>
                         <NavbarWrapper>
                             <Navbar items={

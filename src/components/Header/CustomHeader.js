@@ -10,6 +10,7 @@ import ReactGA from "react-ga4";
 import useConnectWalletPopup from "../ConnectWalletPopup/UseConnectWalletPopup";
 import {PrimaryButton} from "../misc/Buttons";
 import {getReverseEns} from "../../api/defitrack/ens/ens";
+import useEnsHooks from "../../views/DashboardView/hooks/useEnsHooks";
 
 const StyledHeader = styled(Header)`
   ${tw`pt-8 max-w-none lg:mt-8 pb-4`}
@@ -59,20 +60,10 @@ const SlantedBackground = styled.span`
 
 const Notification = tw.span`inline-block my-4 pl-3 py-1 text-gray-100 border-l-4 border-blue-500 font-medium text-sm`;
 
-const PrimaryAction = tw.button`px-8 py-3 mt-10 text-sm sm:text-base sm:mt-16 sm:px-8 sm:py-4 bg-gray-100 text-primary-500 font-bold rounded shadow transition duration-300 hocus:bg-primary-500 hocus:text-gray-100 focus:shadow-outline`;
 
 function UserLink({web3}) {
 
-    const [ens, setEns] = useState(null);
-
-    useEffect(() => {
-        if (web3.account) {
-            getReverseEns(web3.account).then(result => {
-                setEns(result.name)
-            }).catch(e => {
-            });
-        }
-    }, [web3.account])
+    const {ens} = useEnsHooks(web3.account);
 
     const {
         html: connectWalletPopup,
@@ -172,9 +163,14 @@ export default function CustomHeader({onAddressChange, expanded = false, showUse
     const navLinks = [
         <NavLinks key={1}>
             <NavLink onClick={e => {
+                history.push('/explore');
+            }}>
+                Explore
+            </NavLink>
+            <NavLink onClick={e => {
                 history.push('/dashboard');
             }}>
-                Dashboard
+                Profile
             </NavLink>
             <NavLink onClick={e => {
                 history.push('/protocols');
@@ -183,9 +179,6 @@ export default function CustomHeader({onAddressChange, expanded = false, showUse
             </NavLink>
             <NavLink target="_blank" href="https://jobs.decentri.fi">
                 Jobs
-            </NavLink>
-            <NavLink target="_blank" href="https://docs.decentri.fi">
-                Documentation
             </NavLink>
             <NavLink target="_blank" href="https://learn.decentri.fi">
                 Learn

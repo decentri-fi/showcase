@@ -11,9 +11,9 @@ import TwoColWithButton from "../../components/features/TwoColWithButton";
 import MoneyUnicornPic from "images/moneyunicorns.png";
 import UnicornsReading from "images/unicornsreading.png";
 import BookkeeperUniPic from "images/bookkeperuni.png";
-import defitrack from "@defitrack/js-client";
 import {fetchNetworks} from "../../api/defitrack/networks/networks";
 import {fetchProtocols} from "../../api/defitrack/protocols/protocols";
+import {getStatistics} from "../../api/defitrack/statistics/Statistics";
 
 const Subheading = tw.span`uppercase tracking-widest font-bold text-primary-500`;
 const HighlightedText = tw.span`text-primary-500`;
@@ -43,6 +43,15 @@ export default function LandingView() {
                     "networks": networks.length,
                 }
             })
+        })
+
+        getStatistics().then((statistics) => {
+          setStats(prevState => {
+                    return {
+                        ...prevState,
+                        "markets": statistics.marketCount,
+                    }
+                })
         })
 
 
@@ -76,11 +85,11 @@ export default function LandingView() {
             <TwoColSingleFeatureWithStats2
                 imageSrc={UnicornsReading}
                 statistics={statistics}
-                primaryButtonText="Explore Defi Hub"
-                primaryButtonUrl="https://docs.decentri.fi"
+                primaryButtonText="EXPLORE"
+                primaryButtonUrl="/explore"
                 subheading="Defi Hub"
                 heading="Decentralized Finance. Simplified. Open Source."
-                description="Defi Hub is the easiest way to integrate with existing defi protocols without having to know the inner workings of protocols or chain-specific models."
+                description="Explore the world of decentralized finance. Break down your portfolio, find opportunities and manage your positions."
             />
 
 

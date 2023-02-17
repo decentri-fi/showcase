@@ -15,12 +15,18 @@ export default function useDashboardClaimableHooks(account, protocols, supportsC
             }
         });
         persist(account, protocol, claimables);
+        console.log('fetched from db');
         return claimables;
     }
 
     function query(protocol) {
         return async () => {
-            return getFromLocalStorage(account, protocol) || await getClaimables(protocol);
+            let fromLocalStorage = getFromLocalStorage(account, protocol);
+            if (fromLocalStorage != null) {
+                return fromLocalStorage;
+            } else {
+                return await getClaimables(protocol);
+            }
         };
     }
 
@@ -47,10 +53,13 @@ export default function useDashboardClaimableHooks(account, protocols, supportsC
         protocols.forEach(async (protocol) => {
             await queryClient.invalidateQueries(['claimables', account, protocol]);
             persist(account, protocol, null);
+            await queryClient.prefetchQuery(
+                {
+                    queryKey: ['claimables', account, protocol],
+                    queryFn: query(protocol),
+                }
+            )
         });
-        queries.forEach(async query => {
-            await query.refetch();
-        })
     }
 
     const fetchedClaimables = queries.map((query) => {

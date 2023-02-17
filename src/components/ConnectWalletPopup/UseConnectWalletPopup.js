@@ -1,5 +1,5 @@
 import Popup from "reactjs-popup";
-import React, {useState} from "react";
+import React, {useRef, useState} from "react";
 
 import tw from "twin.macro";
 import useWeb3 from "../../hooks/web3";
@@ -31,11 +31,12 @@ export default function useConnectWalletPopup() {
                     </CloseContainer>
                     <Header>Connect Wallet</Header>
                     <ConnectList>
-                        <ConnectListItem onClick={() => web3.metamaskLogin()}>
+                        <ConnectListItem onClick={() => web3.metamaskLogin().then(() => {
+                            setOpen(false);
+                        })}>
                             <ConnectItemLogo src={Metamask} alt="metamask" width="32" height="32"/>
-                            <p>Metamask</p>
+                             Metamask
                         </ConnectListItem>
-                        <ConnectListItem>Trust Wallet</ConnectListItem>
                     </ConnectList>
                 </Container>
             </Popup>

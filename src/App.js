@@ -36,6 +36,7 @@ import useWeb3 from "./hooks/web3";
 import SignInWithEthereumView from "./views/SignInWithEthereumView";
 import HistoryView from "./views/HistoryView/HistoryView";
 import {QueryClient, QueryClientProvider} from "@tanstack/react-query";
+import ExploreView from "./views/ExploreView/ExploreView";
 
 export default function App() {
     ReactGA.initialize([
@@ -60,6 +61,10 @@ export default function App() {
                 <Switch>
                     <Route path="/dashboard">
                         <Web3DashboardView/>
+                        <FooterV2/>
+                    </Route>
+                    <Route path="/explore">
+                        <ExploreView/>
                         <FooterV2/>
                     </Route>
                     <Route path="/claimables">

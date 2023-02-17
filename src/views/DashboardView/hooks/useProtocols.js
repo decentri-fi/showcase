@@ -4,9 +4,12 @@ import {useQuery} from "@tanstack/react-query";
 
 export default function useProtocols() {
     const [protocols, setProtocols] = useState([])
+
     const query = useQuery({
-        queryKey: ['protocols'], queryFn: async () => {
-            return await fetchProtocols()
+        queryKey: ['protocols'],
+        queryFn: async () => {
+            const retVal = await fetchProtocols()
+            return retVal;
         }
     })
 

@@ -43,7 +43,7 @@ export default () => {
         if (protocolHooks.tabs.find(element => element.id === 'Lending' && element.selected === true)) {
             return <>
                 {
-                    (!protocolHooks.scannedLendingOpportunities || protocolHooks.lendingOpportunities.length > 0) &&
+                    (protocolHooks.lendingOpportunities.length > 0) &&
                     <LendingOpportunities
                         lendingOpportunities={protocolHooks.lendingOpportunities}></LendingOpportunities>
                 }
@@ -57,7 +57,7 @@ export default () => {
         if (protocolHooks.tabs.find(element => element.id === 'Pooling' && element.selected === true)) {
             return <>
                 {
-                    (!protocolHooks.scannedPoolingOpportunities || protocolHooks.poolingOpportunities.length > 0) &&
+                    (protocolHooks.poolingOpportunities.length > 0) &&
                     <PoolingOpportunities
                         poolingOpportunities={protocolHooks.poolingOpportunities}></PoolingOpportunities>
                 }
@@ -72,7 +72,7 @@ export default () => {
             return (
                 <>
                     {
-                        (!protocolHooks.scannedFarmingOpportunities || protocolHooks.farmingOpportunities.length > 0) &&
+                        (protocolHooks.farmingOpportunities.length > 0) &&
                         <FarmingOpportunities
                             farmingOpportunities={protocolHooks.farmingOpportunities}></FarmingOpportunities>
                     }

@@ -53,7 +53,7 @@ export default function useTokenviewHooks(networkName, tokenAddress) {
 
     useEffect(() => {
         async function fetchData() {
-            if (token !== null && web3.hasAccount && token.type === 'SINGLE') {
+            if (token !== null && web3.hasAccount) {
                 const result = await fetchTokenBalance(token.address, web3.account, networkName);
                 if (result > 0) {
                     const number = BigNumber.from(String(result))

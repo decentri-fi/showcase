@@ -59,6 +59,7 @@ export default () => {
                 {
                     (protocolHooks.poolingOpportunities.length > 0) &&
                     <PoolingOpportunities
+                        isLoading={protocolHooks.poolingMarketsQuery.isLoading}
                         poolingOpportunities={protocolHooks.poolingOpportunities}></PoolingOpportunities>
                 }
             </>;

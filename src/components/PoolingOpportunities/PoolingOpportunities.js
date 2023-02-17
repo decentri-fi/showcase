@@ -13,7 +13,7 @@ const ButtonWrapper = tw.span`px-1`
 
 const ButtonIcon = tw.div`w-3 h-3 mr-2`
 
-export default ({poolingOpportunities, title = "Pooling Opportunities"}) => {
+export default ({poolingOpportunities, title = "Pooling Opportunities", isLoading = true}) => {
 
     const [searchFilter, setSearchFilter] = useState(null)
     const [networkFilter, setNetworkFilter] = useState([])
@@ -102,13 +102,13 @@ export default ({poolingOpportunities, title = "Pooling Opportunities"}) => {
 
     if (poolingOpportunities.length > 0) {
         return (
-
             <Center>
                 <Container>
                     <AssetTable
                         usePagination={true}
                         showPlaceholder={true}
                         entries={entries}
+                        isLoading={isLoading}
                         header={
                             <>
                                 <Header><h2>{title}</h2></Header>

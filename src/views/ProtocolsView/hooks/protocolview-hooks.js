@@ -15,7 +15,7 @@ export default function useProtocolView() {
     const {allProtocols} = useProtocols();
     const protocol = allProtocols.find(element => element.slug === protoArgument)
 
-    const poolingMarkets = useQuery({
+    const poolingMarketsQuery = useQuery({
         queryKey: ['protocols', protocol, 'pooling-markets'],
         queryFn: async () => {
             return await defitrack.pooling().markets(protocol.slug);
@@ -42,7 +42,7 @@ export default function useProtocolView() {
 
     const farmingOpportunities = farmingMarkets.data || []
     const lendingOpportunities = lendingMarkets.data || []
-    const poolingOpportunities = poolingMarkets.data || []
+    const poolingOpportunities = poolingMarketsQuery.data || []
 
 
     function getTabs() {
@@ -93,6 +93,7 @@ export default function useProtocolView() {
         poolingOpportunities,
         farmingOpportunities,
         lendingOpportunities,
+        poolingMarketsQuery,
         tabs: getTabs(),
         setActiveTab,
         networks: Array.from(

@@ -48,7 +48,9 @@ function DummyList() {
 
 
 export default function ({
-                             entries = [], header,
+                             entries = [],
+                             isLoading = true,
+                             header,
                              showPlaceholder = false,
                              usePagination = false
                          }) {

@@ -1,4 +1,4 @@
-import React, {useEffect, useRef, useState} from "react";
+import React, {useRef} from "react";
 import tw from "twin.macro";
 import styled from "styled-components";
 import Header, {DesktopNavLinks, LogoLink, NavLink, NavLinks, NavToggle} from "../headers/light.js";
@@ -9,7 +9,6 @@ import Search from "../../views/DashboardView/partials/Search/Search";
 import ReactGA from "react-ga4";
 import useConnectWalletPopup from "../ConnectWalletPopup/UseConnectWalletPopup";
 import {PrimaryButton} from "../misc/Buttons";
-import {getReverseEns} from "../../api/defitrack/ens/ens";
 import useEns from "../../views/DashboardView/hooks/useEns";
 
 const StyledHeader = styled(Header)`

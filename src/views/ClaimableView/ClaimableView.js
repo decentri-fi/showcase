@@ -32,7 +32,11 @@ const FAQSection = tw.div`w-full px-4  bg-white`
 
 export default function ClaimableView() {
 
-    const dashboardHooks = useContext(DashboardContext)
+    const {
+        address,
+        totalClaimables,
+        claimableLoading
+    } = useContext(DashboardContext)
 
     const faqs = [
         {
@@ -54,36 +58,36 @@ export default function ClaimableView() {
         <Container>
             <DashboardWrapper>
                 <Center>
-                    <DashboardNavbar address={dashboardHooks.address} selected={"claimables"} />
+                    <DashboardNavbar address={address} selected={"claimables"} />
                 </Center>
 
                 {
-                    !dashboardHooks.claimableLoading &&
+                    !claimableLoading &&
                     <>
                         {
-                            dashboardHooks.totalClaimables > 0.01 &&
+                            totalClaimables > 0.01 &&
                             <Section>
                                 <Subheading>Rewards are waiting for you</Subheading>
                                 <Heading>You've got <HighlightedText><DollarLabel amount={
-                                    dashboardHooks.totalClaimables
+                                    totalClaimables
                                 }/></HighlightedText> of
                                     outstanding <HighlightedText>rewards</HighlightedText></Heading>
                                 <Description></Description>
                             </Section>
                         }
 
-                        <RequiresFishTracking address={dashboardHooks.address}
-                                              target={`/${dashboardHooks.address}/claimables`}>
+                        <RequiresFishTracking address={address}
+                                              target={`/${address}/claimables`}>
                             <ClaimableSection>
                                 <ClaimableDetails showNothingFoundMessage={true}
-                                                  showPlaceholder={dashboardHooks.claimableLoading} />
+                                                  showPlaceholder={claimableLoading} />
                             </ClaimableSection>
                         </RequiresFishTracking>
                     </>
                 }
 
                 {
-                    dashboardHooks.claimableLoading &&
+                    claimableLoading &&
                     <SectionWithBackground>
                         <Subheading>Don't forget your rewards</Subheading>
                         <Heading>Outstanding <HighlightedText>Rewards</HighlightedText></Heading>

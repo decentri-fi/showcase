@@ -35,7 +35,6 @@ export default function HistoryView() {
         loading
     } = useHistoryHooks(address);
 
-
     const onAddressChange = (address) => {
         history.push(`/${address}/history`);
     };

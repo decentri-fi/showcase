@@ -8,7 +8,7 @@ import useDashboardLendingHooks from "./useDashboardLendingHooks";
 import useDashboardClaimableHooks from "./useDashboardClaimableHooks";
 import useDashboardBorrowingHooks from "./useDashboardBorrowingHooks";
 import useDashboardLPHooks from "./useDashboardLPHooks";
-import useEnsHooks from "./useEnsHooks";
+import useEns from "./useEns";
 
 export default function
     useDashboardHooks(account, {
@@ -60,7 +60,7 @@ export default function
 
     const {
         ens
-    } = useEnsHooks(account);
+    } = useEns(account);
 
     function totalStaking(protocol) {
         if (stakings == null || stakings.length === 0) {

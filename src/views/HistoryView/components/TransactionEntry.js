@@ -4,11 +4,11 @@ import tw from "twin.macro";
 import PlaceholderLoading from "react-placeholder-loading";
 import PlaceholderDetail from "./PlaceholderDetail";
 
-const TransactionDetails = tw.div`text-xs w-2/12 flex justify-items-center grid text-center items-center`
+const TransactionDetails = tw.div`text-xs lg:w-2/12 w-full flex-wrap flex justify-items-center grid text-center items-center`
 const AccountLink = tw.div`flex items-center `
-const ListContainer = tw.div`p-4 flex w-2/3 mx-auto mt-2  justify-center bg-white dark:bg-gray-800 mb-4 border`
-const List = tw.ul`w-10/12 flex flex-col w-full`
-
+const ListContainer = tw.div`p-4 flex w-full lg:w-2/3 mx-auto mt-2  justify-center bg-white dark:bg-gray-800 mb-4 border`
+const List = tw.ul`lg:w-10/12 flex flex-col flex-wrap w-full`
+const Transaction = tw.div`hidden lg:block`
 export default function ({transaction, events, owner}) {
     const eventItems = events.map((event) => {
         return <HistoryDetail event={event} owner={owner}/>
@@ -18,10 +18,9 @@ export default function ({transaction, events, owner}) {
         return `${address.slice(0, 6)}...${address.slice(-6, address.length)}`;
     };
 
-    return (
-        <ListContainer>
+    return (<ListContainer>
             <TransactionDetails>
-                    <span>
+                    <Transaction>
                         <AccountLink>{sliceAccount(transaction.id)}
                             <svg width="1em" height="1em" viewBox="0 0 20 20" fill="none">
                                     <path
@@ -30,28 +29,25 @@ export default function ({transaction, events, owner}) {
                     </svg>
                         </AccountLink>
                         {new Date(transaction.time).toLocaleString("en-US")}
-                    </span>
+                    </Transaction>
             </TransactionDetails>
             <List>
                 {eventItems}
             </List>
-        </ListContainer>
-    )
+        </ListContainer>)
 };
 
 export function TransactionEntryPlaceholder() {
-    return (
-        <ListContainer>
+    return (<ListContainer>
             <TransactionDetails>
-                    <span>
-                        <AccountLink>
-                            <PlaceholderLoading width={ 30} height={30} shape={"circle"} />
+            <span>
+                <AccountLink>
+                            <PlaceholderLoading width={30} height={30} shape={"circle"}/>
                         </AccountLink>
-                    </span>
+            </span>
             </TransactionDetails>
             <List>
-                <PlaceholderDetail />
+                <PlaceholderDetail/>
             </List>
-        </ListContainer>
-    )
+        </ListContainer>)
 }

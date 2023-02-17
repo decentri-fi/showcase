@@ -10,7 +10,7 @@ import ReactGA from "react-ga4";
 import useConnectWalletPopup from "../ConnectWalletPopup/UseConnectWalletPopup";
 import {PrimaryButton} from "../misc/Buttons";
 import {getReverseEns} from "../../api/defitrack/ens/ens";
-import useEnsHooks from "../../views/DashboardView/hooks/useEnsHooks";
+import useEns from "../../views/DashboardView/hooks/useEns";
 
 const StyledHeader = styled(Header)`
   ${tw`pt-8 max-w-none lg:mt-8 pb-4`}
@@ -63,7 +63,7 @@ const Notification = tw.span`inline-block my-4 pl-3 py-1 text-gray-100 border-l-
 
 function UserLink({web3}) {
 
-    const {ens} = useEnsHooks(web3.account);
+    const {ens} = useEns(web3.account);
 
     const {
         html: connectWalletPopup,

@@ -1,26 +1,23 @@
 import {useEffect, useState} from "react";
 import {getEvents} from "../../../api/whalespotter/transactions/transactions";
 import useSiwe from "../../../hooks/siwe/useSiwe";
+import {useQuery} from "@tanstack/react-query";
 
 export default function (address) {
 
-    const [events, setEvents] = useState([]);
-    const [loading, setLoading] = useState(true);
-
     const siwe = useSiwe();
 
+    const eventsQuery = useQuery({
+        queryKey: ['account', address, 'events'],
+        queryFn: async () => {
+            return getEvents(address, siwe.getAddress())
+        }
+    })
+
+    const events = eventsQuery.data || []
 
     useEffect(async () => {
         document.title = `History for ${address} - Decentrifi`;
-        if (address) {
-            getEvents(address, siwe.getAddress()).then(events => {
-                setEvents(events);
-                setLoading(false);
-            }).catch(e => {
-                console.error(e);
-                setLoading(false);
-            });
-        }
     }, []);
 
     const eventsPerTransaction = events.reduce((acc, event) => {
@@ -41,7 +38,7 @@ export default function (address) {
     }, {});
 
     return {
-        loading,
+        loading: eventsQuery.isLoading,
         eventsPerTransaction,
         transactionsPerId,
     }

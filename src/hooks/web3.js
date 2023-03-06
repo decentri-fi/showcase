@@ -60,10 +60,17 @@ export default function useWeb3() {
 
     async function changeNetwork(networkId) {
         let chainId = decimalToHex(networkId);
-        await ethereum.request({
-            method: 'wallet_switchEthereumChain',
-            params: [{chainId: "0x" + chainId}], // chainId must be in hexadecimal numbers
-        })
+        if (ethereum.overrideIsMetaMask === true) {
+            await ethereum.providerMap.get("MetaMask").request({
+                method: 'wallet_switchEthereumChain',
+                params: [{chainId: '0x' + chainId}],
+            });
+        } else {
+            await ethereum.request({
+                method: 'wallet_switchEthereumChain',
+                params: [{chainId: "0x" + chainId}], // chainId must be in hexadecimal numbers
+            })
+        }
     }
 
     return {

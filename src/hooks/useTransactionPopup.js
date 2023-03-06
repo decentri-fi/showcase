@@ -1,15 +1,23 @@
 import Popup from "reactjs-popup";
 import React, {useState} from "react";
 import tw from "twin.macro";
-import ClipLoader from "react-spinners/ClipLoader";
+import {CheckCircleIcon, DotsCircleHorizontalIcon} from "@heroicons/react/solid";
+import styled from "styled-components";
 
 const Container = tw.div`grid w-full justify-items-center`;
-const NextStepIcon = tw.div`w-8 h-8 mr-4`
-const TransactionSteps = tw.div`flex flex-col w-full mx-2 mb-8`
-
-const TransactionStep = tw.div`items-center my-2 hover:border-blue-500 border-2 font-bold text-gray-700 hover:text-blue-500 hover:border-2 w-full flex flex-row rounded rounded-lg p-4`
+const NextStepIcon = tw.div`w-3 h-3 self-center mb-2`
 const CloseContainer = tw.div`p-4 w-full`
 const Header = tw.h1`text-lg font-black text-purple-600`
+
+const TimeLine = tw.div`relative w-full mt-5 text-left mb-10`
+const TimelineItem = tw.div`flex items-center relative py-4`
+const TimelineState = tw.div`border-r-2 border-black absolute h-full ml-1 md:ml-8 mt-2 z-10 grid`
+const TimelineDetails = styled.div`
+  ${tw`ml-20`}
+  div {
+    ${tw`font-bold`}
+  }
+`
 
 export default function useTransactionPopup() {
 
@@ -19,28 +27,20 @@ export default function useTransactionPopup() {
     function getStateIcon(loadingState, finishedStates = []) {
         if (transactionState === loadingState) {
             return (
-                <NextStepIcon> <ClipLoader
-                    color={'rgb(36, 195, 163)'}
-                    loading={true}
-                    aria-label="Loading Spinner"
-                    data-testid="loader"
-                />
+                <NextStepIcon>
+                    <DotsCircleHorizontalIcon color={"orange"} tw="ml-1 z-20 w-4 absolute"/>
                 </NextStepIcon>
             )
         } else if (finishedStates.includes(transactionState)) {
             return (
                 <NextStepIcon>
-                    <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24"
-                         stroke="currentColor">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2}
-                              d="M5 13l4 4L19 7"/>
-                    </svg>
+                    <CheckCircleIcon color={"green"} tw="ml-1 z-20 w-4 absolute"/>
                 </NextStepIcon>
             )
         }
         return (
             <NextStepIcon>
-                ...
+                <DotsCircleHorizontalIcon color={"gray"} tw="ml-1 z-20 w-4 absolute"/>
             </NextStepIcon>
         )
     }
@@ -48,7 +48,7 @@ export default function useTransactionPopup() {
     const closeModal = () => setOpen(false);
 
     const html = (
-        <Popup modal open={open} onClose={closeModal}>
+        <Popup closeOnDocumentClick={false} modal open={open} onClose={closeModal}>
             <Container>
                 <CloseContainer>
                     <a className="close" onClick={closeModal}>
@@ -56,16 +56,28 @@ export default function useTransactionPopup() {
                     </a>
                 </CloseContainer>
                 <Header>Transaction Progress</Header>
-                <TransactionSteps>
-                    <TransactionStep>
-                        {getStateIcon("signing", ["pending", "mined"])}
-                        <p>Sign and submit your transaction</p>
-                    </TransactionStep>
-                    <TransactionStep>
-                        {getStateIcon("pending", ["mined"])}
-                        <p>Await your transaction to be mined</p>
-                    </TransactionStep>
-                </TransactionSteps>
+                <TimeLine>
+                    <TimelineItem>
+
+                        <TimelineState>
+                            {getStateIcon("signing", ["pending", "mined"])}
+                        </TimelineState>
+
+                        <TimelineDetails>
+                            <div>Sign and submit your transaction</div>
+                        </TimelineDetails>
+                    </TimelineItem>
+
+                    <TimelineItem>
+                        <TimelineState>
+                            {getStateIcon("pending", ["mined"])}
+                        </TimelineState>
+
+                        <TimelineDetails>
+                            <div>Awaiting your transaction to be mined</div>
+                        </TimelineDetails>
+                    </TimelineItem>
+                </TimeLine>
             </Container>
         </Popup>
     )
@@ -73,7 +85,8 @@ export default function useTransactionPopup() {
     return {
         html,
         setTransactionState,
-        open: () => setOpen(true)
+        open: () => setOpen(true),
+        close: () => setOpen(false),
     }
 };
 

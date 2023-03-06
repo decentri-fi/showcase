@@ -20,9 +20,9 @@ const AddressInfo = tw.div`flex items-center`
 const AddressText = tw.div`flex flex-col`
 const Wrapper = tw.div`flex grid justify-items-center flex-wrap lg:flex-nowrap p-4`;
 const Center = tw.div`w-full lg:w-2/3 border rounded-xl`
-const PortfolioValue = tw.div`lg:justify-items-end justify-items-center grid text-xs w-full`
-const PortfolioValueContainer = tw.div`bg-gray-200 p-4 flex flex-col rounded-xl w-2/3 lg:w-1/2`
-const RefreshContainer = tw.div`text-3xl font-bold flex flex-col lg:flex-row`;
+const PortfolioValue = tw.div`lg:justify-items-end justify-self-center grid text-xs w-full`
+const PortfolioValueContainer = tw.div`bg-gray-200 p-4 flex flex-col rounded-xl w-full lg:w-2/3`
+const RefreshContainer = tw.div`text-3xl font-bold flex flex-col lg:flex-row justify-self-end`;
 
 const ScanningContainer = tw.div`block m-auto`;
 const ProgressText = tw.span`text-sm inline-block text-gray-500 dark:text-gray-100`
@@ -30,8 +30,8 @@ const ProgressText = tw.span`text-sm inline-block text-gray-500 dark:text-gray-1
 const PercentageContainer = tw.div`w-full h-2 bg-gray-200 rounded-full mt-2`;
 const Percentage = tw.div`h-full text-center text-xs text-white bg-purple-500 rounded-full`
 
-const HorizontalCenter = tw.div`pl-1 flex items-center justify-items-center grid w-full lg:ml-8`
-const PortfolioTitle = tw.span`text-center lg:text-left`
+const HorizontalCenter = tw.div`pl-1 flex items-center self-center justify-items-center lg:justify-items-end grid lg:w-full w-2/3`
+const PortfolioTitle = tw.span`text-center lg:text-left justify-self-start`
 
 const Synced = tw.span`mr-5`
 

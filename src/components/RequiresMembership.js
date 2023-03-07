@@ -12,6 +12,7 @@ import {PrimaryButton} from "./misc/Buttons";
 import {useQuery} from "@tanstack/react-query";
 import {getAccount} from "../api/whalespotter/account/account";
 import {createAuthentication} from "../api/whalespotter/authentication/createAuthentication";
+import {useHistory} from "react-router-dom";
 
 const SectionWithBackground = tw.div`grid w-full justify-items-center bg-defaultBackground pt-2`
 const HighlightedText = tw.span`text-primary-500`
@@ -32,11 +33,11 @@ export default function RequiresMembership({address, target = `/${address}/histo
 
     const siwe = useSiwe();
     const [open, setOpen] = useState(false);
+    const history = useHistory();
 
     const membershipQuery = useQuery({
         queryKey: [siwe.owner, "membership"],
         queryFn: async () => {
-            console.log('getting account for ', siwe.owner);
             const acc = await getAccount(createAuthentication({
                 owner: siwe.owner,
                 signature: await siwe.getSignature(),
@@ -90,7 +91,9 @@ export default function RequiresMembership({address, target = `/${address}/histo
                         easy!</Description>
 
                     <Container>
-                        <PrimaryButton>JOIN US</PrimaryButton>
+                        <PrimaryButton onClick={
+                            () => history.push('/membership')
+                        }>JOIN US</PrimaryButton>
                     </Container>
                 </SectionWithBackground>
             </>

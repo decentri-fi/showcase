@@ -1,15 +1,17 @@
 import tw from "twin.macro";
-import React, {useEffect, useState} from "react";
+import React, {useState} from "react";
 
 
 import useSiwe from "../hooks/siwe/useSiwe";
 import Siwe from "./siwe/Siwe";
-import {PrimaryButton} from "./misc/Buttons";
 import {SectionHeading, Subheading as SubheadingBase} from "./misc/Headings";
 import {SectionDescription} from "./misc/Typography";
-import {addFish, getFish} from "../api/whalespotter/fish/fish";
 import Popup from "reactjs-popup";
 import ClipLoader from "react-spinners/ClipLoader";
+import {PrimaryButton} from "./misc/Buttons";
+import {useQuery} from "@tanstack/react-query";
+import {getAccount} from "../api/whalespotter/account/account";
+import {createAuthentication} from "../api/whalespotter/authentication/createAuthentication";
 
 const SectionWithBackground = tw.div`grid w-full justify-items-center bg-defaultBackground pt-2`
 const HighlightedText = tw.span`text-primary-500`
@@ -18,7 +20,7 @@ const Heading = tw(SectionHeading)`w-full`;
 const Description = tw(SectionDescription)`w-full text-center mb-4`;
 
 const Left = tw.input`w-full border-2 border-gray-300 bg-white h-10 px-5 pr-16 rounded-lg text-sm focus:outline-none`
-const Container = tw.div`mb-2 pt-2 text-gray-600 flex flex-nowrap w-full lg:w-1/3 flex flex-col`
+const Container = tw.div`mb-8 pt-2 text-gray-600 flex flex-nowrap w-full lg:w-1/3 flex flex-col`
 
 const PopupContainer = tw.div`grid w-full justify-items-center`;
 const CloseContainer = tw.div`p-4 w-full`
@@ -26,42 +28,38 @@ const Header = tw.h1`text-lg font-black text-purple-600`
 const ConnectList = tw.div`flex flex-col w-full mx-2 mb-8`
 const ConnectListItem = tw.div`items-center my-2 hover:border-blue-500 border-2 font-bold text-gray-700 hover:text-blue-500 hover:border-2 w-full flex flex-row rounded rounded-lg p-4`
 const ConnectItemLogo = tw.img`w-8 h-8 mr-4`
-export default function RequiresFishTracking({address, target = `/${address}/history`, children}) {
+export default function RequiresMembership({address, target = `/${address}/history`, children}) {
 
     const siwe = useSiwe();
     const [open, setOpen] = useState(false);
 
-    const [hasAddedAsFish, setHasAddedAsFish] = useState(null);
+    const membershipQuery = useQuery({
+        queryKey: [siwe.owner, "membership"],
+        queryFn: async () => {
+            console.log('getting account for ', siwe.owner);
+            const acc = await getAccount(createAuthentication({
+                owner: siwe.owner,
+                signature: await siwe.getSignature(),
+                message: await siwe.getMessage()
+            }));
+            return acc.member;
+        },
+        enabled: siwe.isAuthenticated()
+    })
 
     const closeModal = () => setOpen(false);
-
-    async function addAddress() {
-        setOpen(true);
-        addFish(siwe.getAddress(), address).then(() => {
-            window.location.reload(false);
-        });
-    }
-
-
-    useEffect(async () => {
-        if (siwe.getAddress() && address) {
-            const fish = await getFish(siwe.getAddress());
-            setHasAddedAsFish(fish.map(f => {
-                return f.address.toLowerCase()
-            }).includes(address.toLowerCase()));
-        }
-    }, [address, siwe.getAddress()]);
 
     if (!siwe.isAuthenticated()) {
         return (
             <Siwe target={target}/>
         );
     }
-    else if (hasAddedAsFish == null) {
-        return <>
 
-        </>
-    } else if (!hasAddedAsFish) {
+    if (membershipQuery.isLoading) {
+        return <></>
+    }
+
+    if (!membershipQuery.data) {
         return (
             <>
                 <Popup modal open={open} onClose={closeModal}>
@@ -86,14 +84,13 @@ export default function RequiresFishTracking({address, target = `/${address}/his
                     </PopupContainer>
                 </Popup>
                 <SectionWithBackground>
-                    <Subheading>You're not tracking this address yet</Subheading>
-                    <Heading><HighlightedText>TRACK</HighlightedText> THIS ADDRESS</Heading>
-                    <Description>To fully track this address, click the button below.</Description>
+                    <Subheading>This feature requires a membership</Subheading>
+                    <Heading>BECOME A<HighlightedText> MEMBER</HighlightedText></Heading>
+                    <Description>Viewing the details of this page will requires a membership. Becoming a member is super
+                        easy!</Description>
 
                     <Container>
-                        <PrimaryButton onClick={() => {
-                            addAddress()
-                        }} tw="my-2 w-1/2 self-center">REQUEST TO TRACK</PrimaryButton>
+                        <PrimaryButton>JOIN US</PrimaryButton>
                     </Container>
                 </SectionWithBackground>
             </>

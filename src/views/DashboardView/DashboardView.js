@@ -23,9 +23,7 @@ const CenterText = tw.div`text-center w-full`
 const Center = tw.div`w-full flex grid justify-items-center mt-3 mb-1`
 export default function DashboardView({address}) {
 
-    const dashboardHooks = useDashboardHooks(address, {
-        supportsClaimables: true,
-    });
+    const dashboardHooks = useDashboardHooks(address, {});
 
     function showSmallValues() {
         dashboardHooks.setHideSmallValues(false);

@@ -6,7 +6,7 @@ import {SectionHeading, Subheading as SubheadingBase} from "../../components/mis
 import {SectionDescription} from "../../components/misc/Typography";
 import FAQ from "../../components/faqs/SingleCol";
 import DollarLabel from "../../components/Label/DollarLabel";
-import RequiresFishTracking from "../../components/RequiresFishTracking";
+import RequiresMembership from "../../components/RequiresMembership";
 import DashboardNavbar from "../../components/DashboardNavbar";
 import FullWidthWithImage from "../../components/hero/FullWidthWithImage";
 import TwoColumnWithPrimaryBackground from "../../components/hero/TwoColumnWithPrimaryBackground";
@@ -15,7 +15,6 @@ import {DashboardContext} from "../../App";
 const Container = tw.div`flex pt-8`
 
 const DashboardWrapper = tw.div`w-full grid justify-items-center`
-const HideSmallValueFilter = tw.p`text-xs`
 
 const HighlightedText = tw.span`text-primary-500`
 const Subheading = tw(SubheadingBase)`mb-4`;
@@ -76,13 +75,13 @@ export default function ClaimableView() {
                             </Section>
                         }
 
-                        <RequiresFishTracking address={address}
-                                              target={`/${address}/claimables`}>
+                        <RequiresMembership address={address}
+                                            target={`/${address}/claimables`}>
                             <ClaimableSection>
                                 <ClaimableDetails showNothingFoundMessage={true}
                                                   showPlaceholder={claimableLoading} />
                             </ClaimableSection>
-                        </RequiresFishTracking>
+                        </RequiresMembership>
                     </>
                 }
 

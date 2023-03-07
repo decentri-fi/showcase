@@ -2,10 +2,7 @@ import {fetchClaimables} from "../../../api/defitrack/claimable/claimable";
 import {useQueries, useQueryClient} from "@tanstack/react-query";
 import useProtocols from "./useProtocols";
 
-export default function useDashboardClaimableHooks(account, supportsClaimables, {
-    setTotalScanning,
-    setDoneScanning
-}) {
+export default function useDashboardClaimableHooks(account) {
     const queryClient = useQueryClient();
     const {protocols} = useProtocols();
 
@@ -47,7 +44,6 @@ export default function useDashboardClaimableHooks(account, supportsClaimables, 
     function getFromLocalStorage(account, protocol) {
         return JSON.parse(localStorage.getItem(`claimables-${account}-${protocol.name}`));
     }
-
 
 
     const refresh = () => {

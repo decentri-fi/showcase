@@ -33,10 +33,10 @@ import TermsOfServiceView from "./views/TermsOfServiceView/TermsOfServiceView";
 import Web3ClaimableView from "./views/ClaimableView/Web3ClaimableView";
 import AddressClaimableView from "./views/ClaimableView/AddressClaimableView";
 import useWeb3 from "./hooks/web3";
-import SignInWithEthereumView from "./views/SignInWithEthereumView";
 import HistoryView from "./views/HistoryView/HistoryView";
 import {QueryClient, QueryClientProvider} from "@tanstack/react-query";
 import ExploreView from "./views/ExploreView/ExploreView";
+import MembershipView from "./views/MembershipView";
 
 export const DashboardContext = createContext(null);
 
@@ -69,6 +69,9 @@ export default function App() {
                         <ExploreView/>
                         <FooterV2/>
                     </Route>
+                    <Route path="/membership">
+                        <MembershipView />
+                    </Route>
                     <Route path="/claimables">
                         <Web3ClaimableView/>
                         <FooterV2/>
@@ -82,10 +85,6 @@ export default function App() {
                         <CustomHeader/>
                         <ProtocolView/>
                         <FooterV2/>
-                    </Route>
-                    <Route path="/siwe">
-                        <CustomHeader showUserLink={false}/>
-                        <SignInWithEthereumView/>
                     </Route>
                     <Route path="/defi-hub">
                         <CustomHeader showUserLink={false}/>

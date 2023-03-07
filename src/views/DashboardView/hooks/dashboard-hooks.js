@@ -12,7 +12,6 @@ import useEns from "./useEns";
 
 export default function
     useDashboardHooks(account, {
-    supportsClaimables = false,
     supportsBalances = true,
     supportsDebt = true,
     supportsLending = true,
@@ -45,7 +44,7 @@ export default function
         claimables,
         refresh: refreshClaimables,
         loading: claimableLoading
-    } = useDashboardClaimableHooks(account, supportsClaimables, {
+    } = useDashboardClaimableHooks(account, {
         setTotalScanning,
         setDoneScanning
     });

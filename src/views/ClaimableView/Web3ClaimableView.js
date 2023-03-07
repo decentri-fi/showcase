@@ -17,22 +17,10 @@ const Container = tw.div`px-2 flex pt-8 lg:pt-24 bg-defaultBackground`
 const Center = tw.div`w-full grid justify-items-center`;
 
 
-
 export default function Web3ClaimableView() {
-
-    const { useChainId, useAccounts, useIsActivating, useIsActive, useProvider, useENSNames } = hooks
 
     const web3 = useWeb3();
     const history = useHistory();
-
-    const dashboardHooks = useDashboardHooks(web3.account, {
-        supportsPooling: false,
-        supportsLending: false,
-        supportsStaking: false,
-        supportsClaimables: true,
-        supportsBalances: false,
-        supportsDebt: false
-    });
 
     const onAddressChange = (address) => {
         history.push(`/${address}/claimables`);

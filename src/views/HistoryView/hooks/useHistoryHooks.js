@@ -1,16 +1,14 @@
-import {useEffect, useState} from "react";
+import {useEffect} from "react";
 import {getEvents} from "../../../api/whalespotter/transactions/transactions";
 import useSiwe from "../../../hooks/siwe/useSiwe";
 import {useQuery} from "@tanstack/react-query";
 
 export default function (address) {
 
-    const siwe = useSiwe();
-
     const eventsQuery = useQuery({
         queryKey: ['account', address, 'events'],
         queryFn: async () => {
-            return getEvents(address, siwe.getAddress())
+            return getEvents(address, address)
         }
     })
 

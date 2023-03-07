@@ -4,7 +4,7 @@ import CustomHeader from "../../components/Header/CustomHeader";
 import tw from "twin.macro";
 import {SectionHeading, Subheading as SubheadingBase} from "../../components/misc/Headings";
 import {SectionDescription} from "../../components/misc/Typography";
-import RequiresFishTracking from "../../components/RequiresFishTracking";
+import RequiresMembership from "../../components/RequiresMembership";
 import TwoColSingleFeatureWithStats2 from "../../components/features/TwoColSingleFeatureWithStats2";
 import DashboardNavbar from "../../components/DashboardNavbar";
 import useHistoryHooks from "./hooks/useHistoryHooks";
@@ -60,7 +60,7 @@ export default function HistoryView() {
                     <DashboardNavbar address={address} selected={"history"}/>
                 </Center>
             </DashboardWrapper>
-            <RequiresFishTracking address={address}>
+            <RequiresMembership address={address}>
                 <SectionWithBackground>
                     <Subheading>A little bit of history</Subheading>
                     <Heading><HighlightedText>DEFI</HighlightedText> ACTIVITIES</Heading>
@@ -101,7 +101,7 @@ export default function HistoryView() {
                         </Section>
                     }
                 </DashboardWrapper>
-            </RequiresFishTracking>
+            </RequiresMembership>
         </Container>
 
     </>

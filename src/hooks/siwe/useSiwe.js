@@ -19,40 +19,45 @@ export default function useSiwe() {
         return message.prepareMessage();
     }
 
-    async function createMessage() {
-        const signer = web3.web3React.provider.getSigner();
-        let address = await signer.getAddress();
-        localStorage.setItem('siwe_address', address)
+    async function createMessage(address) {
+//        const signer = web3.web3React.provider.getSigner();
+        //       let address = await signer.getAddress();
         return createSiweMessage(
             address,
             'Sign in with Ethereum to https://decentri.fi.'
         );
     }
 
-    async function createSignature() {
+    async function createSignature(address) {
         const signer = web3.web3React.provider.getSigner();
-        return await signer.signMessage(await getMessage());
+        return await signer.signMessage(await getMessage(address));
     }
 
-    async function getMessage() {
-        if (localStorage.getItem(`siwe_message`) == null) {
-            let value = await createMessage();
-            localStorage.setItem(`siwe_message`, value);
+    async function getMessage(address) {
+        if (localStorage.getItem(`${address}_siwe_message`) == null) {
+            let value = await createMessage(address);
+            localStorage.setItem(`${address}_siwe_message`, value);
         }
-        return localStorage.getItem(`siwe_message`);
+        return localStorage.getItem(`${address}_siwe_message`);
     }
 
-    async function getSignature() {
-        if (localStorage.getItem(`siwe_signature`) == null) {
-            localStorage.setItem(`siwe_signature`, await createSignature());
+    async function getSignature(address) {
+        if (localStorage.getItem(`${address}_siwe_signature`) == null) {
+            localStorage.setItem(`${address}_siwe_signature`, await createSignature(address));
         }
-        return localStorage.getItem(`siwe_signature`);
+        return localStorage.getItem(`${address}_siwe_signature`);
     }
 
     return {
-        getAddress: () => localStorage.getItem('siwe_address'),
-        getMessage,
-        getSignature,
-        isAuthenticated: () => localStorage.getItem(`siwe_signature`) != null
+        getSignature: () => getSignature(web3.account),
+        getMessage: () => getMessage(web3.account),
+        owner: web3.account,
+        isAuthenticated: () => {
+            const acc = web3.account;
+            if (!acc) {
+                return false
+            }
+            return localStorage.getItem(`${acc}_siwe_signature`) != null;
+        }
     }
 }

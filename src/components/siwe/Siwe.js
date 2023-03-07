@@ -22,7 +22,8 @@ export default function Siwe({target}) {
     const web3 = useWeb3();
 
     async function handleClick() {
-        await siwe.getSignature();
+        console.log('doing tihngs')
+        await siwe.getSignature(web3.account);
         history.push(target)
     }
 

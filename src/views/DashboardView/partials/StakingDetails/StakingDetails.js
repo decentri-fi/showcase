@@ -20,6 +20,8 @@ const CloseContainer = tw.div`grid w-full justify-items-center`
 const CloseIcon = tw.div`p-4 w-full`
 const ActionContainer = tw.div`w-full grid justify-items-center mb-4`
 
+const DataContainer = tw.div`w-full px-4`
+
 export default function StakingDetails({protocol}) {
 
     const web3 = useWeb3()
@@ -61,7 +63,6 @@ export default function StakingDetails({protocol}) {
         return {
             symbol: element.stakedToken.symbol,
             onClick: () => {
-                console.log(element)
                 setPopupData(
                     <>
                         <AssetTable
@@ -136,9 +137,9 @@ export default function StakingDetails({protocol}) {
                             &times;
                         </a>
                     </CloseIcon>
-                    <div tw="w-full px-4">
+                    <DataContainer>
                         {popupData}
-                    </div>
+                    </DataContainer>
                 </CloseContainer>
             </Popup>
             <AssetTable

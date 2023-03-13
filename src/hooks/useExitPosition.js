@@ -27,7 +27,7 @@ export const useExitPosition = (web3) => {
             }
         } else {
             const preparedTransactionFn = await defihub.exit().exitPositionFunction(position)
-            const preparedTransactions = await preparedTransactionFn(web3.account, position.amount);
+            const preparedTransactions = await preparedTransactionFn(web3.account, position.tokenAmount);
             const transactions = preparedTransactions.transactions;
             for (const tx of transactions) {
                 if (tx.from == null || tx.from.toLowerCase() === web3.account.toLowerCase()) {

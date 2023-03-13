@@ -5,7 +5,12 @@ import {CheckCircleIcon, DotsCircleHorizontalIcon} from "@heroicons/react/solid"
 import styled from "styled-components";
 
 const Container = tw.div`grid w-full justify-items-center`;
-const NextStepIcon = tw.div`w-3 h-3 self-center mb-2`
+const NextStepIcon = styled.div`
+  ${tw`w-3 h-3 self-center mb-2`}
+  svg {
+    ${tw`ml-1 z-20 w-4 absolute`}
+  }
+`
 const CloseContainer = tw.div`p-4 w-full`
 const Header = tw.h1`text-lg font-black text-purple-600`
 
@@ -28,13 +33,13 @@ export default function useTransactionPopup() {
         if (transactionState === loadingState) {
             return (
                 <NextStepIcon>
-                    <DotsCircleHorizontalIcon color={"orange"} tw="ml-1 z-20 w-4 absolute"/>
+                    <DotsCircleHorizontalIcon color={"orange"} />
                 </NextStepIcon>
             )
         } else if (finishedStates.includes(transactionState)) {
             return (
                 <NextStepIcon>
-                    <CheckCircleIcon color={"green"} tw="ml-1 z-20 w-4 absolute"/>
+                    <CheckCircleIcon color={"green"} />
                 </NextStepIcon>
             )
         }

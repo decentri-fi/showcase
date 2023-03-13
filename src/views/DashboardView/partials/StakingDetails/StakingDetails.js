@@ -4,10 +4,8 @@ import tw from "twin.macro";
 import AssetTable from "../../../../components/AssetTable/AssetTable";
 import Popup from "reactjs-popup";
 import 'reactjs-popup/dist/index.css';
-import {Button} from "@mui/material";
 import {DashboardContext} from "../../../../App";
-import {useExitPosition} from "../../../../hooks/useExitPosition";
-import useWeb3 from "../../../../hooks/web3";
+import {ExitButton} from "./ExitButton";
 
 const Header = tw.div`w-full flex items-center mb-2`
 const HeaderTextContainer = tw.div`lg:w-3/12 w-full`
@@ -24,10 +22,7 @@ const DataContainer = tw.div`w-full px-4`
 
 export default function StakingDetails({protocol}) {
 
-    const web3 = useWeb3()
-    const {
-        exit
-    } = useExitPosition(web3);
+
     const [open, setOpen] = useState(false);
     const [popupData, setPopupData] = useState(<></>);
     const closeModal = () => setOpen(false);
@@ -100,11 +95,7 @@ export default function StakingDetails({protocol}) {
                         <ActionContainer>
                             {
                                 element.exitPositionSupported &&
-                                <Button onClick={
-                                    async () => {
-                                        await exit(element);
-                                    }
-                                } variant={"contained"}>Exit Position</Button>
+                                <ExitButton element={element}/>
                             }
                         </ActionContainer>
                     </>

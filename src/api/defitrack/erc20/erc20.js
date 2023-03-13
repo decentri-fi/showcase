@@ -1,13 +1,13 @@
-import defitrack from "@defitrack/js-client";
+import defihub from "@decentri.fi/defi-hub";
 
 export const fetchWrappedToken = async (network) => {
-    return await defitrack.erc20().wrapped(network);
+    return await defihub.erc20().wrapped(network);
 }
 
 export const fetchTokenInformation = async (address, network) => {
-    return await defitrack.erc20().info(network, address);
+    return await defihub.erc20().info(network, address);
 }
 
 export const fetchTokenBalance = async (token, user, network) => {
-    return await defitrack.erc20().getTokenBalance(network, token, user);
+    return await defihub.erc20().getTokenBalance(network, token, user);
 }

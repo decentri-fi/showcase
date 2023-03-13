@@ -5,7 +5,6 @@ export const useClaims = (web3) => {
     const initiateClaim = async (claimable) => {
         if (claimable.network.chainId !== web3.web3React.chainId) {
             try {
-                console.log('requesting chain change', web3.web3React.chainId);
                 await web3.changeNetwork(claimable.network.chainId);
             } catch (err) {
                 if (err.code === 4902) {

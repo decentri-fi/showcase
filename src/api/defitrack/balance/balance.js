@@ -1,5 +1,4 @@
 import axios from "axios";
-import defitrack from "@defitrack/js-client";
 
 export const fetchNativeBalance = async (address) => {
     const result = await axios.get(`https://api.decentri.fi/balance/${address}/native-balance`)

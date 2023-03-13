@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@defitrack/js-client": "^1.0.7",
+    "@decentri.fi/defi-hub": "^2.0.4",
     "@emotion/react": "^11.6.0",
     "@emotion/styled": "^11.6.0",
     "@ethersproject/address": "^5.4.0",

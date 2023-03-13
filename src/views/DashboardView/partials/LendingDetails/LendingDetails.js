@@ -26,7 +26,7 @@ export default function LendingDetails({protocol}) {
             onClick: () => {
             },
             name: element.name,
-            amount: element.amount,
+            amount: element.amountDecimal,
             apr: element.rate,
             logo: element.protocol.logo,
             networkLogo: element.network.logo,

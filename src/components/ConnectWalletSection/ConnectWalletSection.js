@@ -7,7 +7,6 @@ import StatsIllustrationSrc from "images/stats-illustration.svg";
 import {ReactComponent as SvgDotPattern} from "images/dot-pattern.svg";
 import FoxWithWalletPic from "../../images/fox-with-wallet.png";
 import 'reactjs-popup/dist/index.css';
-import useWeb3 from "../../hooks/web3";
 import useConnectWalletPopup from "../ConnectWalletPopup/UseConnectWalletPopup";
 
 const Container = tw.div`w-full grid justify-items-center`;

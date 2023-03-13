@@ -5,7 +5,6 @@ import {SectionHeading, Subheading as SubheadingBase} from "components/misc/Head
 import {PrimaryButton as PrimaryButtonBase} from "components/misc/Buttons.js";
 import StatsIllustrationSrc from "images/stats-illustration.svg";
 import {ReactComponent as SvgDotPattern} from "images/dot-pattern.svg";
-import PopularProtocols from "../PopularProtocols/PopularProtocols";
 
 const Container = tw.div`w-full grid justify-items-center`;
 const TwoColumn = tw.div`flex flex-col md:flex-row justify-between max-w-screen-xl mx-8 pb-12  md:py-24`;

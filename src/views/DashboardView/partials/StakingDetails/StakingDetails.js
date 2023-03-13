@@ -6,6 +6,8 @@ import Popup from "reactjs-popup";
 import 'reactjs-popup/dist/index.css';
 import {Button} from "@mui/material";
 import {DashboardContext} from "../../../../App";
+import {useExitPosition} from "../../../../hooks/useExitPosition";
+import useWeb3 from "../../../../hooks/web3";
 
 const Header = tw.div`w-full flex items-center mb-2`
 const HeaderTextContainer = tw.div`lg:w-3/12 w-full`
@@ -20,6 +22,10 @@ const ActionContainer = tw.div`w-full grid justify-items-center mb-4`
 
 export default function StakingDetails({protocol}) {
 
+    const web3 = useWeb3()
+    const {
+        exit
+    } = useExitPosition(web3);
     const [open, setOpen] = useState(false);
     const [popupData, setPopupData] = useState(<></>);
     const closeModal = () => setOpen(false);
@@ -36,7 +42,7 @@ export default function StakingDetails({protocol}) {
 
         const single = {
             name: element.name,
-            amount: element.amount,
+            amount: element.amountDecimal,
             apr: element.apr,
             logo: element.protocol.logo,
             networkLogo: element.network.logo,
@@ -48,13 +54,14 @@ export default function StakingDetails({protocol}) {
                 name: reward.name,
                 logo: reward.logo,
                 networkLogo: element.network.logo,
-                dollarValue: 0,
+                dollarValue: null,
             }
         });
 
         return {
             symbol: element.stakedToken.symbol,
             onClick: () => {
+                console.log(element)
                 setPopupData(
                     <>
                         <AssetTable
@@ -90,14 +97,21 @@ export default function StakingDetails({protocol}) {
                         />
 
                         <ActionContainer>
-                            <Button variant={"contained"}>Exit Position</Button>
+                            {
+                                element.exitPositionSupported &&
+                                <Button onClick={
+                                    async () => {
+                                        await exit(element);
+                                    }
+                                } variant={"contained"}>Exit Position</Button>
+                            }
                         </ActionContainer>
                     </>
                 )
                 setOpen(true);
             },
             name: element.name,
-            amount: element.amount,
+            amount: element.amountDecimal,
             apr: element.apr,
             logo: element.protocol.logo,
             networkLogo: element.network.logo,

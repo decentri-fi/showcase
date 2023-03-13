@@ -116,10 +116,8 @@ function Expansion({expanded}) {
                             ref={searchField}
                             onKeyDown={e => {
                                 if (searchField.current.value === 40 || searchField.current.value === 42) {
-                                    ReactGA.event({
-                                        category: 'dashboard',
-                                        action: 'Search',
-                                        value: searchField
+                                    ReactGA.event('search_address', {
+                                        search_term: searchField.current.value
                                     });
                                     history.push(`/${searchField}/profile`);
                                 }

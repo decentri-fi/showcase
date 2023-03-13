@@ -1,8 +1,8 @@
 import {useState} from "react";
 import {useParams} from "react-router-dom";
-import defitrack from "@defitrack/js-client";
 import useProtocols from "../../DashboardView/hooks/useProtocols";
 import {useQuery} from "@tanstack/react-query";
+import defihub from '@decentri.fi/defi-hub'
 
 export default function useProtocolView() {
 
@@ -18,7 +18,7 @@ export default function useProtocolView() {
     const poolingMarketsQuery = useQuery({
         queryKey: ['protocols', protocol, 'pooling-markets'],
         queryFn: async () => {
-            return await defitrack.pooling().markets(protocol.slug);
+            return await defihub.pooling().markets(protocol.slug);
         },
         enabled: !!protocol
     });
@@ -26,7 +26,7 @@ export default function useProtocolView() {
     const lendingMarkets = useQuery({
         queryKey: ['protocols', protocol, 'lending-markets'],
         queryFn: async () => {
-            return await defitrack.lending().markets(protocol.slug);
+            return await defihub.lending().markets(protocol.slug);
         },
         enabled: !!protocol
     });
@@ -34,7 +34,7 @@ export default function useProtocolView() {
     const farmingMarkets = useQuery({
         queryKey: ['protocols', protocol, 'farming-markets'],
         queryFn: async () => {
-            return await defitrack.farming().markets(protocol.slug);
+            return await defihub.farming().markets(protocol.slug);
         },
         enabled: !!protocol
     });

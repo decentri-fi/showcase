@@ -1,9 +1,11 @@
 import axios from "axios";
-import defitrack from "@defitrack/js-client";
+import defihub from "@decentri.fi/defi-hub";
 
 export const farmingPositions = async (address, protocol) => {
     try {
-        return await defitrack.farming().positions(protocol.slug, address);
+        const farmingPositions = await defihub.farming().positions(protocol.slug, address);
+        console.log(farmingPositions);
+        return farmingPositions;
     } catch (ex) {
         console.log(`unable to fetch farming positions for ${protocol.slug} for address ${address}`);
         return [];
@@ -16,7 +18,7 @@ export const fetchStakingById = async (address, protocol, network, id) => {
 }
 
 export const fetchStakingMarketsForToken = async (network, protocol, tokenAddress) => {
-    return await defitrack.farming().marketsForToken(protocol.slug, tokenAddress, network)
+    return await defihub.farming().marketsForToken(protocol.slug, tokenAddress, network)
 }
 
 export const fetchStakingMarketById = async (network, protocol, stakingId) => {

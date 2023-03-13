@@ -1,5 +1,5 @@
-import defitrack from "@defitrack/js-client";
+import defihub from '@decentri.fi/defi-hub'
 
 export const calculatePrice = async (priceRequest) => {
-    return await defitrack.prices().calculate(priceRequest.address, priceRequest.network, priceRequest.amount);
+    return await defihub.prices().calculate(priceRequest.address, priceRequest.network, priceRequest.amount);
 };

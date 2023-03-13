@@ -1,5 +1,5 @@
-import defitrack from "@defitrack/js-client";
+import defihub from '@decentri.fi/defi-hub'
 
 export const fetchNetworks = async () => {
-    return await defitrack.networks().list();
+    return await defihub.networks().list();
 }

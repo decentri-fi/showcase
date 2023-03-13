@@ -22,7 +22,7 @@ export default function Search({searchPlaceholder = "Search an address", onAddre
                             ReactGA.event({
                                 category: 'dashboard',
                                 action: 'Search',
-                                value: searchField
+                                label: searchField
                             });
                             onAddressChange(searchField);
                         }

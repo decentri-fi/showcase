@@ -87,12 +87,23 @@ export function ApprovalTable({isLoading, allowances}) {
         return <DummyList/>
     } else {
 
+
         const listItems = allowances.map((allowance) => {
+            const spender = () => {
+                if (allowance.spender.label) {
+                    return allowance.spender.label;
+                } else {
+                    return sliceAccount(allowance.spender.address);
+                }
+            }
+
             return (
                 <ListItem>
                     <Row>
                         <NameColumn>
-                            {sliceAccount(allowance.spender)}
+                            <a target="_blank" href={`${allowance.network.baseUrl}/address/${allowance.spender.address}`}>
+                                {spender()}
+                            </a>
                         </NameColumn>
                         <TokenColumn>
                             {allowance.token.name}

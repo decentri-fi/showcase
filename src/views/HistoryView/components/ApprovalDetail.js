@@ -20,7 +20,7 @@ const FromOrToColumn = tw.div`lg:w-1/3 w-1/2 lg:text-right font-mono`
 export default function ApprovalDetail({event, owner}) {
 
     if (event.metadata.owner.toLowerCase() !== owner.toLowerCase()) {
-        return <></>
+        return null
     }
 
     const revokeOrApproval = (event) => {

@@ -56,6 +56,7 @@ export default function useTokenviewHooks(networkName, tokenAddress) {
             if (token !== null && web3.hasAccount) {
                 const result = await fetchTokenBalance(token.address, web3.account, networkName);
                 if (result > 0) {
+                    console.log(result)
                     const number = BigNumber.from(String(result))
                     setDecimalUserBalance(
                         ethers.utils.formatUnits(number, token.decimals)

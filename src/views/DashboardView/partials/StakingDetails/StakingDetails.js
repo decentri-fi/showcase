@@ -39,7 +39,7 @@ export default function StakingDetails({protocol}) {
 
         const single = {
             name: element.name,
-            amount: element.amountDecimal,
+            amount: element.stakedAmountDecimal,
             apr: element.apr,
             logo: element.protocol.logo,
             networkLogo: element.network.logo,
@@ -103,7 +103,7 @@ export default function StakingDetails({protocol}) {
                 setOpen(true);
             },
             name: element.name,
-            amount: element.amountDecimal,
+            amount: element.stakedAmountDecimal,
             apr: element.apr,
             logo: element.protocol.logo,
             networkLogo: element.network.logo,

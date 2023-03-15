@@ -37,6 +37,7 @@ import HistoryView from "./views/HistoryView/HistoryView";
 import {QueryClient, QueryClientProvider} from "@tanstack/react-query";
 import ExploreView from "./views/ExploreView/ExploreView";
 import MembershipView from "./views/MembershipView";
+import {ApprovalView} from "./views/ApprovalView/ApprovalView";
 
 export const DashboardContext = createContext(null);
 
@@ -98,6 +99,10 @@ export default function App() {
                     </Route>
                     <Route path="/test">
                         <ServiceLandingPage/>
+                    </Route>
+                    <Route path="/:user/allowance">
+                        <ApprovalView/>
+                        <FooterV2/>
                     </Route>
                     <Route path="/:user/profile">
                         <AddressDashboardView/>

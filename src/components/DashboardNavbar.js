@@ -25,10 +25,17 @@ export default function DashboardNavbar({address , selected = "profile"}) {
             }
         },
         {
-            name: <span>History <NewLabel>new</NewLabel></span>,
+            name: <span>History</span>,
             selected: selected === "history",
             onClick() {
                 history.push(`/${address}/history`)
+            }
+        },
+        {
+            name: <span>Allowances <NewLabel>new</NewLabel></span>,
+            selected: selected === "allowance",
+            onClick() {
+                history.push(`/${address}/allowance`)
             }
         }
     ];

@@ -8,8 +8,6 @@ import FAQ from "../../components/faqs/SingleCol";
 import DollarLabel from "../../components/Label/DollarLabel";
 import RequiresMembership from "../../components/RequiresMembership";
 import DashboardNavbar from "../../components/DashboardNavbar";
-import FullWidthWithImage from "../../components/hero/FullWidthWithImage";
-import TwoColumnWithPrimaryBackground from "../../components/hero/TwoColumnWithPrimaryBackground";
 import {DashboardContext} from "../../App";
 
 const Container = tw.div`flex pt-8`
@@ -57,7 +55,7 @@ export default function ClaimableView() {
         <Container>
             <DashboardWrapper>
                 <Center>
-                    <DashboardNavbar address={address} selected={"claimables"} />
+                    <DashboardNavbar address={address} selected={"claimables"}/>
                 </Center>
 
                 {
@@ -75,11 +73,10 @@ export default function ClaimableView() {
                             </Section>
                         }
 
-                        <RequiresMembership address={address}
-                                            target={`/${address}/claimables`}>
+                        <RequiresMembership target={`/${address}/claimables`}>
                             <ClaimableSection>
                                 <ClaimableDetails showNothingFoundMessage={true}
-                                                  showPlaceholder={claimableLoading} />
+                                                  showPlaceholder={claimableLoading}/>
                             </ClaimableSection>
                         </RequiresMembership>
                     </>

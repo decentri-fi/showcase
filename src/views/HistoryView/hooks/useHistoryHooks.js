@@ -19,18 +19,18 @@ export default function (address) {
     }, []);
 
     const eventsPerTransaction = events.reduce((acc, event) => {
-        if (acc[event.transaction.id] == null) {
-            acc[event.transaction.id] = []
+        if (acc[event.transactionHash] == null) {
+            acc[event.transactionHash] = []
         }
-        acc[event.transaction.id].push(
+        acc[event.transactionHash].push(
             event
         )
         return acc
     }, {});
 
     const transactionsPerId = events.reduce((acc, event) => {
-        if (acc[event.transaction.id] == null) {
-            acc[event.transaction.id] = event.transaction
+        if (acc[event.transactionHash] == null) {
+            acc[event.transactionHash] = event.transactionHash
         }
         return acc
     }, {});

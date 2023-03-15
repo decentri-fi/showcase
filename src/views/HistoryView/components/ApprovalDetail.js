@@ -45,25 +45,14 @@ export default function ApprovalDetail({event, owner}) {
                     </AssetLogo>
                 </Center>
             </SymbolColumn>
-            <FromOrToColumn>spender: {sliceAccount(event.metadata.spender)}</FromOrToColumn>
+            <FromOrToColumn>spender:
+                <a target="_blank" href={`${event.network.baseUrl}/address/${event.metadata.spender}`}>
+                    {sliceAccount(event.metadata.spender)}
+                </a>
+            </FromOrToColumn>
         </Container>
     );
 }
-
-const normalized = function (sign, amount, decimals = 18) {
-    if (amount == null) {
-        return "0.00"
-    } else {
-        const result = new BigNumber(amount).dividedBy(
-            new BigNumber(10).exponentiatedBy(decimals)
-        )
-        if (new BigNumber(0).isLessThan(result)) {
-            return `~ ${sign}${result.toFixed(6, 0)}`;
-        } else {
-            return <span>&nbsp;&nbsp;&nbsp;0.00</span>;
-        }
-    }
-};
 
 const sliceAccount = function (address) {
     return `${address.slice(0, 6)}...${address.slice(-6, address.length)}`;

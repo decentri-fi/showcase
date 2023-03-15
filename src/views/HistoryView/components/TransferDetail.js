@@ -64,7 +64,7 @@ export default function TransferDetail({event, owner}) {
                 </Center>
             </SymbolColumn>
             <FromOrToColumn>
-                <p>{fromOrTo}: {fromOrToAddress}</p>
+                <a href={`${event.network.baseUrl}/address/${fromOrToAddress}`}>{fromOrTo}: {fromOrToAddress}</a>
             </FromOrToColumn>
         </Container>
     );

@@ -37,7 +37,7 @@ export function ApprovalView() {
                 <RequiresMembership target={`/${address}/allowance`}>
                     <SectionWithBackground>
                         <TableContainer>
-                            <ApprovalTable isLoading={approvalHooks.isLoading} allowances={approvalHooks.allowances}/>
+                            <ApprovalTable revoke={approvalHooks.revoke} isLoading={approvalHooks.isLoading} allowances={approvalHooks.allowances}/>
                         </TableContainer>
                     </SectionWithBackground>
                 </RequiresMembership>

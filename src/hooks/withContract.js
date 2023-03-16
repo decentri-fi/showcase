@@ -1,17 +1,13 @@
 import {Contract} from '@ethersproject/contracts'
 
-export const withContract = function (address, abi, web3ReactContextInterface) {
-    return getContract(address, abi, web3ReactContextInterface.library, web3ReactContextInterface.account)
+export const withContract = function (address, abi, web3) {
+    return getContract(address, abi, web3, web3.account)
 };
 
-function getContract(address, abi, library, account) {
+function getContract(address, abi, web3, account) {
     return new Contract(
-        address, abi, getProviderOrSigner(library, account)
+        address, abi, getSigner(web3.web3React.provider, account)
     )
-}
-
-export function getProviderOrSigner(library, account) {
-    return account ? getSigner(library, account) : library
 }
 
 export function getSigner(provider, account) {

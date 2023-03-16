@@ -82,7 +82,7 @@ function DummyList() {
 }
 
 
-export function ApprovalTable({isLoading, allowances}) {
+export function ApprovalTable({isLoading, allowances, revoke}) {
     if (isLoading) {
         return <DummyList/>
     } else {
@@ -97,11 +97,16 @@ export function ApprovalTable({isLoading, allowances}) {
                 }
             }
 
+            const doRevoke = async () => {
+                await revoke(allowance)
+            }
+
             return (
                 <ListItem>
                     <Row>
                         <NameColumn>
-                            <a target="_blank" href={`${allowance.network.baseUrl}/address/${allowance.spender.address}`}>
+                            <a target="_blank"
+                               href={`${allowance.network.baseUrl}/address/${allowance.spender.address}`}>
                                 {spender()}
                             </a>
                         </NameColumn>
@@ -114,7 +119,7 @@ export function ApprovalTable({isLoading, allowances}) {
                         <TotalColumn>
                             <PullRight>
                                 <BoldRed>
-                                    revoke
+                                    <span onClick={doRevoke}>revoke</span>
                                 </BoldRed>
                             </PullRight>
                         </TotalColumn>

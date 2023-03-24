@@ -115,11 +115,12 @@ function Expansion({expanded}) {
                         <SearchInput
                             ref={searchField}
                             onKeyDown={e => {
-                                if (searchField.current.value === 40 || searchField.current.value === 42) {
+                                console.log(searchField.current.value)
+                                if (searchField.current.value.length === 40 || searchField.current.value.length === 42) {
                                     ReactGA.event('search_address', {
                                         search_term: searchField.current.value
                                     });
-                                    history.push(`/${searchField}/profile`);
+                                    history.push(`/${searchField.current.value}/profile`);
                                 }
                             }}
                             type="search" name="search" placeholder={'Track your wallet address or ENS'}></SearchInput>

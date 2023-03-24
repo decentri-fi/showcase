@@ -12,7 +12,7 @@ export default function (address) {
         }
     })
 
-    const events = eventsQuery.data || []
+    const events = eventsQuery.data?.content || []
 
     useEffect(async () => {
         document.title = `History for ${address} - Decentrifi`;

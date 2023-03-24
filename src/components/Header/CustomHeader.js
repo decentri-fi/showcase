@@ -109,6 +109,9 @@ function Expansion({expanded}) {
     return expanded ?
         <TwoColumn>
             <LeftColumn>
+                <Heading>
+                    Hello
+                </Heading>
                 <Notification>Discover. Research. Invest.</Notification>
                 <SearchTeaser>
                     <SearchContainer>

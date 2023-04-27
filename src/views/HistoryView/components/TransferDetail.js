@@ -4,7 +4,7 @@ import FallbackImage from "../../../components/Image/FallbackImage";
 import tw from "twin.macro";
 
 const Container = tw.div`w-full flex lg:px-4`
-const TypeColumn = tw.div`lg:w-1/6 w-1/2 text-center`
+const TypeColumn = tw.div`lg:w-1/6 w-1/2 `
 const TypeLabel = tw.span`px-2 font-medium  rounded bg-purple-100 mx-4 my-1`
 
 const AmountColumn = tw.div`lg:w-1/3 w-1/2 flex items-center text-center font-mono`
@@ -17,7 +17,7 @@ const FromOrToColumn = tw.div`lg:w-1/3 w-1/2  lg:text-right font-mono`
 
 export default function TransferDetail({event, owner}) {
     const sign = (() => {
-        if (event.metadata.from.toLowerCase() === owner.toLowerCase()) {
+        if (event.metadata.from.address.toLowerCase() === owner.toLowerCase()) {
             return '-';
         } else {
             return '+';
@@ -25,18 +25,20 @@ export default function TransferDetail({event, owner}) {
     })();
 
     const fromOrTo = (() => {
-        if (event.metadata.from.toLowerCase() === owner.toLowerCase()) {
-            return 'to';
+        if (event.metadata.from.address.toLowerCase() === owner.toLowerCase()) {
+            return {
+                sliced: sliceAccount(event.metadata.to.address),
+                address: event.metadata.to,
+                label: 'to',
+                action: 'sent'
+            }
         } else {
-            return 'from';
-        }
-    })();
-
-    const fromOrToAddress = (() => {
-        if (event.metadata.from.toLowerCase() === owner.toLowerCase()) {
-            return sliceAccount(event.metadata.to);
-        } else {
-            return sliceAccount(event.metadata.from);
+            return {
+                sliced: sliceAccount(event.metadata.from.address),
+                address: event.metadata.from,
+                label: 'from',
+                action: 'received'
+            }
         }
     })();
 
@@ -44,8 +46,8 @@ export default function TransferDetail({event, owner}) {
         return null;
     }
 
-    if(event.metadata.from.toLowerCase() != owner.toLowerCase() &&
-        event.metadata.to.toLowerCase() != owner.toLowerCase()
+    if(event.metadata.from.address.toLowerCase() != owner.toLowerCase() &&
+        event.metadata.to.address.toLowerCase() != owner.toLowerCase()
     ) {
         return null;
     }
@@ -53,7 +55,7 @@ export default function TransferDetail({event, owner}) {
     return (
         <Container>
             <TypeColumn>
-                <TypeLabel>transfer</TypeLabel>
+                <TypeLabel>{fromOrTo.action}</TypeLabel>
             </TypeColumn>
             <AmountColumn>{normalized(sign, event.metadata.amount, event.metadata.asset.decimals)}</AmountColumn>
             <SymbolColumn>
@@ -64,7 +66,7 @@ export default function TransferDetail({event, owner}) {
                 </Center>
             </SymbolColumn>
             <FromOrToColumn>
-                <a href={`${event.network.baseUrl}/address/${fromOrToAddress}`}>{fromOrTo}: {fromOrToAddress}</a>
+                <a target="_blank" href={`${event.network.baseUrl}/address/${fromOrTo.address}`}>{fromOrTo.label}: {fromOrTo.sliced}</a>
             </FromOrToColumn>
         </Container>
     );

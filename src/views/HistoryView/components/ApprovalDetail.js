@@ -4,7 +4,7 @@ import FallbackImage from "../../../components/Image/FallbackImage";
 import tw from "twin.macro";
 
 const Container = tw.div`w-full flex  px-4`
-const TypeColumn = tw.div`lg:w-1/6 w-1/2 text-center`
+const TypeColumn = tw.div`lg:w-1/6 w-1/2`
 const TypeLabel = tw.span`px-2 font-medium  rounded mx-4 my-1`
 const RevokeTypeLabel = tw(TypeLabel)`bg-red-100`
 const ApproveTypeLabel = tw(TypeLabel)`bg-green-100`
@@ -19,7 +19,7 @@ const FromOrToColumn = tw.div`lg:w-1/3 w-1/2 lg:text-right font-mono`
 
 export default function ApprovalDetail({event, owner}) {
 
-    if (event.metadata.owner.toLowerCase() !== owner.toLowerCase()) {
+    if (event.metadata.owner.address.toLowerCase() !== owner.toLowerCase()) {
         return null
     }
 
@@ -46,8 +46,8 @@ export default function ApprovalDetail({event, owner}) {
                 </Center>
             </SymbolColumn>
             <FromOrToColumn>spender:
-                <a target="_blank" href={`${event.network.baseUrl}/address/${event.metadata.spender}`}>
-                    {sliceAccount(event.metadata.spender)}
+                <a target="_blank" href={`${event.network.baseUrl}/address/${event.metadata.spender.address}`}>
+                    {sliceAccount(event.metadata.spender.address)}
                 </a>
             </FromOrToColumn>
         </Container>

@@ -22,7 +22,6 @@ const OverlayImage = tw.div`lg:h-4 lg:w-4 h-2 w-2 -mx-2 `
 
 const NameColumn = tw.div`pl-1 lg:w-1/4 w-3/4 flex-1 font-medium text-indigo-600 dark:text-gray-200 text-xs`
 const AmountColumn = tw.div`hidden lg:block text-sm text-left text-gray-600 dark:text-gray-200 lg:w-1/3 w-0`
-const TwoColumns = tw.div`grid grid-cols-2`
 
 const ThinGreen = tw.span`text-green-500 font-thin`
 
@@ -126,20 +125,21 @@ function ListEntry({entry}) {
                 </NameColumn>
                 <AmountColumn>
                     <Hidden>
-                        <TwoColumns>
-                            <NumberFormat
-                                value={entry.amount} displayType={'text'} decimalScale={4}
-                                thousandSeparator={true}/>
-                            <ThinGreen> {entry.symbol}</ThinGreen>
-                        </TwoColumns>
-                        <div>
-                            {
-                                entry.apr != null && entry.apr > 0 && <div>
-                                    <APYLabel amount={entry.apr * 100}/>
-                                    <span>% APR</span>
-                                </div>
-                            }
-                        </div>
+                        <NumberFormat
+                            value={entry.amount} displayType={'text'} decimalScale={4}
+                            thousandSeparator={true}/>
+                        <ThinGreen> {entry.symbol}</ThinGreen>
+                        {
+
+                            entry.apr != null && entry.apr > 0 && <div>
+                            <b>
+
+                                <APYLabel amount={entry.apr * 100}/>
+                                <span>% APR</span>
+                            </b>
+
+                            </div>
+                        }
                     </Hidden>
                 </AmountColumn>
                 <TotalColumn>
@@ -178,14 +178,10 @@ function DummyRow() {
                     <PlaceholderLoading width={50} height={10} shape={"rect"}/>
                 </NameColumn>
                 <AmountColumn>
-                    <TwoColumns>
-                        <div>
-                            <PlaceholderLoading width={50} height={10} shape={"rect"}/>
-                        </div>
-                        <ThinGreen>
-                            <PlaceholderLoading width={50} height={10} shape={"rect"}/>
-                        </ThinGreen>
-                    </TwoColumns>
+                    <PlaceholderLoading width={50} height={10} shape={"rect"}/>
+                    <ThinGreen>
+                        <PlaceholderLoading width={50} height={10} shape={"rect"}/>
+                    </ThinGreen>
                 </AmountColumn>
                 <TotalColumn>
                     <PullRight>

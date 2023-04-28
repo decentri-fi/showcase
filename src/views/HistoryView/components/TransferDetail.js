@@ -27,15 +27,15 @@ export default function TransferDetail({event, owner}) {
     const fromOrTo = (() => {
         if (event.metadata.from.address.toLowerCase() === owner.toLowerCase()) {
             return {
-                sliced: sliceAccount(event.metadata.to.address),
-                address: event.metadata.to,
+                sliced: event.metadata.to.label || sliceAccount(event.metadata.to.address),
+                address: event.metadata.to.address,
                 label: 'to',
                 action: 'sent'
             }
         } else {
             return {
-                sliced: sliceAccount(event.metadata.from.address),
-                address: event.metadata.from,
+                sliced: event.metadata.from.label || sliceAccount(event.metadata.from.address),
+                address: event.metadata.from.address,
                 label: 'from',
                 action: 'received'
             }

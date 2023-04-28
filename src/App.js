@@ -38,6 +38,7 @@ import {QueryClient, QueryClientProvider} from "@tanstack/react-query";
 import ExploreView from "./views/ExploreView/ExploreView";
 import MembershipView from "./views/MembershipView";
 import {ApprovalView} from "./views/ApprovalView/ApprovalView";
+import SuggestionView from "./views/SuggestionView/SuggestionView";
 
 export const DashboardContext = createContext(null);
 
@@ -102,6 +103,10 @@ export default function App() {
                     </Route>
                     <Route path="/:user/allowance">
                         <ApprovalView/>
+                        <FooterV2/>
+                    </Route>
+                    <Route path="/:user/suggestions">
+                        <SuggestionView/>
                         <FooterV2/>
                     </Route>
                     <Route path="/:user/profile">

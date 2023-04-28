@@ -30,6 +30,7 @@ export default function PoolingDetails({protocol}) {
             logo: element.protocol.logo,
             networkLogo: element.network.logo,
             dollarValue: element.dollarValue,
+            symbol: ''
         }
     })
 

@@ -22,7 +22,7 @@ export default function LendingDetails({protocol}) {
         return lending.protocol.slug === protocol.slug
     }).map(element => {
         return {
-            symbol: '',
+            symbol: element.token.symbol,
             onClick: () => {
             },
             name: element.name,

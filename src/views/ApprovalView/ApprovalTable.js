@@ -1,6 +1,7 @@
 import React from 'react';
 import tw from "twin.macro";
 import PlaceholderLoading from "react-placeholder-loading";
+import FallbackImage from "../../components/Image/FallbackImage";
 
 
 const Container = tw.div`w-full my-4`
@@ -13,7 +14,7 @@ const Row = tw.div`px-4 select-none cursor-pointer flex flex-1 items-center py-2
 const IconColumn = tw.div`flex flex-col w-1/12 justify-center items-center mr-4 lg:block`;
 const IconBlock = tw.div`block relative`
 const FallbackImageContainer = tw.div`flex flex-nowrap`
-const Image = tw.div`h-5 w-5 lg:h-8 lg:w-8`
+const Image = tw.div`h-5 w-5 `
 const OverlayImage = tw.div`lg:h-4 lg:w-4 h-2 w-2 -mx-2 `
 
 const NameColumn = tw.div`pl-1 lg:w-1/6 w-3/4 flex-1 font-mono font-medium text-indigo-600 dark:text-gray-200 text-xs`
@@ -104,6 +105,15 @@ export function ApprovalTable({isLoading, allowances, revoke}) {
             return (
                 <ListItem>
                     <Row>
+                        <IconColumn>
+                            <IconBlock>
+                                <FallbackImageContainer>
+                                    <Image>
+                                        <FallbackImage src={allowance.network.logo}/>
+                                    </Image>
+                                </FallbackImageContainer>
+                            </IconBlock>
+                        </IconColumn>
                         <NameColumn>
                             <a target="_blank"
                                href={`${allowance.network.baseUrl}/address/${allowance.spender.address}`}>

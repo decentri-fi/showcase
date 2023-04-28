@@ -1,31 +1,36 @@
-import React from 'react';
-import {useHistory, useParams} from "react-router-dom";
-import {useApprovalHooks} from "./hooks/useApprovalHooks";
-import RequiresMembership from "../../components/RequiresMembership";
+import React from "react";
 import CustomHeader from "../../components/Header/CustomHeader";
-import tw from "twin.macro";
+import {useHistory, useParams} from "react-router-dom";
 import DashboardNavbar from "../../components/DashboardNavbar";
-import {ApprovalTable} from "./ApprovalTable";
-import {SectionHeading} from "../../components/misc/Headings";
+import RequiresMembership from "../../components/RequiresMembership";
+import tw from "twin.macro";
+import useSuggestionHooks from "./hooks/useSuggestionHooks.js";
+import SuggestionTable from "./SuggestionTable";
 
 const Container = tw.div`flex pt-8 grid`
 const DashboardWrapper = tw.div`w-full grid justify-items-center`
 const Center = tw.div`w-full flex grid justify-items-center mb-3`
-const Heading = tw(SectionHeading)`w-full`;
-
 const SectionWithBackground = tw.div`grid w-full justify-items-center bg-defaultBackground pt-2`
-const TableContainer = tw.div`w-2/3 my-8`
+const TableContainer = tw.div`w-2/3`
 
-export function ApprovalView() {
+export default function () {
+
     const history = useHistory();
     const params = useParams();
     const address = params.user;
 
-    const approvalHooks = useApprovalHooks(address);
+    const {suggestions, isLoading, dismiss} = useSuggestionHooks(address);
 
     const onAddressChange = (address) => {
-        history.push(`/${address}/allowance`);
+        history.push(`/${address}/suggestions`);
     };
+
+    const suggs = suggestions.map((suggestion) => {
+        return (
+            <p>{suggestion.type}</p>
+        )
+    });
+
 
     return (
         <>
@@ -33,19 +38,22 @@ export function ApprovalView() {
             <Container>
                 <DashboardWrapper>
                     <Center>
-                        <DashboardNavbar address={address} selected={"allowance"}/>
+                        <DashboardNavbar address={address} selected={"suggestions"}/>
                     </Center>
                 </DashboardWrapper>
                 <RequiresMembership target={`/${address}/allowance`}>
                     <SectionWithBackground>
-                        <Heading><span tw="text-red-500">Revoke</span> access to your assets.</Heading>
                         <TableContainer>
-                            <ApprovalTable revoke={approvalHooks.revoke} isLoading={approvalHooks.isLoading} allowances={approvalHooks.allowances}/>
+                            <p>
+                                {isLoading && "Loading..."}
+                                {
+                                    !isLoading && <SuggestionTable suggestions={suggestions}/>
+                                }
+                            </p>
                         </TableContainer>
                     </SectionWithBackground>
                 </RequiresMembership>
             </Container>
-
         </>
-    )
-}
+    );
+};

@@ -67,13 +67,12 @@ function BalanceRow({balance}) {
                     {balance.token.name}
                 </NameColumn>
                 <AmountColumn>
-                    <TwoColumns>
-                        <NumberFormat
-                            value={balance.amount} displayType={'text'} decimalScale={4} thousandSeparator={true}/>
-                        <ThinGreen>
-                            {balance.token.symbol}
-                        </ThinGreen>
-                    </TwoColumns>
+                    <NumberFormat
+                        value={balance.amount} displayType={'text'} decimalScale={4} thousandSeparator={true}/>
+                    <ThinGreen>
+                        &nbsp;
+                        {balance.token.symbol}
+                    </ThinGreen>
                 </AmountColumn>
                 <TotalColumn>
                     <PullRight>

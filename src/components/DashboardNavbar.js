@@ -32,10 +32,17 @@ export default function DashboardNavbar({address , selected = "profile"}) {
             }
         },
         {
-            name: <span>Allowances <NewLabel>new</NewLabel></span>,
+            name: <span>Allowances</span>,
             selected: selected === "allowance",
             onClick() {
                 history.push(`/${address}/allowance`)
+            }
+        },
+        {
+            name: <span>Suggestions <NewLabel>new</NewLabel></span>,
+            selected: selected === "suggestions",
+            onClick() {
+                history.push(`/${address}/suggestions`)
             }
         }
     ];

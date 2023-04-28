@@ -1,38 +1,37 @@
 import {useQuery} from "@tanstack/react-query";
-import {getApprovals} from "../../../api/whalespotter/approvals/Approvals";
 import {createAuthentication} from "../../../api/whalespotter/authentication/createAuthentication";
+import {getApprovals} from "../../../api/whalespotter/approvals/Approvals";
 import useSiwe from "../../../hooks/siwe/useSiwe";
-import {useERC20} from "../../../hooks/erc20/useERC20";
 import useWeb3 from "../../../hooks/web3";
+import {getSuggestions} from "../../../api/whalespotter/suggestion/suggestions.js";
 
-export function useApprovalHooks(address) {
+export default function useSuggestionHooks(address) {
 
     const siwe = useSiwe();
     const web3 = useWeb3();
-    const erc20 = useERC20(web3);
 
-    const revoke = async (allowance) => {
-        await erc20.approve(allowance.token.address, allowance.spender.address, 0, allowance.network.chainId)
-    }
-
-    const approvalQuery = useQuery({
-        queryKey: ['account', address, 'allowance'],
+    const suggestionQuery = useQuery({
+        queryKey: ['account', address, 'suggestions'],
         queryFn: async () => {
             const auth = createAuthentication({
                 owner: siwe.owner,
                 signature: await siwe.getSignature(),
                 message: await siwe.getMessage()
             })
-            return getApprovals(
+            return getSuggestions(
                 address,
                 auth
             )
         }
     })
 
+    const dismiss = function () {
+        console.log("dismiss")
+    };
+
     return {
-        allowances: approvalQuery.data || [],
-        isLoading: approvalQuery.isLoading,
-        revoke
+        suggestions: suggestionQuery.data || [],
+        isLoading: suggestionQuery.isLoading,
+        dismiss
     }
-}
+};

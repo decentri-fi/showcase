@@ -5,11 +5,11 @@ import BalanceDetails from "./partials/BalanceDetails";
 
 import tw from 'twin.macro';
 import DefiPositions from "./partials/DefiPositions";
-import {useHistory} from "react-router-dom";
 import DashboardNavbar from "../../components/DashboardNavbar";
-import ClaimableTeaser from "./ClaimableTeaser";
+import ClaimableTeaser from "./teasers/ClaimableTeaser";
 import {DashboardContext} from "../../App";
 import useDashboardHooks from "./hooks/dashboard-hooks";
+import SuggestionTeaser from "./teasers/SuggestionTeaser";
 
 const Container = tw.div`flex pt-5 grid`
 const DashboardWrapper = tw.div`w-full`
@@ -24,6 +24,10 @@ const Center = tw.div`w-full flex grid justify-items-center mt-3 mb-1`
 export default function DashboardView({address}) {
 
     const dashboardHooks = useDashboardHooks(address, {});
+
+    function getRandomInt(max) {
+        return Math.floor(Math.random() * max);
+    }
 
     function showSmallValues() {
         dashboardHooks.setHideSmallValues(false);
@@ -43,15 +47,17 @@ export default function DashboardView({address}) {
             <Container>
                 <DashboardWrapper>
                     <Center>
-                        <DashboardNavbar address={dashboardHooks.address} selected={"profile"}/>
+                        <DashboardNavbar address={address} selected={"profile"}/>
                     </Center>
 
-                    <DashboardHeader />
-                    <ClaimableTeaser owner={dashboardHooks.address} amount={dashboardHooks.totalClaimables}/>
+                    <DashboardHeader/>
+
+                    <ClaimableTeaser address={dashboardHooks.address} amount={dashboardHooks.totalClaimables}/>
+                    <SuggestionTeaser address={dashboardHooks.address} amount={1}/>
                     <Full>
                         <Column>
 
-                            <BalanceDetails />
+                            <BalanceDetails/>
 
                             <HorizontalCenter>
                                 <CenterText>
@@ -74,8 +80,8 @@ export default function DashboardView({address}) {
                             </HorizontalCenter>
                         </Column>
                         <Column>
-                            <AccountBreakdown />
-                            <DefiPositions />
+                            <AccountBreakdown/>
+                            <DefiPositions/>
                         </Column>
                     </Full>
                 </DashboardWrapper>

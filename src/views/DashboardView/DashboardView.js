@@ -10,6 +10,7 @@ import ClaimableTeaser from "./teasers/ClaimableTeaser";
 import {DashboardContext} from "../../App";
 import useDashboardHooks from "./hooks/dashboard-hooks";
 import SuggestionTeaser from "./teasers/SuggestionTeaser";
+import useSuggestionHooks from "../SuggestionView/hooks/useSuggestionHooks";
 
 const Container = tw.div`flex pt-5 grid`
 const DashboardWrapper = tw.div`w-full`
@@ -25,9 +26,7 @@ export default function DashboardView({address}) {
 
     const dashboardHooks = useDashboardHooks(address, {});
 
-    function getRandomInt(max) {
-        return Math.floor(Math.random() * max);
-    }
+    const suggestions = useSuggestionHooks(address);
 
     function showSmallValues() {
         dashboardHooks.setHideSmallValues(false);
@@ -53,7 +52,7 @@ export default function DashboardView({address}) {
                     <DashboardHeader/>
 
                     <ClaimableTeaser address={dashboardHooks.address} amount={dashboardHooks.totalClaimables}/>
-                    <SuggestionTeaser address={dashboardHooks.address} amount={1}/>
+                    <SuggestionTeaser address={dashboardHooks.address} amount={suggestions.suggestions.length}/>
                     <Full>
                         <Column>
 

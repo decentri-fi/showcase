@@ -7,7 +7,7 @@ export class SuggestionMapper {
             return {
                 imageSrc: IdeaIconImage,
                 title: "Pool to Farm",
-                description: `You can put your ${metadata.position} position into ${metadata.farmProtocol}'s ${metadata.farmName} to start earning additional yield.`
+                description: `You can put your ${metadata.poolName} position into ${metadata.farmProtocol}'s ${metadata.farmName} to start earning additional yield.`
             }
         } else {
             return null

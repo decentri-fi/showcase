@@ -39,6 +39,7 @@ import ExploreView from "./views/ExploreView/ExploreView";
 import MembershipView from "./views/MembershipView";
 import {ApprovalView} from "./views/ApprovalView/ApprovalView";
 import SuggestionView from "./views/SuggestionView/SuggestionView";
+import MentorshipView from "./views/MentorshipView/MentorshipView";
 
 export const DashboardContext = createContext(null);
 
@@ -67,12 +68,15 @@ export default function App() {
                         <Web3DashboardView/>
                         <FooterV2/>
                     </Route>
+                    <Route path={"/mentorship"}>
+                        <MentorshipView/>
+                    </Route>
                     <Route path="/explore">
                         <ExploreView/>
                         <FooterV2/>
                     </Route>
                     <Route path="/membership">
-                        <MembershipView />
+                        <MembershipView/>
                     </Route>
                     <Route path="/claimables">
                         <Web3ClaimableView/>

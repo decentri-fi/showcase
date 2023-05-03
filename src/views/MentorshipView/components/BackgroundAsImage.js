@@ -58,15 +58,13 @@ const StyledResponsiveVideoEmbed = styled(ResponsiveVideoEmbed)`
 
 export default () => {
 
-  const history = useHistory();
-
   return (
     <Container>
       <OpacityOverlay />
       <HeroContainer>
         <TwoColumn>
           <LeftColumn>
-            <Notification>We have now launched operations in Europe.</Notification>
+            <Notification>We just launched our JVM & Web3 Mentorship</Notification>
             <Heading>
               <SlantedBackground>Announcing</SlantedBackground>
               <br />

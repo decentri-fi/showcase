@@ -17,7 +17,7 @@ const ThreeColumnContainer = styled.div`
 const Heading = tw(SectionHeading)`w-full`;
 
 const Column = styled.div`
-  ${tw`md:w-1/2 lg:w-1/3 px-6 flex`}
+  ${tw`md:w-1/2 lg:w-1/4 px-6 flex`}
 `;
 
 const Card = styled.div`

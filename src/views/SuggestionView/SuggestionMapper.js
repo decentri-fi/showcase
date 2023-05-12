@@ -7,14 +7,14 @@ export class SuggestionMapper {
             return {
                 imageSrc: IdeaIconImage,
                 title: "Pool to Farm",
-                description: `You can put your ${metadata.poolName} position into ${metadata.farmProtocol}'s ${metadata.farmName} to start earning additional yield.`
+                description: `You can put your <b>{metadata.poolName}</b> position into <b>{metadata.farmProtocol}</b>'s <b>{metadata.farmName}</b> to start earning additional yield.`
             }
         } else if(suggestion.type === 'EXPIRED_FARM') {
             const metadata = suggestion.metadata
             return {
                 imageSrc: IdeaIconImage,
                 title: "Expired Farm",
-                description: `You've invested in ${metadata.farmProtocol}'s ${metadata.farmName}. The farm has expired. Claim rewards and exit the farm.`
+                description: <p>You've invested in <b>{metadata.farmProtocol}</b>'s <b>{metadata.farmName}</b>. The farm has expired. Claim rewards and <u>exit the farm.</u></p>
             }
         } {
             return null

@@ -40,6 +40,7 @@ import MembershipView from "./views/MembershipView";
 import {ApprovalView} from "./views/ApprovalView/ApprovalView";
 import SuggestionView from "./views/SuggestionView/SuggestionView";
 import MentorshipView from "./views/MentorshipView/MentorshipView";
+import GoerliFaucetView from "./views/GoerliFaucetView/GoerliFaucetView.js";
 
 export const DashboardContext = createContext(null);
 
@@ -70,6 +71,9 @@ export default function App() {
                     </Route>
                     <Route path={"/mentorship"}>
                         <MentorshipView/>
+                    </Route>
+                    <Route path={"/goerli-faucet"}>
+                        <GoerliFaucetView />
                     </Route>
                     <Route path="/explore">
                         <ExploreView/>

@@ -19,7 +19,6 @@ export default () => {
 
     return (
 
-
         <AnimationRevealPage>
             <CustomHeader expanded={false}/>
 

@@ -10,5 +10,10 @@ export const lendingPositions = async (address, protocol) => {
 }
 
 export const fetchLendingMarketsForToken = async (network, address, protocol) => {
-    return await defihub.lending().marketsForToken(protocol.slug, address, network)
+    try {
+        return await defihub.lending().marketsForToken(protocol.slug, address, network);
+    } catch (ex) {
+        console.log(`unable to fetch lending markets for ${protocol.slug} for address ${address}`);
+        return [];
+    }
 }

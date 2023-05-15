@@ -23,7 +23,7 @@ export default function useProtocols() {
     }, [])
 
     return {
-        protocols,
-        allProtocols: query.data || []
+        protocols: query.data || [],
+        deprecatedProtocols: protocols
     }
 };

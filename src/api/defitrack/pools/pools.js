@@ -11,12 +11,23 @@ export const poolingPositions = async (address, protocol) => {
 }
 
 export const fetchPoolingMarketsForToken = async (network, protocol, address) => {
-    return await defihub.pooling().marketsForToken(protocol.slug, address, network)
+    try {
+        return await defihub.pooling().marketsForToken(protocol.slug, address, network)
+    } catch (ex) {
+        console.log(`unable to fetch pooling markets for ${protocol.slug} for address ${address}`);
+        return [];
+    }
 }
 
 export const fetchPoolingMarketAlternativesForToken = async (network, protocol, address) => {
-    const result = await axios.get(`https://api.decentri.fi/${protocol.slug}/pooling/markets/alternatives?network=${network}&token=${address}`);
-    return result.data;
+    try {
+        const result = await axios.get(`https://api.decentri.fi/${protocol.slug}/pooling/markets/alternatives?network=${network}&token=${address}`);
+        return result.data;
+    } catch (ex) {
+        console.log(`unable to fetch pooling market alternatives for ${protocol.slug} for address ${address}`);
+        return [];
+    }
+
 }
 
 export const fetchPoolingMarketById = async (network, protocol, poolingMarketId) => {

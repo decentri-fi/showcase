@@ -12,8 +12,8 @@ export default function useProtocolView() {
 
     const [activeTab, setActiveTab] = useState();
 
-    const {allProtocols} = useProtocols();
-    const protocol = allProtocols.find(element => element.slug === protoArgument)
+    const {protocols} = useProtocols();
+    const protocol = protocols.find(element => element.slug === protoArgument)
 
     const poolingMarketsQuery = useQuery({
         queryKey: ['protocols', protocol, 'pooling-markets'],

@@ -7,7 +7,7 @@ export default function useDashboardLendingHooks(account, supportsLending, {
     setDoneScanning
 }) {
     const [lendings, setLendings] = useState([]);
-    const {protocols} = useProtocols();
+    const {deprecatedProtocols: protocols} = useProtocols();
 
     function refresh() {
         localStorage.setItem(`lending-elements-${account}`, null);

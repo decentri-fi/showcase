@@ -8,7 +8,7 @@ export default function useDashboardBorrowingHooks(account, supportsDebt, {
     setDoneScanning
 }) {
     const [borrowings, setBorrowings] = useState([]);
-    const {protocols} = useProtocols();
+    const {deprecatedProtocols: protocols} = useProtocols();
 
     function refresh() {
         localStorage.setItem(`borrowing-elements-${account}`, null);

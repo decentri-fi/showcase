@@ -1,4 +1,4 @@
-import {useEffect, useState} from "react";
+import {useMemo, useState} from "react";
 import {fetchTokenBalance, fetchTokenInformation, fetchWrappedToken} from "../../../api/defitrack/erc20/erc20";
 import {fetchProtocols} from "../../../api/defitrack/protocols/protocols";
 import {fetchPoolingMarketAlternativesForToken, fetchPoolingMarketsForToken} from "../../../api/defitrack/pools/pools";
@@ -8,119 +8,139 @@ import {BigNumber} from "@ethersproject/bignumber";
 import {calculatePrice} from "../../../api/defitrack/price/price";
 import {fetchLendingMarketsForToken} from "../../../api/defitrack/lending/lending";
 import {fetchStakingMarketsForToken} from "../../../api/defitrack/staking/staking";
+import {useQuery} from "@tanstack/react-query";
 
 export default function useTokenviewHooks(networkName, tokenAddress) {
 
-    const [token, setToken] = useState(null);
-    const [decimalUserBalance, setDecimalUserBalance] = useState(null);
-    const [lendingOpportunities, setLendingOpportunities] = useState([])
-    const [farmingOpportunities, setFarmingOpportunities] = useState([])
+    const tokenQuery = useQuery({
+        queryKey: ['tokens', networkName, tokenAddress],
+        queryFn: async () => {
+            const usingAddress = tokenAddress === '0x0' ? (await fetchWrappedToken(networkName)).address : tokenAddress
+            const tokenInfoResponse = await fetchTokenInformation(usingAddress, networkName)
+            const dollarValue = await calculatePrice({
+                address: tokenInfoResponse.address,
+                network: networkName,
+                amount: 1.0,
+                tokenType: tokenInfoResponse.type
+            })
+            return {
+                ...tokenInfoResponse,
+                dollarValue: dollarValue
+            };
+        }
+    })
 
-    const [tabs, setTabs] = useState([]);
+    const token = tokenQuery.data;
 
-    function setActiveTab(tabName) {
-        setTabs((prevState) => {
-            return prevState.map((tab) => {
-                tab.selected = tab.id === tabName;
-                return tab;
-            });
-        });
-    }
 
     const web3 = useWeb3();
 
-    useEffect(() => {
-        async function fetchData() {
-            if (tokenAddress !== null && networkName !== null) {
-                const usingAddress = tokenAddress === '0x0' ? (await fetchWrappedToken(networkName)).address : tokenAddress
-                const tokenInfoResponse = await fetchTokenInformation(usingAddress, networkName)
-                const dollarValue = await calculatePrice({
-                    address: tokenInfoResponse.address,
-                    network: networkName,
-                    amount: 1.0,
-                    tokenType: tokenInfoResponse.type
-                })
-                let fullTokenInfo = {
-                    ...tokenInfoResponse,
-                    dollarValue: dollarValue
-                };
-                setToken(fullTokenInfo)
+    const userBalanceQuery = useQuery({
+        queryKey: ['tokens', networkName, tokenAddress, web3.account],
+        queryFn: async () => {
+            const result = await fetchTokenBalance(token.address, web3.account, networkName);
+            if (result > 0) {
+                const number = BigNumber.from(String(result))
+                return ethers.utils.formatUnits(number, token.decimals)
+            } else {
+                return 0;
             }
-        }
+        },
+        enabled: !!token && web3.hasAccount
+    });
 
-        fetchData();
-    }, [networkName, tokenAddress])
-
-    useEffect(() => {
-        async function fetchData() {
-            if (token !== null && web3.hasAccount) {
-                const result = await fetchTokenBalance(token.address, web3.account, networkName);
-                if (result > 0) {
-                    console.log(result)
-                    const number = BigNumber.from(String(result))
-                    setDecimalUserBalance(
-                        ethers.utils.formatUnits(number, token.decimals)
-                    )
-                }
+    const poolingOpportunitiesQuery = useQuery({
+        queryKey: ['tokens', networkName, tokenAddress, 'pooling-markets'],
+        queryFn: async () => {
+            const result = [];
+            let protocols = await fetchProtocols();
+            for (const proto of protocols) {
+                let markets = token.type === 'SINGLE' ? await fetchPoolingMarketsForToken(
+                    networkName,
+                    proto,
+                    token.address
+                ) : await fetchPoolingMarketAlternativesForToken(
+                    networkName,
+                    proto,
+                    token.address
+                );
+                result.push(...markets);
             }
-        }
 
-        fetchData()
-    }, [token, web3.account]);
+            return result;
+        },
+        enabled: !!token
+    });
 
-    const [poolingOpportunities, setPoolingOpportunities] = useState([]);
-
-    useEffect(() => {
-        async function fetchData() {
-            if (token !== null && networkName !== null) {
-                let protocols = await fetchProtocols();
-                for (const proto of protocols) {
-                    let promise = token.type === 'SINGLE' ? fetchPoolingMarketsForToken(
-                        networkName,
-                        proto,
-                        token.address
-                    ) : fetchPoolingMarketAlternativesForToken(
-                        networkName,
-                        proto,
-                        token.address
-                    );
-                    promise.then((elements) => {
-                        for (const element of elements) {
-                            setPoolingOpportunities((prevState) => {
-                                prevState.push(element)
-                                return [...prevState]
-                            })
-                        }
-                    })
-                }
+    const lendingOpportunitiesQuery = useQuery({
+        queryKey: ['tokens', networkName, tokenAddress, 'lending-markets'],
+        queryFn: async () => {
+            const result = [];
+            let protocols = await fetchProtocols();
+            for (const proto of protocols) {
+                let markets = await fetchLendingMarketsForToken(
+                    networkName,
+                    token.address,
+                    proto,
+                )
+                result.push(...markets);
             }
-        }
 
-        fetchData();
-    }, [token])
+            return result;
+        },
+        enabled: !!token && token.type === 'SINGLE'
+    });
 
-    useEffect(() => {
+    const [activeTab, setActiveTab] = useState('Pooling');
+
+
+    function updateActiveTab(tabName) {
+        const t = tabs.find((tab) => tab.id === tabName);
+        setActiveTab(t.id)
+    }
+
+    const farmingOpportunitiesQuery = useQuery({
+        queryKey: ['tokens', networkName, tokenAddress, 'farming-markets'],
+        queryFn: async () => {
+            const result = [];
+            let protocols = await fetchProtocols();
+            for (const proto of protocols) {
+                let markets = await fetchStakingMarketsForToken(
+                    networkName,
+                    proto,
+                    token.address,
+                )
+                result.push(...markets);
+            }
+
+            return result;
+        },
+        enabled: !!token
+    });
+
+
+    const tabs = useMemo(() => {
         let t = [];
-        if (poolingOpportunities.length > 0) {
+        if ((poolingOpportunitiesQuery.data || []).length > 0) {
             t.push({
                 id: 'Pooling',
-                name: `Pooling (${poolingOpportunities.length})`, selected: true,
-                onClick: () => setActiveTab('Pooling')
+                name: `Pooling (${poolingOpportunitiesQuery.data.length})`, selected: true,
+                onClick: () => updateActiveTab('Pooling')
             });
         }
-        if (lendingOpportunities.length > 0) {
+        if ((lendingOpportunitiesQuery.data || []).length > 0) {
             t.push({
                 id: `Lending`,
-                name: `Lending (${lendingOpportunities.length})`, onClick: (() => {
-                    setActiveTab('Lending')
+                name: `Lending (${lendingOpportunitiesQuery.data.length})`, onClick: (() => {
+                    updateActiveTab('Lending')
                 })
             });
         }
-        if (farmingOpportunities.length > 0) {
+        if ((farmingOpportunitiesQuery.data || [].length) > 0) {
             t.push({
                 id: 'Farming',
-                name: `Farming (${farmingOpportunities.length})`, onClick: (() => {
-                    setActiveTab('Farming')
+                name: `Farming (${farmingOpportunitiesQuery.data.length})`, onClick: (() => {
+                    updateActiveTab('Farming')
                 })
             });
         }
@@ -128,68 +148,32 @@ export default function useTokenviewHooks(networkName, tokenAddress) {
         if (t.length > 0) {
             t[0].selected = true;
         }
-
-        setTabs(t);
-    }, [poolingOpportunities, lendingOpportunities, farmingOpportunities]);
-
-    useEffect(() => {
-        async function fetchData() {
-            let protocols = await fetchProtocols();
-            for (const proto of protocols) {
-                fetchLendingMarketsForToken(
-                    networkName,
-                    token.address,
-                    proto
-                ).then((elements) => {
-                    for (const element of elements) {
-                        setLendingOpportunities((prevState) => {
-                            prevState.push(element)
-                            return [...prevState]
-                        })
-                    }
-                })
-            }
-        }
-
-        if (token !== null && token.type === 'SINGLE' && networkName !== null) {
-            fetchData();
-        }
-    }, [token, networkName])
-
-    useEffect(() => {
-        async function fetchData() {
-            if (token !== null) {
-                let protocols = await fetchProtocols();
-                for (const proto of protocols) {
-                    fetchStakingMarketsForToken(
-                        networkName,
-                        proto,
-                        token.address
-                    ).then((elements) => {
-                        for (const element of elements) {
-                            setFarmingOpportunities((prevState) => {
-                                prevState.push(element)
-                                return [...prevState]
-                            })
-                        }
-                    })
-                }
-            }
-        }
-
-        if (token !== null && networkName !== null) {
-            fetchData();
-        }
-    }, [token, networkName])
-
+        return t;
+    }, [
+        farmingOpportunitiesQuery.data,
+        lendingOpportunitiesQuery.data,
+        poolingOpportunitiesQuery.data,
+        poolingOpportunitiesQuery.isLoading,
+        lendingOpportunitiesQuery.isLoading,
+        farmingOpportunitiesQuery.isLoading,
+        poolingOpportunitiesQuery.error,
+        lendingOpportunitiesQuery.error,
+        farmingOpportunitiesQuery.error,
+    ]);
 
     return {
-        tabs,
-        userBalance: decimalUserBalance,
-        poolingOpportunities,
-        farmingOpportunities,
-        lendingOpportunities,
-        token,
+        tabs: (tabs || []).map((tab) => {
+            if (tab.id === activeTab) {
+                return {...tab, selected: true}
+            } else {
+                return {...tab, selected: false}
+            }
+        }),
+        userBalance: userBalanceQuery.data || 0,
+        poolingOpportunities: poolingOpportunitiesQuery.data || [],
+        farmingOpportunities: farmingOpportunitiesQuery.data || [],
+        lendingOpportunities: lendingOpportunitiesQuery.data || [],
+        token: tokenQuery.data,
         network: networkName,
     }
 }

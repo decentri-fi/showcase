@@ -18,7 +18,12 @@ export const fetchStakingById = async (address, protocol, network, id) => {
 }
 
 export const fetchStakingMarketsForToken = async (network, protocol, tokenAddress) => {
-    return await defihub.farming().marketsForToken(protocol.slug, tokenAddress, network)
+    try {
+        return await defihub.farming().marketsForToken(protocol.slug, tokenAddress, network)
+    } catch (ex) {
+        console.log(`unable to fetch farming markets for ${protocol.slug} for address ${tokenAddress}`);
+        return [];
+    }
 }
 
 export const fetchStakingMarketById = async (network, protocol, stakingId) => {

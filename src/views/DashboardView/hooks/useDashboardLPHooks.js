@@ -4,7 +4,7 @@ import useProtocols from "./useProtocols";
 
 export default function useDashboardLPHooks(account, supportsPooling, {setTotalScanning, setDoneScanning}) {
     const [lps, setLps] = useState([]);
-    const {protocols} = useProtocols();
+    const {deprecatedProtocols: protocols} = useProtocols();
 
     function getStoredElements() {
         return JSON.parse(localStorage.getItem(`lp-elements-${account}`));

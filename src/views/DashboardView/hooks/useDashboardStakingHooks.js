@@ -8,7 +8,7 @@ export default function useDashboardStakingHooks(account, supportsStaking, {
 }) {
 
     const [stakings, setStakings] = useState([]);
-    const {protocols} = useProtocols();
+    const {deprecatedProtocols: protocols} = useProtocols();
 
     function refresh() {
         localStorage.setItem(`staking-elements-${account}`, null);
@@ -64,7 +64,8 @@ export default function useDashboardStakingHooks(account, supportsStaking, {
     }
 
     useEffect(() => {
-        init();
+        console.log('updating');
+    //    init();
     }, [protocols, account])
 
     return {

@@ -14,7 +14,6 @@ import BookkeeperUniPic from "images/bookkeperuni.png";
 import {fetchNetworks} from "../../api/defitrack/networks/networks";
 import {fetchProtocols} from "../../api/defitrack/protocols/protocols";
 import {getStatistics} from "../../api/defitrack/statistics/Statistics";
-import OurWork from "../ConnectView/our-work";
 
 const Subheading = tw.span`uppercase tracking-widest font-bold text-primary-500`;
 const HighlightedText = tw.span`text-primary-500`;
@@ -23,6 +22,7 @@ const Container = tw.div`w-full`
 
 const Dark = tw.section`bg-defaultBackground`
 
+import OurWork from "../ConnectView/our-work";
 
 export default function LandingView() {
 
@@ -97,6 +97,17 @@ export default function LandingView() {
 
             <Dark>
                 <OurWork/>
+                <TwoColWithButton
+                    subheading={"Staking Made Easy"}
+                    heading={<>
+                        Easily Enter, Exit and Claim <span tw="text-primary-500">Your Farms.</span>
+                    </>}
+                    primaryButtonUrl={"/claimables"}
+                    buttonRounded={false}
+                    description={"We'll find your claimable farms, airdrops and rewards. Connect your web3 wallet. With just 1 click you can harvest your yield."}
+                    primaryButtonText={"START CLAIMING"}
+                    imageSrc={MoneyUnicornPic}
+                />
             </Dark>
 
             <Feature

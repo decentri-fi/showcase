@@ -38,6 +38,8 @@ export default function LandingView() {
             page: window.location.pathname + window.location.search
         });
 
+        window.title = 'Decentrifi | Decentralized Finance. Simplified. Open Source';
+
         fetchNetworks().then((networks) => {
             setStats(prevState => {
                 return {

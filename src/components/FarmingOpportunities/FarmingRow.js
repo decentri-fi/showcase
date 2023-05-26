@@ -16,13 +16,13 @@ const Image = tw.div`h-5 w-5 lg:h-8 lg:w-8`
 const OverlayImage = tw.div`lg:h-4 lg:w-4 h-2 w-2 -mx-2 `
 
 
-const NameColumn = tw.div`pl-1 w-1/4 flex-1 font-medium text-blue-600 dark:text-gray-200 text-xs`
+const NameColumn = tw.div`pl-1 w-1/4 flex-1 font-medium text-blue-600 text-xs`
 
 const TwoColumns = tw.div`grid grid-cols-2`
 
-const AmountColumn=tw.div`text-sm text-left text-gray-600 dark:text-gray-200 w-1/2 lg:w-1/3`
+const AmountColumn=tw.div`text-sm text-left text-gray-600 w-1/2 lg:w-1/3`
 
-const TotalColumn = tw.div`text-sm text-left text-gray-600 dark:text-gray-200 w-1/3 lg:w-1/5 justify-items-end grid`
+const TotalColumn = tw.div`text-sm text-left text-gray-600 w-1/3 lg:w-1/5 justify-items-end grid`
 const PullRight = tw.div`flex flex-col grid justify-items-end`
 
 const Hidden = tw.span`hidden lg:block`

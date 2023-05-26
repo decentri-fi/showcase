@@ -1,6 +1,5 @@
-import {useEffect, useState} from 'react';
+import {useState} from 'react';
 import {useDashboardFilterHooks} from "./useDashboardFilterHooks";
-import useProtocols from "./useProtocols";
 import useDashboardWalletHooks from "./useDashboardWalletHooks";
 import useDashboardScanningProgressHooks from "./useDashboardScanningProgressHooks";
 import useDashboardStakingHooks from "./useDashboardStakingHooks.js";
@@ -32,10 +31,22 @@ export default function
         totalScanning
     } = useDashboardScanningProgressHooks();
 
+    const incrementProgress = () => {
+        setDoneScanning((prevState) => {
+            return prevState + 1
+        });
+    }
+
+    const addToTotalScanning = (amount) => {
+        setTotalScanning((prevState) => {
+            return prevState + amount
+        });
+    }
+
     const {
         stakings,
         refresh: refreshStakings
-    } = useDashboardStakingHooks(account, supportsStaking, {setTotalScanning, setDoneScanning});
+    } = useDashboardStakingHooks(account, supportsStaking, {addToTotalScanning, incrementProgress});
     const {
         lendings,
         refresh: refreshLendings
@@ -183,7 +194,7 @@ export default function
                     .map(lp => lp.protocol)
             ).concat(
                 claimables.map(claimable => claimable.protocol)
-            );
+            ).filter(proto => proto != null)
 
         const set = Array.from(
             new Set(

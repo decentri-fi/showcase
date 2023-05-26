@@ -9,23 +9,23 @@ import {Pagination} from "../Pagination/Pagination";
 
 const Container = tw.div`w-full my-4`
 
-const ListContainer = tw.div`flex flex-col w-full mx-auto items-center justify-center bg-white dark:bg-gray-800`
+const ListContainer = tw.div`flex flex-col w-full mx-auto items-center justify-center bg-white `
 const List = tw.ul`flex flex-col w-full`
 
-const ListItem = tw.li`flex flex-row`
-const Row = tw.div`select-none cursor-pointer flex flex-1 items-center py-2 border-b hover:bg-indigo-100`
+const ListItem = tw.li`flex flex-row w-full`
+const Row = tw.div`select-none cursor-pointer flex items-center py-2 border-b hover:bg-indigo-100 w-full`
 const IconColumn = tw.div`flex flex-col w-1/12 justify-center items-center mr-4 lg:block`;
 const IconBlock = tw.div`block relative`
 const FallbackImageContainer = tw.div`flex flex-nowrap`
 const Image = tw.div`h-5 w-5 lg:h-8 lg:w-8`
 const OverlayImage = tw.div`lg:h-4 lg:w-4 h-2 w-2 -mx-2 `
 
-const NameColumn = tw.div`pl-1 lg:w-1/4 w-3/4 flex-1 font-medium text-indigo-600 dark:text-gray-200 text-xs`
-const AmountColumn = tw.div`hidden lg:block text-sm text-left text-gray-600 dark:text-gray-200 lg:w-1/3 w-0`
+const NameColumn = tw.div`pl-1 lg:w-1/4 w-3/4 flex-1 font-medium text-indigo-600 text-xs`
+const AmountColumn = tw.div`hidden lg:block text-sm text-left text-gray-600 lg:w-1/3 w-0`
 
 const ThinGreen = tw.span`text-green-500 font-thin`
 
-const TotalColumn = tw.div`text-sm text-left text-gray-600 dark:text-gray-200 w-1/3 lg:w-1/5 justify-items-end grid`
+const TotalColumn = tw.div`text-sm text-left text-gray-600 w-1/3 lg:w-1/5 justify-items-end grid`
 const PullRight = tw.div`flex items-center justify-items-end`
 const Bold = tw.span`font-bold text-sm`
 const Hidden = tw.span`hidden lg:block`
@@ -48,7 +48,6 @@ function DummyList() {
 
 export default function ({
                              entries = [],
-                             isLoading = true,
                              header,
                              showPlaceholder = false,
                              usePagination = false
@@ -104,60 +103,61 @@ export default function ({
 
 function ListEntry({entry}) {
 
-
     return (
-        <ListItem onClick={entry.onClick}>
-            <Row>
-                <IconColumn>
-                    <IconBlock>
-                        <FallbackImageContainer>
-                            <Image>
-                                <FallbackImage src={entry.logo}/>
-                            </Image>
-                            <OverlayImage>
-                                <FallbackImage src={entry.networkLogo}/>
-                            </OverlayImage>
-                        </FallbackImageContainer>
-                    </IconBlock>
-                </IconColumn>
-                <NameColumn>
-                    {entry.name}
-                </NameColumn>
-                <AmountColumn>
-                    <Hidden>
-                        <NumberFormat
-                            value={entry.amount} displayType={'text'} decimalScale={4}
-                            thousandSeparator={true}/>
-                        <ThinGreen> {entry.symbol}</ThinGreen>
-                        {
-
-                            entry.apr != null && entry.apr > 0 && <div>
-                            <b>
-
-                                <APYLabel amount={entry.apr * 100}/>
-                                <span>% APR</span>
-                            </b>
-
-                            </div>
-                        }
-                    </Hidden>
-                </AmountColumn>
-                <TotalColumn>
-                    <PullRight>
-
-                        <Bold>
-                            <DollarLabel amount={entry.dollarValue}/>
-                        </Bold>
-                        <ActionButton>
+        <>
+            <ListItem onClick={entry.onClick}>
+                <Row>
+                    <IconColumn>
+                        <IconBlock>
+                            <FallbackImageContainer>
+                                <Image>
+                                    <FallbackImage src={entry.logo}/>
+                                </Image>
+                                <OverlayImage>
+                                    <FallbackImage src={entry.networkLogo}/>
+                                </OverlayImage>
+                            </FallbackImageContainer>
+                        </IconBlock>
+                    </IconColumn>
+                    <NameColumn>
+                        {entry.name}
+                    </NameColumn>
+                    <AmountColumn>
+                        <Hidden>
+                            <NumberFormat
+                                value={entry.amount} displayType={'text'} decimalScale={4}
+                                thousandSeparator={true}/>
+                            <ThinGreen> {entry.symbol}</ThinGreen>
                             {
-                                entry.actionButton &&
-                                entry['actionButton']
+
+                                entry.apr != null && entry.apr > 0 && <div>
+                                    <b>
+
+                                        <APYLabel amount={entry.apr * 100}/>
+                                        <span>% APR</span>
+                                    </b>
+
+                                </div>
                             }
-                        </ActionButton>
-                    </PullRight>
-                </TotalColumn>
-            </Row>
-        </ListItem>
+                        </Hidden>
+                    </AmountColumn>
+                    <TotalColumn>
+                        <PullRight>
+
+                            <Bold>
+                                <DollarLabel amount={entry.dollarValue}/>
+                            </Bold>
+                            <ActionButton>
+                                {
+                                    entry.actionButton &&
+                                    entry['actionButton']
+                                }
+                            </ActionButton>
+                        </PullRight>
+                    </TotalColumn>
+                </Row>
+            </ListItem>
+        </>
     )
 }
 

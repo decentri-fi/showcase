@@ -28,6 +28,10 @@ export default function DashboardView({address}) {
 
     const suggestions = useSuggestionHooks(address);
 
+    useEffect(async () => {
+        window.title = 'Decentrifi Connect | Explore DeFi Protocols and Accounts';
+    }, []);
+
     function showSmallValues() {
         dashboardHooks.setHideSmallValues(false);
     }

@@ -1,8 +1,5 @@
 import tw from "twin.macro";
 import React, {useState} from "react";
-
-
-import useSiwe from "../hooks/siwe/useSiwe";
 import Siwe from "./siwe/Siwe";
 import {SectionHeading, Subheading as SubheadingBase} from "./misc/Headings";
 import {SectionDescription} from "./misc/Typography";
@@ -10,9 +7,8 @@ import Popup from "reactjs-popup";
 import ClipLoader from "react-spinners/ClipLoader";
 import {PrimaryButton} from "./misc/Buttons";
 import {useQuery} from "@tanstack/react-query";
-import {getAccount} from "../api/whalespotter/account/account";
-import {createAuthentication} from "../api/whalespotter/authentication/createAuthentication";
 import {useHistory} from "react-router-dom";
+import {getMembership} from "../api/whalespotter/account/membership";
 
 const SectionWithBackground = tw.div`grid w-full justify-items-center bg-defaultBackground pt-2`
 const HighlightedText = tw.span`text-primary-500`
@@ -29,38 +25,26 @@ const Header = tw.h1`text-lg font-black text-purple-600`
 const ConnectList = tw.div`flex flex-col w-full mx-2 mb-8`
 const ConnectListItem = tw.div`items-center my-2 hover:border-blue-500 border-2 font-bold text-gray-700 hover:text-blue-500 hover:border-2 w-full flex flex-row rounded rounded-lg p-4`
 const ConnectItemLogo = tw.img`w-8 h-8 mr-4`
-export default function RequiresMembership({target, children}) {
+export default function RequiresMembership({target, owner, children}) {
 
-    const siwe = useSiwe();
     const [open, setOpen] = useState(false);
     const history = useHistory();
 
     const membershipQuery = useQuery({
-        queryKey: [siwe.owner, "membership"],
+        queryKey: [owner, "membership"],
         queryFn: async () => {
-            const acc = await getAccount(createAuthentication({
-                owner: siwe.owner,
-                signature: await siwe.getSignature(),
-                message: await siwe.getMessage()
-            }));
-            return acc.member;
-        },
-        enabled: siwe.isAuthenticated()
+            return await getMembership(owner);
+        }
     })
 
     const closeModal = () => setOpen(false);
 
-    if (!siwe.isAuthenticated()) {
-        return (
-            <Siwe target={target}/>
-        );
-    }
 
     if (membershipQuery.isLoading) {
         return <></>
     }
 
-    if (!membershipQuery.data) {
+    if (!membershipQuery.data.member) {
         return (
             <>
                 <Popup modal open={open} onClose={closeModal}>

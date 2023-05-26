@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useMemo} from 'react';
 import useTokenviewHooks from "./hooks/tokenview-hooks";
 import FarmingOpportunities from "../../components/FarmingOpportunities/FarmingOpportunities";
 import LendingOpportunities from "../../components/LendingOpportunities/LendingOpportunities";
@@ -32,13 +32,17 @@ export default function TokenView() {
         network,
     } = tokenViewHooks;
 
-    const poolingOpportunitiesTitle = () => {
+    const poolingOpportunitiesTitle = useMemo(() => {
+        if (token == null) {
+            return ''
+        }
+
         if (token.type === 'SINGLE') {
             return 'Pooling Opportunities'
         } else {
             return 'Alternative Pooling Opportunities'
         }
-    }
+    }, [token])
 
     function LendingTab() {
         if (tabs.find(element => element.id === 'Lending' && element.selected === true)) {
@@ -60,7 +64,7 @@ export default function TokenView() {
                 {
                     (poolingOpportunities.length > 0) &&
                     <PoolingOpportunities
-                        title={poolingOpportunitiesTitle()}
+                        title={poolingOpportunitiesTitle}
                         poolingOpportunities={poolingOpportunities}></PoolingOpportunities>
                 }
             </>;
@@ -98,7 +102,6 @@ export default function TokenView() {
         if (token == null) {
             return <></>
         } else {
-            console.log('tabs', tabs)
             return (
                 <>
                     <TokenStats network={network} token={token} userBalance={userBalance}/>

@@ -242,7 +242,7 @@ function DefiOverview() {
 
     return (
         <>
-            <HeaderText>Defi Positions</HeaderText>
+            <HeaderText>Protocol Holdings</HeaderText>
             <Table>
                 <Protocols/>
             </Table>

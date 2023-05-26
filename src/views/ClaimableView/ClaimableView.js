@@ -73,7 +73,7 @@ export default function ClaimableView() {
                             </Section>
                         }
 
-                        <RequiresMembership target={`/${address}/claimables`}>
+                        <RequiresMembership owner={address} target={`/${address}/claimables`}>
                             <ClaimableSection>
                                 <ClaimableDetails showNothingFoundMessage={true}
                                                   showPlaceholder={claimableLoading}/>

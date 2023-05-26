@@ -1,6 +1,6 @@
 import tw from "twin.macro";
 import CustomHeader from "../../components/Header/CustomHeader";
-import React from "react";
+import React, {useEffect} from "react";
 import {useQuery} from "@tanstack/react-query";
 import {getStatisticsPerProtocol} from "../../api/defitrack/statistics/Statistics";
 import {ProtocolCard} from "./ProtocolCard";
@@ -17,6 +17,10 @@ const Highlight = tw.span`text-purple-700`
 const ProtocolsContainer = tw.div`flex lg:w-3/4 flex-wrap w-full`
 
 export default function () {
+
+    useEffect(async () => {
+        window.title = 'Decentrifi Connect | Explore DeFi Protocols and Accounts';
+    }, []);
 
     async function fetchStatistics() {
         return await getStatisticsPerProtocol();

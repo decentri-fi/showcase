@@ -36,7 +36,7 @@ export function ApprovalView() {
                         <DashboardNavbar address={address} selected={"allowance"}/>
                     </Center>
                 </DashboardWrapper>
-                <RequiresMembership target={`/${address}/allowance`}>
+                <RequiresMembership owner={address} target={`/${address}/allowance`}>
                     <SectionWithBackground>
                         <Heading><span tw="text-red-500">Revoke</span> access to your assets.</Heading>
                         <TableContainer>

@@ -4,7 +4,6 @@ import defihub from "@decentri.fi/defi-hub";
 export const farmingPositions = async (address, protocol) => {
     try {
         const farmingPositions = await defihub.farming().positions(protocol.slug, address);
-        console.log(farmingPositions);
         return farmingPositions;
     } catch (ex) {
         console.log(`unable to fetch farming positions for ${protocol.slug} for address ${address}`);

@@ -6,7 +6,7 @@ import PlaceholderDetail from "./PlaceholderDetail";
 
 const TransactionDetails = tw.div`text-xs lg:w-2/12 w-full flex-wrap flex justify-items-center grid text-center items-center`
 const AccountLink = tw.div`flex items-center `
-const ListContainer = tw.div`p-4 flex w-full lg:w-2/3 mx-auto mt-2  justify-center bg-white dark:bg-gray-800 mb-4 border`
+const ListContainer = tw.div`p-4 flex w-full lg:w-2/3 mx-auto mt-2  justify-center bg-white mb-4 border`
 const List = tw.ul`lg:w-10/12 flex flex-col flex-wrap w-full`
 const Transaction = tw.div`hidden lg:block`
 export default function ({transaction, events, owner}) {

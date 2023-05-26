@@ -10,18 +10,15 @@ import ReactGA from "react-ga4";
 export default function FarmingView({farmingElement, token}) {
 
     const farmingViewHooks = useFarmingViewHooks(farmingElement);
-    const {hasAccount, isOnCorrectChain} = useWeb3();
+    const {hasAccount} = useWeb3();
 
     useEffect(() => {
-        ReactGA.pageview(window.location.pathname + window.location.search);
+        ReactGA.send({
+            hitType: "pageview",
+            page: window.location.pathname + window.location.search
+        });
     }, [])
 
-
-    if (hasAccount && isOnCorrectChain()) {
-        return (
-            <ChangeNetworkSection currentNetwork={farmingElement.network} requiredChainId={farmingElement.network.chainId} />
-        )
-    }
 
     return (
         <>

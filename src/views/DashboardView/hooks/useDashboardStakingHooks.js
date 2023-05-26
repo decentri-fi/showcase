@@ -1,75 +1,41 @@
-import {useEffect, useState} from "react";
 import {farmingPositions} from "../../../api/defitrack/staking/staking";
 import useProtocols from "./useProtocols";
+import {useQuery} from "@tanstack/react-query";
 
 export default function useDashboardStakingHooks(account, supportsStaking, {
-    setTotalScanning,
-    setDoneScanning
+    addToTotalScanning,
+    incrementProgress,
 }) {
 
-    const [stakings, setStakings] = useState([]);
-    const {deprecatedProtocols: protocols} = useProtocols();
+    const protocols = useProtocols().protocols
+
+    const stakingQuery = useQuery({
+        queryKey: ['staking', account],
+        staleTime: 1000 * 60 * 3,
+        queryFn: async () => {
+            let farmingProtocols = protocols.filter(proto => {
+                return proto.primitives.includes('FARMING');
+            });
+
+            addToTotalScanning(farmingProtocols.length);
+
+            const results = farmingProtocols.map(async (protocol) => {
+                const result = await farmingPositions(account, protocol)
+                incrementProgress();
+                return result;
+            });
+            return (await Promise.all(results)).flat();
+        },
+        enabled: protocols.length > 0 && !!account
+    })
+
 
     function refresh() {
-        localStorage.setItem(`staking-elements-${account}`, null);
-        setStakings([]);
-        init();
+        stakingQuery.refetch();
     }
-
-    function updateStakes(retStakings) {
-        setDoneScanning(prevState => {
-            return prevState + 1
-        })
-        if (retStakings.length > 0) {
-            for (const staking of retStakings) {
-                setStakings(prevState => {
-                    prevState.push(staking)
-                    localStorage.setItem(`staking-elements-${account}`, JSON.stringify(prevState));
-                    return [...prevState];
-                })
-            }
-        } else {
-            setStakings(prevState => {
-                localStorage.setItem(`staking-elements-${account}`, JSON.stringify(prevState));
-                return [...prevState]
-            })
-        }
-    }
-
-    function init() {
-        const loadData = async () => {
-            if (protocols.length > 0) {
-                setTotalScanning(prevTotalScanning => {
-                    return prevTotalScanning + protocols.length
-                })
-                for (const protocol of protocols) {
-                    farmingPositions(account, protocol).then(retStakings => {
-                        updateStakes(retStakings)
-                    }).catch(() => {
-                        updateStakes([]);
-                    });
-                }
-            }
-        }
-
-        if (supportsStaking && account !== undefined) {
-            const savedOne = JSON.parse(localStorage.getItem(`staking-elements-${account}`));
-            if (savedOne !== null) {
-                setStakings(savedOne);
-            } else {
-                setStakings([]);
-                loadData();
-            }
-        }
-    }
-
-    useEffect(() => {
-        console.log('updating');
-    //    init();
-    }, [protocols, account])
 
     return {
-        stakings,
+        stakings: stakingQuery.data || [],
         refresh
     }
 };

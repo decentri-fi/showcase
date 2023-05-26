@@ -171,15 +171,15 @@ export default function CustomHeader({onAddressChange, expanded = false, showUse
             <NavLink onClick={e => {
                 history.push('/dashboard');
             }}>
-                Profile
+                Decentrifi Connect
             </NavLink>
             <NavLink onClick={e => {
                 history.push('/protocols');
             }}>
                 Protocols
             </NavLink>
-            <NavLink target="_blank" href="https://jobs.decentri.fi">
-                Jobs
+            <NavLink target="_blank" href="https://docs.decentri.fi">
+                API
             </NavLink>
             <NavLink target="_blank" href="https://learn.decentri.fi">
                 Learn

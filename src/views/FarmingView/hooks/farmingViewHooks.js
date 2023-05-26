@@ -65,9 +65,7 @@ export function useFarmingViewHooks(farmingElement) {
     }, [wantBalance])
 
     useEffect(() => {
-        if (web3.isOnCorrectChain(farmingElement.network.id)) {
-            fetchWalletBalance();
-        }
+        fetchWalletBalance();
     }, [web3.account])
 
     const getWantBalance = function () {

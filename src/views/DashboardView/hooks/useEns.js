@@ -4,7 +4,9 @@ import {useQuery} from "@tanstack/react-query";
 export default function useEns(account) {
 
     const query = useQuery({
-        queryKey: ['ens', account], queryFn: async () => {
+        staleTime: 1000 * 60 * 10,
+        queryKey: ['ens', account],
+        queryFn: async () => {
             if (account) {
                 try {
                     return await getReverseEns(account);

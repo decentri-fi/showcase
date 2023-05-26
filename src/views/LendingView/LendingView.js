@@ -165,18 +165,18 @@ function LendingContent({lendingMarkets, searchFilter, setSearchFilter, selected
     return (
         <div className="flex w-full flex-wrap lg:flex-no-wrap">
             <div className="lg:w-2/6 w-full m-4 py-8">
-                <div className="shadow-lg px-4 py-6 w-full bg-white dark:bg-gray-800 relative">
-                    <p className="text-sm w-max text-gray-700 dark:text-white font-semibold border-b border-gray-200">
+                <div className="shadow-lg px-4 py-6 w-full bg-white relative">
+                    <p className="text-sm w-max text-gray-700 font-semibold border-b border-gray-200">
                         Lend Assets
                     </p>
                     <div className="flex items-end space-x-2 my-6">
-                        <p className="text-sm text-black dark:text-white font-bold">
+                        <p className="text-sm text-black font-bold">
                             Lending out assets allows you to generate yield on your principal. <br/><a
                             className="underline" href="https://learn.decentri.fi">Learn how to invest single
                             assets.</a>
                         </p>
                     </div>
-                    <div className="dark:text-white">
+                    <div>
                         <div onClick={() => {
                             setSelectedNetwork('ETHEREUM');
                         }}

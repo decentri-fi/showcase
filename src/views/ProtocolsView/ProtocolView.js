@@ -9,11 +9,11 @@ import {Link} from "@mui/material";
 import Navbar from "../../components/Navbar/Navbar";
 import MyBreadcrumbs from "../../components/MyBreadcrumbs";
 
-const Address = tw.span`hidden lg:block font-bold text-base text-black dark:text-white ml-2`
+const Address = tw.span`hidden lg:block font-bold text-base text-black ml-2`
 const Blockie = tw.span`hidden lg:block rounded-xl relative p-2 w-24 `;
 const GeneralInfo = tw.div`grid flex items-center mb-3 flex-col lg:flex-row w-full`
 
-const LeftColumn = tw.div` w-full p-4 bg-white dark:bg-gray-700`
+const LeftColumn = tw.div` w-full p-4 bg-white`
 
 const AddressInfo = tw.div`flex items-center`
 const AddressText = tw.div`flex flex-col`
@@ -23,7 +23,7 @@ const PortfolioValue = tw.div`lg:justify-items-end justify-items-center grid tex
 const PortfolioValueContainer = tw.div`bg-purple-100 shadow p-3 flex-wrap flex rounded-xl w-full lg:w-1/2`
 const ValueText = tw.div`text-center text-3xl font-bold`;
 const StatisticTitle = tw.span`text-center text-gray-700`
-const BreadcrumbContainer = tw.div`lg:w-2/3 w-full flex mb-3 text-gray-700 hover:text-blue-600 dark:text-gray-400 dark:hover:text-white`
+const BreadcrumbContainer = tw.div`lg:w-2/3 w-full flex mb-3 text-gray-700 hover:text-blue-600`
 const Statistic = tw.div`w-1/2 lg:w-1/4 flex-col flex`
 
 const NavbarWrapper = tw.div`lg:w-2/3`

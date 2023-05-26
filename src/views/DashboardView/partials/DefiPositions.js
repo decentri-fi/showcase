@@ -20,7 +20,6 @@ export default function DefiPositions() {
 
     const {
         usedProtocols,
-
     } = useContext(DashboardContext)
 
     const DefiBreakdown = usedProtocols.map((proto, index) => {

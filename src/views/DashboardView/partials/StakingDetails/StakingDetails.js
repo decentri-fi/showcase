@@ -6,6 +6,9 @@ import Popup from "reactjs-popup";
 import 'reactjs-popup/dist/index.css';
 import {DashboardContext} from "../../../../App";
 import {ExitButton} from "./ExitButton";
+import {Button} from "@mui/material";
+import styled from "styled-components";
+import {useHistory} from "react-router-dom";
 
 const Header = tw.div`w-full flex items-center mb-2`
 const HeaderTextContainer = tw.div`lg:w-3/12 w-full`
@@ -16,12 +19,18 @@ const Hidden = tw.span`hidden lg:block`
 
 const CloseContainer = tw.div`grid w-full justify-items-center`
 const CloseIcon = tw.div`p-4 w-full`
-const ActionContainer = tw.div`w-full grid justify-items-center mb-4`
+const ActionContainer = styled.div`
+  ${tw`w-full grid justify-items-center mb-4`}
+  button {
+    ${tw`w-full lg:w-1/2 my-2`}
+  }
+`
 
 const DataContainer = tw.div`w-full px-4`
 
 export default function StakingDetails({protocol}) {
 
+    const history = useHistory();
 
     const [open, setOpen] = useState(false);
     const [popupData, setPopupData] = useState(<></>);
@@ -97,6 +106,13 @@ export default function StakingDetails({protocol}) {
                                 element.exitPositionSupported &&
                                 <ExitButton element={element}/>
                             }
+                            <Button onClick={
+                                () => {
+                                    history.push(`/staking/${element.network.name}/${element.protocol.slug}/${element.id}`)
+                                }
+                            }
+                                    variant={"contained"}
+                            >Details</Button>
                         </ActionContainer>
                     </>
                 )

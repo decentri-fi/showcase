@@ -53,7 +53,9 @@ export default function useTokenviewHooks(networkName, tokenAddress) {
         queryKey: ['tokens', networkName, tokenAddress, 'pooling-markets'],
         queryFn: async () => {
             const result = [];
-            let protocols = await fetchProtocols();
+            let protocols = (await fetchProtocols()).filter((proto) => {
+                return proto.primitives.includes('POOLING');
+            });
             for (const proto of protocols) {
                 let markets = token.type === 'SINGLE' ? await fetchPoolingMarketsForToken(
                     networkName,
@@ -76,7 +78,7 @@ export default function useTokenviewHooks(networkName, tokenAddress) {
         queryKey: ['tokens', networkName, tokenAddress, 'lending-markets'],
         queryFn: async () => {
             const result = [];
-            let protocols = await fetchProtocols();
+            let protocols = (await fetchProtocols()).filter(proto => proto.primitives.includes('LENDING'));
             for (const proto of protocols) {
                 let markets = await fetchLendingMarketsForToken(
                     networkName,
@@ -103,7 +105,7 @@ export default function useTokenviewHooks(networkName, tokenAddress) {
         queryKey: ['tokens', networkName, tokenAddress, 'farming-markets'],
         queryFn: async () => {
             const result = [];
-            let protocols = await fetchProtocols();
+            let protocols = (await fetchProtocols()).filter(proto => proto.primitives.includes('FARMING'));
             for (const proto of protocols) {
                 let markets = await fetchStakingMarketsForToken(
                     networkName,

@@ -25,10 +25,10 @@ const OverlayImage = tw.div`lg:h-4 lg:w-4 h-2 w-2 -mx-2 `
 
 const TwoColumns = tw.div`grid grid-cols-2`
 
-const NameColumn = tw.div`px-1 pl-1 lg:w-1/4 w-3/4 flex-1 font-medium text-green-600 dark:text-gray-200 text-xs`
-const AmountColumn = tw.div`px-1 hidden lg:block text-sm text-left text-gray-600 dark:text-gray-200 lg:w-1/3 w-0`
+const NameColumn = tw.div`px-1 pl-1 lg:w-1/4 w-3/4 flex-1 font-medium text-green-600 text-xs`
+const AmountColumn = tw.div`px-1 hidden lg:block text-sm text-left text-gray-600 lg:w-1/3 w-0`
 
-const TotalColumn = tw.div`px-1 text-sm text-left text-gray-600 dark:text-gray-200 w-1/3 lg:w-1/5 justify-items-end grid`
+const TotalColumn = tw.div`px-1 text-sm text-left text-gray-600 w-1/3 lg:w-1/5 justify-items-end grid`
 const PullRight = tw.div`flex flex-col grid justify-items-end`
 const Bold = tw.span`font-bold text-sm`
 

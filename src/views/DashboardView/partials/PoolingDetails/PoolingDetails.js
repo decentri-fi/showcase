@@ -21,11 +21,14 @@ export default function PoolingDetails({protocol}) {
     const elements = lps.filter(pooling => {
         return pooling.protocol.slug === protocol.slug
     }).map(element => {
+
+        const amount = element.erc20Compatible ? element.amount : null;
+
         return {
             onClick: () => {
             },
             name: element.name,
-            amount: element.amountDecimal,
+            amount: amount,
             apr: element.apr,
             logo: element.protocol.logo,
             networkLogo: element.network.logo,

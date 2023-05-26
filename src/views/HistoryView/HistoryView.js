@@ -60,7 +60,7 @@ export default function HistoryView() {
                     <DashboardNavbar address={address} selected={"history"}/>
                 </Center>
             </DashboardWrapper>
-            <RequiresMembership>
+            <RequiresMembership owner={address}>
                 <SectionWithBackground>
                     <Subheading>A little bit of history</Subheading>
                     <Heading><HighlightedText>DEFI</HighlightedText> ACTIVITIES</Heading>

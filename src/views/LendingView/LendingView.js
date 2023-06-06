@@ -182,7 +182,7 @@ function LendingContent({lendingMarkets, searchFilter, setSearchFilter, selected
                         }}
                              className={getNetworkCss('ETHEREUM')}>
                             <div className="w-2/12">
-                                <img alt="ethereum" src="https://static.decentri.fi/images/networks/ethereum.png"
+                                <img alt="ethereum" src="https://github.com/defitrack/data/raw/master/logo/network/ethereum.png"
                                      className="object-cover rounded-full h-10 w-6 "/>
                             </div>
                             <p className="w-10/12">
@@ -194,7 +194,7 @@ function LendingContent({lendingMarkets, searchFilter, setSearchFilter, selected
                         }}
                              className={getNetworkCss('POLYGON')}>
                             <div className="w-2/12">
-                                <img alt="polygon" src="https://static.decentri.fi/images/networks/polygon.png"
+                                <img alt="polygon" src="https://github.com/defitrack/data/raw/master/logo/network/polygon.png"
                                      className="object-cover rounded-full h-10 w-10 "/>
                             </div>
                             <p className="w-10/12">

@@ -1,4 +1,4 @@
-FROM node:lts-fermium as build-stage
+FROM node:lts-gallium as build-stage
 WORKDIR /app
 COPY package.json /app/
 RUN npm i

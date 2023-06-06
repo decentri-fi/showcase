@@ -1,20 +1,15 @@
 import React from "react";
 import tw from "twin.macro";
 import styled from "styled-components";
-import { css } from "styled-components/macro"; //eslint-disable-line
-
-import { ReactComponent as FacebookIcon } from "images/facebook-icon.svg";
-import { ReactComponent as TwitterIcon } from "images/twitter-icon.svg";
-import { ReactComponent as GithubIcon } from "images/github-icon.svg";
-import { ReactComponent as YoutubeIcon } from "images/youtube-icon.svg";
-import { ReactComponent as SvgDecoratorBlob1 } from "images/svg-decorator-blob-9.svg";
-import {useHistory} from "react-router-dom";
+import {ReactComponent as TwitterIcon} from "images/twitter-icon.svg";
+import {ReactComponent as GithubIcon} from "images/github-icon.svg";
+import Logo from "images/logo/namewithlogo.png";
 
 const Container = styled.div`
-${tw`relative bg-primary-500 text-gray-100 -mb-8  px-8 py-20 lg:py-24`}
-background-image: url("https://media.istockphoto.com/vectors/abstract-background-of-halftone-dots-and-curved-lines-vector-id1250331164?k=20&m=1250331164&s=612x612&w=0&h=qMsTBJQZ2Kne-2CoZaRvLRSUxpElEG1plEb_YvnxCso=");
-background-repeat: no-repeat;
-background-size: cover;
+  ${tw`relative bg-primary-500 text-gray-100 -mb-8  px-8 py-20 lg:py-24`}
+  background-image: url("https://media.istockphoto.com/vectors/abstract-background-of-halftone-dots-and-curved-lines-vector-id1250331164?k=20&m=1250331164&s=612x612&w=0&h=qMsTBJQZ2Kne-2CoZaRvLRSUxpElEG1plEb_YvnxCso=");
+  background-repeat: no-repeat;
+  background-size: cover;
 `
 
 const Content = tw.div`max-w-screen-xl mx-auto relative z-10`;
@@ -50,89 +45,92 @@ const Center = tw.div`w-1/3 mx-auto text-center grid justify-items-center`;
 
 function PoweredByAlchemy() {
 
-  function onClick() {
-    window.open("https://alchemy.com/?r=28b98946-57c8-41d4-8ba3-ca85c3bf429a", "_blank");
-  }
+    function onClick() {
+        window.open("https://alchemy.com/?r=28b98946-57c8-41d4-8ba3-ca85c3bf429a", "_blank");
+    }
 
-  return (
-      <>
-        <script>const BADGE_ID = '28b98946-57c8-41d4-8ba3-ca85c3bf429a';</script>
-        <script type="text/javascript" src="http://static.alchemyapi.io/scripts/badge/alchemy-badge.js"></script>
-        <a tw="w-1/3" href="#">
-          <img tw="w-full" onClick={onClick} id="badge-button"
-          src="https://static.alchemyapi.io/images/marketing/badgeLight.png" alt="Alchemy Supercharged" />
-        </a>
-      </>
-  )
+    return (
+        <>
+            <script>const BADGE_ID = '28b98946-57c8-41d4-8ba3-ca85c3bf429a';</script>
+            <script type="text/javascript" src="http://static.alchemyapi.io/scripts/badge/alchemy-badge.js"></script>
+            <a tw="w-1/3" href="#">
+                <img tw="w-full" onClick={onClick} id="badge-button"
+                     src="https://static.alchemyapi.io/images/marketing/badgeLight.png" alt="Alchemy Supercharged"/>
+            </a>
+        </>
+    )
 }
 
 export default () => {
-  return (
-    <Container>
-      <Content>
-        <FiveColumns>
-          <Column>
-            <ColumnHeading>Product</ColumnHeading>
-            <LinkList>
-              <LinkListItem>
-                <Link href="https://docs.decentri.fi">Documentation</Link>
-              </LinkListItem>
-              <LinkListItem>
-                <Link href="https://decentri.fi/dashboard">Insights</Link>
-              </LinkListItem>
-              <LinkListItem>
-                <Link href="https://docs.decentri.fi/general/supported-protocols">Roadmap</Link>
-              </LinkListItem>
-            </LinkList>
-          </Column>
-          <Column>
-            <ColumnHeading>Developers</ColumnHeading>
-            <LinkList>
-              <LinkListItem>
-                <Link target="_blank" href="https://github.com/decentri-fi">Github</Link>
-              </LinkListItem>
-              <LinkListItem>
-                <Link href="https://gitcoin.co/explorer?network=mainnet&applicants=ALL&keywords=defitrack&order_by=null">Bounties</Link>
-              </LinkListItem>
-              <LinkListItem>
-                <Link target="_blank" href="https://github.com/decentri-fi/defi-hub">Defi Hub</Link>
-              </LinkListItem>
-              <LinkListItem>
-                <Link target="_blank" href="https://github.com/decentri-fi/data">Decentrifi Data</Link>
-              </LinkListItem>
-            </LinkList>
-          </Column>
-          <Column>
-            <ColumnHeading>Community</ColumnHeading>
-            <LinkList>
-              <LinkListItem>
-                <Link target="_blank" href="https://twitter.com/defitrack">Twitter</Link>
-              </LinkListItem>
-              <LinkListItem>
-                <Link href="https://gitcoin.co/grants/4539/defitrack-find-the-best-opportunities-in-the-defi">Gitcoin Grants</Link>
-              </LinkListItem>
-            </LinkList>
-          </Column>
-        </FiveColumns>
-        <Divider />
-        <ThreeColRow>
-          <LogoContainer>
-            <LogoImg src="https://static.decentri.fi/images/logo/namewithlogo.png" />
-          </LogoContainer>
-          <CopywrightNotice>&copy; 2022 Defitrack. All Rights Reserved.</CopywrightNotice>
-          <SocialLinksContainer>
-            <SocialLink href="https://twitter.com/defitrack">
-              <TwitterIcon />
-            </SocialLink>
-            <SocialLink href="https://github.com/defitrack">
-              <GithubIcon />
-            </SocialLink>
-          </SocialLinksContainer>
-        </ThreeColRow>
-        <Center>
-          <PoweredByAlchemy />
-        </Center>
-      </Content>
-    </Container>
-  );
+    return (
+        <Container>
+            <Content>
+                <FiveColumns>
+                    <Column>
+                        <ColumnHeading>Product</ColumnHeading>
+                        <LinkList>
+                            <LinkListItem>
+                                <Link href="https://docs.decentri.fi">Documentation</Link>
+                            </LinkListItem>
+                            <LinkListItem>
+                                <Link href="https://decentri.fi/dashboard">Insights</Link>
+                            </LinkListItem>
+                            <LinkListItem>
+                                <Link href="https://docs.decentri.fi/general/supported-protocols">Roadmap</Link>
+                            </LinkListItem>
+                        </LinkList>
+                    </Column>
+                    <Column>
+                        <ColumnHeading>Developers</ColumnHeading>
+                        <LinkList>
+                            <LinkListItem>
+                                <Link target="_blank" href="https://github.com/decentri-fi">Github</Link>
+                            </LinkListItem>
+                            <LinkListItem>
+                                <Link
+                                    href="https://gitcoin.co/explorer?network=mainnet&applicants=ALL&keywords=defitrack&order_by=null">Bounties</Link>
+                            </LinkListItem>
+                            <LinkListItem>
+                                <Link target="_blank" href="https://github.com/decentri-fi/defi-hub">Defi Hub</Link>
+                            </LinkListItem>
+                            <LinkListItem>
+                                <Link target="_blank" href="https://github.com/decentri-fi/data">Decentrifi Data</Link>
+                            </LinkListItem>
+                        </LinkList>
+                    </Column>
+                    <Column>
+                        <ColumnHeading>Community</ColumnHeading>
+                        <LinkList>
+                            <LinkListItem>
+                                <Link target="_blank" href="https://twitter.com/decentrifi">Twitter</Link>
+                            </LinkListItem>
+                            <LinkListItem>
+                                <Link
+                                    href="https://gitcoin.co/grants/4539/defitrack-find-the-best-opportunities-in-the-defi">Gitcoin
+                                    Grants</Link>
+                            </LinkListItem>
+                        </LinkList>
+                    </Column>
+                </FiveColumns>
+                <Divider/>
+                <ThreeColRow>
+                    <LogoContainer>
+                        <LogoImg src={Logo}/>
+                    </LogoContainer>
+                    <CopywrightNotice>&copy; 2023 Defitrack. All Rights Reserved.</CopywrightNotice>
+                    <SocialLinksContainer>
+                        <SocialLink href="https://twitter.com/decentrifi">
+                            <TwitterIcon/>
+                        </SocialLink>
+                        <SocialLink href="https://github.com/decentri-foi">
+                            <GithubIcon/>
+                        </SocialLink>
+                    </SocialLinksContainer>
+                </ThreeColRow>
+                <Center>
+                    <PoweredByAlchemy/>
+                </Center>
+            </Content>
+        </Container>
+    );
 };

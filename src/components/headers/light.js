@@ -9,6 +9,7 @@ import useAnimatedNavToggler from "../../helpers/useAnimatedNavToggler.js";
 
 import { ReactComponent as MenuIcon } from "feather-icons/dist/icons/menu.svg";
 import { ReactComponent as CloseIcon } from "feather-icons/dist/icons/x.svg";
+import NameWithlogo from "../../images/logo/namewithlogo.png";
 
 const Header = tw.header`
   flex justify-between items-center
@@ -88,7 +89,7 @@ export default ({ roundedHeaderButton = false, logoLink, links, className, colla
 
   const defaultLogoLink = (
     <LogoLink href="/">
-      <img src="https://static.decentri.fi/images/logo/namewithlogo.png" alt="logo" />
+      <img src={NameWithlogo} alt="logo" />
     </LogoLink>
   );
 

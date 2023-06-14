@@ -3,12 +3,12 @@ import React from "react";
 import FallbackImage from "../../../components/Image/FallbackImage";
 import tw from "twin.macro";
 
-const Container = tw.div`w-full flex lg:px-4`
+const Container = tw.div`w-full flex px-2`
 const TypeColumn = tw.div`lg:w-1/6 w-1/2 `
 const TypeLabel = tw.span`px-2 font-medium  rounded bg-purple-100 mx-4 my-1`
 
 const AmountColumn = tw.div`lg:w-1/3 w-1/2 flex items-center text-center font-mono`
-const SymbolColumn = tw.div`w-1/2 lg:w-1/6 text-right grid  justify-items-center lg:justify-items-end`
+const SymbolColumn = tw.div`w-1/2 lg:w-1/5 text-right grid  justify-items-center lg:justify-items-end`
 const Center = tw.div`flex items-center`
 
 const AssetLogo = tw.div`w-5 h-5`
@@ -32,15 +32,21 @@ export default function TransferDetail({event, owner}) {
                 label: 'to',
                 action: 'sent'
             }
-        } else {
+        } else if(event.metadata.to.address.toLowerCase() === owner.toLowerCase()) {
             return {
                 sliced: event.metadata.from.label || sliceAccount(event.metadata.from.address),
                 address: event.metadata.from.address,
                 label: 'from',
                 action: 'received'
             }
+        } else {
+            return null;
         }
     })();
+
+    if(fromOrTo == null) {
+        return null;
+    }
 
     if (!new BigNumber(0).isLessThan(new BigNumber(event.metadata.amount))) {
         return null;

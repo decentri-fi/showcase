@@ -1,13 +1,11 @@
 import {useQuery} from "@tanstack/react-query";
 import {createAuthentication} from "../../../api/whalespotter/authentication/createAuthentication";
 import useSiwe from "../../../hooks/siwe/useSiwe";
-import useWeb3 from "../../../hooks/web3";
 import {getSuggestions} from "../../../api/whalespotter/suggestion/suggestions.js";
 
 export default function useSuggestionHooks(address) {
 
     const siwe = useSiwe();
-    const web3 = useWeb3();
 
     const suggestionQuery = useQuery({
         queryKey: ['account', address, 'suggestions'],

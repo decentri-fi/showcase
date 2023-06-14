@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useMemo} from "react";
 import {useHistory, useParams} from "react-router-dom";
 import CustomHeader from "../../components/Header/CustomHeader";
 import tw from "twin.macro";
@@ -11,7 +11,7 @@ import useHistoryHooks from "./hooks/useHistoryHooks";
 import TransactionEntry, {TransactionEntryPlaceholder} from "./components/TransactionEntry";
 
 const Container = tw.div`flex pt-8 grid`
-const DashboardWrapper = tw.div`w-full grid justify-items-center`
+const DashboardWrapper = tw.div`w-full grid justify-items-center mt-4`
 const Center = tw.div`w-full flex grid justify-items-center mb-3`
 const Subheading = tw(SubheadingBase)`mb-4`;
 const Heading = tw(SectionHeading)`w-full`;
@@ -30,9 +30,8 @@ export default function HistoryView() {
     const address = params.user;
 
     const {
-        eventsPerTransaction,
-        transactionsPerId,
-        loading
+        loading,
+        events
     } = useHistoryHooks(address);
 
     const onAddressChange = (address) => {
@@ -40,17 +39,13 @@ export default function HistoryView() {
     };
 
 
-    const entries = Object.keys(eventsPerTransaction).map((key) => {
-        const events = eventsPerTransaction[key];
-        return {
-            tx: key,
-            events: events
-        }
-    }).map((entry) => {
-        return (
-            <TransactionEntry transaction={transactionsPerId[entry.tx]} events={entry.events} owner={address}/>
-        )
-    });
+    const entries = useMemo(() => {
+       return events?.map((entry) => {
+            return (
+                <TransactionEntry transaction={entry} events={entry.events} owner={address} />
+            )
+        })
+    }, [events]);
 
     return <>
         <CustomHeader showSearch={true} onAddressChange={onAddressChange}></CustomHeader>
@@ -70,14 +65,14 @@ export default function HistoryView() {
                 <DashboardWrapper>
 
                     {
-                        loading && entries.length === 0 &&
+                        loading &&
                         <Center>
                             <TransactionEntryPlaceholder/>
                         </Center>
                     }
 
                     {
-                        entries?.length > 0 &&
+                        !loading && entries?.length > 0 &&
 
                         <Center>
                             {entries}
@@ -86,13 +81,13 @@ export default function HistoryView() {
 
 
                     {
-                        !loading && entries?.length === 0 &&
+                        !loading && entries == null &&
                         <Section>
                             <TwoColSingleFeatureWithStats2
                                 statistics={[]}
-                                subheading={"History unavailable"}
-                                heading={"Unable to locate history for this specific address"}
-                                description={"We are unable to locate any history for this address. Please check the address and try again."}
+                                subheading={"History is being scanned"}
+                                heading={"We're currently scanning for your history."}
+                                description={"Please check back and refresh this page after a while to see your full historical transactions."}
                                 primaryButtonText={"Refresh"}
                                 primaryButtonUrl={`/${address}/history`}
                                 secondaryButtonText={"Back to overview"}

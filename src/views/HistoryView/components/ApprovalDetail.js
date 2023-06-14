@@ -3,14 +3,14 @@ import React from "react";
 import FallbackImage from "../../../components/Image/FallbackImage";
 import tw from "twin.macro";
 
-const Container = tw.div`w-full flex  px-4`
+const Container = tw.div`w-full flex  px-2`
 const TypeColumn = tw.div`lg:w-1/6 w-1/2`
 const TypeLabel = tw.span`px-2 font-medium  rounded mx-4 my-1`
 const RevokeTypeLabel = tw(TypeLabel)`bg-red-100`
 const ApproveTypeLabel = tw(TypeLabel)`bg-green-100`
 
 const AmountColumn = tw.div`lg:w-1/3 w-1/2 flex items-center text-center font-mono`
-const SymbolColumn = tw.div`w-1/2 lg:w-1/6  text-right grid  justify-items-center lg:justify-items-end`
+const SymbolColumn = tw.div`w-1/2 lg:w-1/5  text-right grid  justify-items-center lg:justify-items-end`
 const Center = tw.div`flex items-center`
 
 const AssetLogo = tw.div`w-5 h-5`

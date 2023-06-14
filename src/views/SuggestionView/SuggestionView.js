@@ -19,18 +19,11 @@ export default function () {
     const params = useParams();
     const address = params.user;
 
-    const {suggestions, isLoading, dismiss} = useSuggestionHooks(address);
+    const {suggestions, isLoading} = useSuggestionHooks(address);
 
     const onAddressChange = (address) => {
         history.push(`/${address}/suggestions`);
     };
-
-    const suggs = suggestions.map((suggestion) => {
-        return (
-            <p>{suggestion.type}</p>
-        )
-    });
-
 
     return (
         <>

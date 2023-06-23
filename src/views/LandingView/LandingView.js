@@ -91,9 +91,9 @@ export default function LandingView() {
                 statistics={statistics}
                 primaryButtonText="EXPLORE"
                 primaryButtonUrl="/explore"
-                subheading="Defi Hub"
-                heading="Decentralized Finance. Simplified. Open Source."
-                description="Explore the world of decentralized finance. Break down your portfolio, find opportunities and manage your positions."
+                subheading="DeFi. Simplified. Open Source"
+                heading="Open Source Decentralized Finance Platform."
+                description="Integrate with thousands of DeFi markets and protocols. Build your own DeFi application or use our data to track your investments."
             />
 
 
@@ -102,7 +102,7 @@ export default function LandingView() {
             </Dark>
 
             <Feature
-                subheading={<Subheading>Decentrifi Insights</Subheading>}
+                subheading={<Subheading>Decentrifi Accounting</Subheading>}
                 heading={
                     <>
                         Track your ongoing <HighlightedText>DeFi Investments</HighlightedText>
@@ -119,7 +119,7 @@ export default function LandingView() {
                         positions.</b>
                     </>
                 }
-                primaryButtonText={"EXPLORE DECENTRIFI INSIGHTS"}
+                primaryButtonText={"EXPLORE DECENTRIFI TRACKER"}
                 primaryButtonUrl={"/account/0x26fcbd3afebbe28d0a8684f790c48368d21665b5"}
                 imageSrc={BookkeeperUniPic}
                 showDecoratorBlob={false}

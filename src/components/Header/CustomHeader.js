@@ -1,15 +1,9 @@
-import React, {useRef} from "react";
+import React from "react";
 import tw from "twin.macro";
 import styled from "styled-components";
 import Header, {DesktopNavLinks, LogoLink, NavLink, NavLinks, NavToggle} from "../headers/light.js";
-import useWeb3 from "../../hooks/web3";
-import {Button} from "@mui/material";
 import {useHistory} from "react-router-dom";
-import Search from "../../views/DashboardView/partials/Search/Search";
-import ReactGA from "react-ga4";
-import useConnectWalletPopup from "../ConnectWalletPopup/UseConnectWalletPopup";
-import {PrimaryButton} from "../misc/Buttons";
-import useEns from "../../views/DashboardView/hooks/useEns";
+import LandingMockup from "../../images/landing/landing_mockup.png";
 
 const StyledHeader = styled(Header)`
   ${tw`pt-8 max-w-none lg:mt-8 pb-4`}
@@ -59,123 +53,39 @@ const SlantedBackground = styled.span`
 
 const Notification = tw.span`inline-block my-4 pl-3 py-1 text-gray-100 border-l-4 border-blue-500 font-medium text-sm`;
 
-
-function UserLink({web3}) {
-
-    const {ens} = useEns(web3.account);
-
-    const {
-        html: connectWalletPopup,
-        open: openConnectWalletPopup,
-    } = useConnectWalletPopup();
-
-    const sliceAccount = function (address) {
-        return `${address.slice(0, 6)}...${address.slice(-6, address.length)}`;
-    };
-
-    if (web3.account != null) {
-        const buttonText = (function () {
-            if (ens != null) {
-                return ens;
-            } else {
-                return sliceAccount(web3.account)
-            }
-        })();
-        return (
-            <>
-                <Button color={"secondary"} variant={"contained"}>
-                    {buttonText}
-                </Button>
-            </>
-        );
-    } else {
-        return (
-            <>
-                <Button variant={"contained"} color={"secondary"} onClick={openConnectWalletPopup}>
-                    Connect Wallet
-                </Button>
-                {connectWalletPopup}
-            </>
-        );
-    }
-}
-
 function Expansion({expanded}) {
-
-    const searchField = useRef(null);
-
-    const history = useHistory();
 
     return expanded ?
         <TwoColumn>
             <LeftColumn>
                 <Heading>
-                    Hello
+                    <span>The easiest way</span>
+                    <br/>
+                    <SlantedBackground>to integrate DeFi</SlantedBackground><br/>
+                    <span>For Developers</span>
                 </Heading>
-                <Notification>Discover. Research. Invest.</Notification>
-                <SearchTeaser>
-                    <SearchContainer>
-                        <SearchInput
-                            ref={searchField}
-                            onKeyDown={e => {
-                                console.log(searchField.current.value)
-                                if (searchField.current.value.length === 40 || searchField.current.value.length === 42) {
-                                    ReactGA.event('search_address', {
-                                        search_term: searchField.current.value
-                                    });
-                                    history.push(`/${searchField.current.value}/profile`);
-                                }
-                            }}
-                            type="search" name="search" placeholder={'Track your wallet address or ENS'}></SearchInput>
-                        <Caret>
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor"
-                                 viewBox="0 0 256 256">
-                                <rect width="256" height="256" fill="none"></rect>
-                                <polyline points="96 48 176 128 96 208" fill="none" stroke="currentColor"
-                                          strokeLinecap="round" strokeLinejoin="round" strokeWidth="24"></polyline>
-                            </svg>
-                        </Caret>
-                    </SearchContainer>
-                    <OrText>or</OrText>
-                    <PrimaryButton onClick={() => {
-                        history.push('/dashboard');
-                    }
-                    }>Login with Web3</PrimaryButton>
-                </SearchTeaser>
+                <Notification>Discover. Research. Implement.</Notification>
             </LeftColumn>
             <RightColumn>
-                <Heading>
-                    <span>Break down and manage your</span>
-                    <br/>
-                    <SlantedBackground>Decentralized Finance</SlantedBackground><br/>
-                    Portfolio
-
-                </Heading>
+                <img src={LandingMockup} alt={"Landing Mockup"}/>
             </RightColumn>
         </TwoColumn>
         : <></>
 }
 
-export default function CustomHeader({onAddressChange, expanded = false, showUserLink = true, showSearch = false}) {
+export default function CustomHeader({expanded = false}) {
 
-    const web3 = useWeb3();
     const history = useHistory();
 
     const navLinks = [
         <NavLinks key={1}>
-            <NavLink onClick={e => {
-                history.push('/explore');
-            }}>
+            <NavLink target="_blank" href="https://track.decentri.fi/explore">
                 Explore
             </NavLink>
-            <NavLink onClick={e => {
-                history.push('/dashboard');
-            }}>
+            <NavLink target="_blank" href="https://track.decentri.fi">
                 Decentrifi Connect
             </NavLink>
-            <NavLink onClick={e => {
-                history.push('/protocols');
-            }}>
+            <NavLink target="_blank" href="https://track.decentri.fi/protocols">
                 Protocols
             </NavLink>
             <NavLink target="_blank" href="https://docs.decentri.fi">
@@ -187,36 +97,11 @@ export default function CustomHeader({onAddressChange, expanded = false, showUse
         </NavLinks>,
     ];
 
-    const userLink = showUserLink ? <UserLink web3={web3}/> : <></>
-
-    const userLinks = [
-        <NavLinks key={2}>
-            {userLink}
-        </NavLinks>
-    ]
-
-    const search = () => {
-        if (showSearch) {
-            return (
-                <SearchHolder>
-                    <LeftColumn></LeftColumn>
-                    <RightColumn>
-                        <Search onAddressChange={onAddressChange}></Search>
-                    </RightColumn>
-                </SearchHolder>
-            )
-        } else {
-            return <></>;
-        }
-    }
-
-
     return (
         <Container>
             <OpacityOverlay/>
             <HeroContainer>
-                <StyledHeader links={navLinks.concat(userLinks)}/>
-                {search()}
+                <StyledHeader links={navLinks}/>
                 <Expansion expanded={expanded}/>
             </HeroContainer>
         </Container>

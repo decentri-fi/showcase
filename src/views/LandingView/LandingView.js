@@ -90,7 +90,7 @@ export default function LandingView() {
                 imageSrc={UnicornsReading}
                 statistics={statistics}
                 primaryButtonText="EXPLORE"
-                primaryButtonUrl="/explore"
+                primaryButtonUrl="https://track.decentri.fi/explore"
                 subheading="DeFi. Simplified. Open Source"
                 heading="Open Source Decentralized Finance Platform."
                 description="Integrate with thousands of DeFi markets and protocols. Build your own DeFi application or use our data to track your investments."
@@ -120,7 +120,7 @@ export default function LandingView() {
                     </>
                 }
                 primaryButtonText={"EXPLORE DECENTRIFI TRACKER"}
-                primaryButtonUrl={"/account/0x26fcbd3afebbe28d0a8684f790c48368d21665b5"}
+                primaryButtonUrl={"https://track.decentri.fi/account/0x26fcbd3afebbe28d0a8684f790c48368d21665b5"}
                 imageSrc={BookkeeperUniPic}
                 showDecoratorBlob={false}
                 features={[

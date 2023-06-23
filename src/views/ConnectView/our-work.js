@@ -73,7 +73,7 @@ export default ({
             category: "Kotlin",
             title: "Decentrifi Dashboard",
             description: "Track an address, show its investments, its yield, its assets, its transactions, its history, its future.",
-            url: "https://decentri.fi/dashboard"
+            url: "https://track.decentri.fi/dashboard"
         },
     ];
     return (

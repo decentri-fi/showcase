@@ -11,6 +11,7 @@ import TwoColWithButton from "../../components/features/TwoColWithButton";
 import MoneyUnicornPic from "images/moneyunicorns.png";
 import UnicornsReading from "images/unicornsreading.png";
 import BookkeeperUniPic from "images/bookkeperuni.png";
+import CodeOrDash from "images/code_or_dash.png";
 import {fetchNetworks} from "../../api/defitrack/networks/networks";
 import {fetchProtocols} from "../../api/defitrack/protocols/protocols";
 import {getStatistics} from "../../api/defitrack/statistics/Statistics";
@@ -140,11 +141,42 @@ export default function LandingView() {
             />
 
             <Dark>
-                <GetStartedLight
-                    primaryLinkUrl="https://docs.decentri.fi"
-                    secondaryLinkUrl="https://learn.decentri.fi"
-                    subheading="Buidling in the space?"
-                    heading="Explore our developer-friendly docs."
+                <Feature
+                    subheading={<Subheading>Decentrifi Accounting</Subheading>}
+                    heading={
+                        <>
+                            Track your ongoing <HighlightedText>DeFi Investments</HighlightedText>
+                        </>
+                    }
+                    description={
+                        <>
+                            Tracking positions requires specific know-how about underlying protocols and projects.
+                            We keep track of all the major <HighlightedText><a target="_blank"
+                                                                               href="https://docs.decentri.fi">lending,
+                            farming, pool and staking providers</a></HighlightedText> and the current, relevant markets.
+                            <br/>
+                            We pour all this data into a unified model, which lets you easily <b>compare different
+                            positions.</b>
+                        </>
+                    }
+                    primaryButtonText={"EXPLORE DECENTRIFI TRACKER"}
+                    primaryButtonUrl={"https://track.decentri.fi/account/0x26fcbd3afebbe28d0a8684f790c48368d21665b5"}
+                    imageSrc={CodeOrDash}
+                    showDecoratorBlob={false}
+                    features={[
+                        {
+                            Icon: ChainIcon,
+                            title: "Chain Agnostic",
+                            description: "We integrate with a variety of EVM-compatible or equivalent chains, like Ethereum, Polygon, Optimism, etc...",
+                            iconContainerCss: tw`bg-purple-300 text-purple-800`
+                        },
+                        {
+                            Icon: BriefcaseIcon,
+                            title: "Unified Model",
+                            description: "We reduce protocol markets to a unified domain based on defi principals and building blocks.",
+                            iconContainerCss: tw`bg-green-300 text-green-800`
+                        }
+                    ]}
                 />
             </Dark>
         </Container>

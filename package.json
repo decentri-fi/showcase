@@ -70,7 +70,6 @@
     "@babel/plugin-proposal-class-properties": "^7.18.6",
     "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
     "@ensdomains/ens-avatar": "^0.2.1",
-    "@tanstack/react-query": "^4.24.6",
     "eslint-config-react-app": "^6.0.0",
     "react-spinners": "^0.13.8",
     "recharts": "^2.4.3",

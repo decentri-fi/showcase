@@ -73,7 +73,13 @@ export default () => {
                                 <Link href="https://docs.decentri.fi">Documentation</Link>
                             </LinkListItem>
                             <LinkListItem>
-                                <Link href="https://decentri.fi/dashboard">Insights</Link>
+                                <Link href="https://track.decentri.fi/dashboard">Insights</Link>
+                            </LinkListItem>
+                            <LinkListItem>
+                                <Link href="https://track.decentri.fi/explore">Explore</Link>
+                            </LinkListItem>
+                            <LinkListItem>
+                                <Link href="https://track.decentri.fi/claimables">Claimables</Link>
                             </LinkListItem>
                             <LinkListItem>
                                 <Link href="https://docs.decentri.fi/general/supported-protocols">Roadmap</Link>
@@ -104,11 +110,6 @@ export default () => {
                             <LinkListItem>
                                 <Link target="_blank" href="https://twitter.com/decentrifi">Twitter</Link>
                             </LinkListItem>
-                            <LinkListItem>
-                                <Link
-                                    href="https://gitcoin.co/grants/4539/defitrack-find-the-best-opportunities-in-the-defi">Gitcoin
-                                    Grants</Link>
-                            </LinkListItem>
                         </LinkList>
                     </Column>
                 </FiveColumns>
@@ -122,7 +123,7 @@ export default () => {
                         <SocialLink href="https://twitter.com/decentrifi">
                             <TwitterIcon/>
                         </SocialLink>
-                        <SocialLink href="https://github.com/decentri-foi">
+                        <SocialLink href="https://github.com/decentri-fi">
                             <GithubIcon/>
                         </SocialLink>
                     </SocialLinksContainer>

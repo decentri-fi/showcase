@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useMemo} from 'react';
 import tw from "twin.macro";
 import Feature from "../../components/features/TwoColWithTwoHorizontalFeaturesAndButton";
 import {ReactComponent as BriefcaseIcon} from "feather-icons/dist/icons/share.svg";
@@ -6,17 +6,11 @@ import {ReactComponent as ChainIcon} from "feather-icons/dist/icons/link.svg";
 import {ReactComponent as DollarSign} from "feather-icons/dist/icons/dollar-sign.svg";
 import ReactGA from "react-ga4";
 import TwoColSingleFeatureWithStats2 from "../../components/features/TwoColSingleFeatureWithStats2";
-import GetStartedLight from "../../components/cta/GetStartedLight";
-import TwoColWithButton from "../../components/features/TwoColWithButton";
-
-import MoneyUnicornPic from "images/moneyunicorns.png";
 import UnicornsReading from "images/unicornsreading.png";
 import BookkeeperUniPic from "images/bookkeperuni.png";
 import CodeOrDash from "images/code_or_dash.png";
-import {fetchNetworks} from "../../api/defitrack/networks/networks";
-import {fetchProtocols} from "../../api/defitrack/protocols/protocols";
-import {getStatistics} from "../../api/defitrack/statistics/Statistics";
 import OurWork from "../DefiHubView/our-work";
+import {useLandingView} from "./hooks/useLandingView";
 
 const Subheading = tw.span`uppercase tracking-widest font-bold text-primary-500`;
 const HighlightedText = tw.span`text-primary-500`;
@@ -28,50 +22,24 @@ const Dark = tw.section`bg-defaultBackground`
 
 export default function LandingView() {
 
-    const [stats, setStats] = React.useState({
-        "protocols": 21, "networks": 7, "markets": 550
-    });
+    const {statistics: stats} = useLandingView();
 
-    useEffect(async () => {
+    useEffect(() => {
+        window.title = 'Decentrifi | Decentralized Finance. Simplified. Open Source';
         ReactGA.send({
             hitType: "pageview", page: window.location.pathname + window.location.search
         });
+    }, []);
 
-        window.title = 'Decentrifi | Decentralized Finance. Simplified. Open Source';
-
-        fetchNetworks().then((networks) => {
-            setStats(prevState => {
-                return {
-                    ...prevState, "networks": networks.length,
-                }
-            })
-        })
-
-        getStatistics().then((statistics) => {
-            setStats(prevState => {
-                return {
-                    ...prevState, "markets": statistics.marketCount,
-                }
-            })
-        })
-
-
-        fetchProtocols().then((protocols) => {
-            setStats(prevState => {
-                return {
-                    ...prevState, "protocols": protocols.length,
-                }
-            })
-        })
-    }, [])
-
-    let statistics = [{
-        key: "Protocols", value: `${stats['protocols']}+`
-    }, {
-        key: "Networks", value: `${stats['networks']}+`
-    }, {
-        key: "Markets", value: `${stats['markets']}+`
-    }];
+    let statistics = useMemo(() => {
+        return [{
+            key: "Protocols", value: `${stats['protocols']}+`
+        }, {
+            key: "Networks", value: `${stats['networks']}+`
+        }, {
+            key: "Markets", value: `${stats['markets']}+`
+        }]
+    }, [stats]);
 
     return (<Container>
         <TwoColSingleFeatureWithStats2
@@ -129,13 +97,13 @@ export default function LandingView() {
                 <HighlightedText> claim your rewards</HighlightedText> in a timely manner.
             </>}
             primaryButtonText={"EXPLORE DECENTRIFI TRACKER"}
-            primaryButtonUrl={"https://track.decentri.fi/account/0x26fcbd3afebbe28d0a8684f790c48368d21665b5"}
+            primaryButtonUrl={"https://track.decentri.fi/claimables"}
             imageSrc={CodeOrDash}
             showDecoratorBlob={false}
             features={[{
                 Icon: DollarSign,
                 title: "Farming Rewards",
-                description: "We integrate with a variety of EVM-compatible or equivalent chains, like Ethereum, Polygon, Optimism, etc...",
+                description: "Easily find and claim your farming rewards from all the major protocols. We support a variety of chains and protocols.",
                 iconContainerCss: tw`bg-purple-300 text-purple-800`
             }]}
         />

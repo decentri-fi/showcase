@@ -2,7 +2,7 @@ import "tailwindcss/dist/base.css";
 import "styles/globalStyles.css";
 
 // Path: src/styles/globalStyles.css
-import React, {createContext} from "react";
+import React from "react";
 import {BrowserRouter as Router, Route, Switch} from 'react-router-dom';
 
 /*
@@ -20,13 +20,11 @@ import CustomHeader from "./components/Header/CustomHeader";
 import LandingView from "./views/LandingView/LandingView";
 import FooterV2 from "./components/Footer/FooterV2";
 import ReactGA from "react-ga4";
-import ConnectView from "./views/ConnectView/ConnectView";
+import DefiHubView from "./views/DefiHubView/DefiHubView";
 import TermsOfServiceView from "./views/TermsOfServiceView/TermsOfServiceView";
 import {QueryClient, QueryClientProvider} from "@tanstack/react-query";
 import MembershipView from "./views/MembershipView";
 import MentorshipView from "./views/MentorshipView/MentorshipView";
-
-export const DashboardContext = createContext(null);
 
 export default function App() {
     ReactGA.initialize([
@@ -49,7 +47,7 @@ export default function App() {
                     </Route>
                     <Route path="/defi-hub">
                         <CustomHeader showUserLink={false}/>
-                        <ConnectView/>
+                        <DefiHubView/>
                         <FooterV2/>
                     </Route>
                     <Route path="/terms-of-service">

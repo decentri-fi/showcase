@@ -11,7 +11,7 @@ import Ourwork from "./our-work";
 
 const Dark = tw.section`bg-defaultBackground`
 
-export default function ConnectView() {
+export default function DefiHubView() {
 
     useEffect(() => {
         ReactGA.pageview(window.location.pathname + window.location.search);

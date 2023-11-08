@@ -4,8 +4,8 @@ import tw from "twin.macro";
 import styled, { css } from "styled-components/macro"; //eslint-disable-line
 import { Container, ContentWithPaddingXl } from "../misc/Layouts";
 import { SectionHeading, Subheading as SubheadingBase } from "../../components/misc/Headings.js";
-import { SectionDescription } from "../../components/misc/Typography.js";
-import ChevronDownIcon from "feather-icons/dist/icons/chevron-down.svg";
+import { SectionDescription } from "../misc/Typography";
+import ChevronDownIcon from "feather-icons/dist/icons/chevron-down.svg?react";
 
 const PrimaryBackgroundContainer = tw(Container)`-mx-8 px-8 bg-primary-900 text-gray-100`;
 

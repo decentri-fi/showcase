@@ -11,6 +11,7 @@ import {SectionDescription} from "../../components/misc/Typography";
 import UniPooling from "../../images/unicorns/uni-pooling.png"
 import UniFarming from "../../images/unicorns/uni-farmer.png"
 import UniBanker from "../../images/unicorns/uni-banker.png"
+import UniChess from "../../images/unicorns/uni-chess.png"
 import UniTokens from "../../images/unicorns/uni-with-tokens.png"
 
 const ImageContainer = tw.div`w-64`
@@ -69,25 +70,31 @@ export default () => {
       imageSrc: UniPooling,
       title: "Liquidity Pools",
       description: "Uniswap, Balancer, Curve? These pools are used as liquidity for token swaps.",
-      url: "https://timerse.com"
+      url: "https://docs.decentri.fi/api-endpoints/liquidity-pools"
     },
     {
       imageSrc: UniFarming,
       title: "Farming Opportunities",
       description: "Any Farm, Token Staking or Yield Opportunity",
-      url: "https://google.com"
+      url: "https://docs.decentri.fi/api-endpoints/farming"
     },
     {
       imageSrc: UniBanker,
       title: "Lending & Borrowing",
       description: "Borrow vaults? Debt tokens? Compound or Aave? We index it.",
-      url: "https://reddit.com"
+      url: "https://docs.decentri.fi/api-endpoints/lending"
     },
     {
       imageSrc: UniTokens,
       title: "Tokens",
-      description: "Borrow vaults? Debt tokens? Compound or Aave? We index it.",
-      url: "https://reddit.com"
+      description: "ERC20 token details, balances and allowances.",
+      url: "https://docs.decentri.fi/api-endpoints/erc20"
+    },
+    {
+      imageSrc: UniChess,
+      title: "Positions",
+      description: "Liquidity Pool Positions, borrowing or lending, farming?",
+      url: "https://docs.decentri.fi/api-endpoints/balances"
     }
   ]
 
@@ -97,7 +104,7 @@ export default () => {
         <Description>We index protocols, aggregate contracts, transform data and present defi native building blocks.</Description>
         <Heading>Your DeFi <span tw="text-primary-500">Building Blocks</span></Heading>
         {cards.map((card, i) => (
-          <Column key={i}>
+          <Column key={i} as={"a"} target="_blank" href={card.url}>
             <Card>
               <ImageContainer>
                 <img src={card.imageSrc || defaultCardImage} alt="" />

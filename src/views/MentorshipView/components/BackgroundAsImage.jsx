@@ -3,8 +3,8 @@ import tw from "twin.macro";
 import styled from "styled-components";
 import { css } from "styled-components/macro"; //eslint-disable-line
 
-import Header, { NavLink, NavLinks, PrimaryLink, LogoLink, NavToggle, DesktopNavLinks } from "components/headers/light.js";
-import ResponsiveVideoEmbed from "helpers/ResponsiveVideoEmbed.js";
+import Header, { NavLink, NavLinks, PrimaryLink, LogoLink, NavToggle, DesktopNavLinks } from "../../../components/headers/light.jsx";
+import ResponsiveVideoEmbed from "../../../helpers/ResponsiveVideoEmbed.jsx";
 import {useHistory} from "react-router-dom";
 
 const StyledHeader = styled(Header)`

@@ -1,4 +1,3 @@
-import AnimationRevealPage from "../helpers/AnimationRevealPage";
 import MainFeature1 from "../components/features/TwoColWithButton";
 import Features from "../components/features/ThreeColSimple";
 import SupportIconImage from "../images/support-icon.svg";
@@ -18,7 +17,6 @@ const Subheading = tw.span`uppercase tracking-wider text-sm`;
 export default function MembershipView() {
     return (
         <>
-            <AnimationRevealPage>
                 <CustomHeader showSearch={false} showUserLink={false}/>
                 <MainFeature1
                     description={
@@ -96,7 +94,6 @@ export default function MembershipView() {
                 />
 
                 <FooterV2/>
-            </AnimationRevealPage>
             );
         </>
     )

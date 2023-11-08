@@ -3,18 +3,18 @@ import styled from "styled-components";
 import tw from "twin.macro";
 //eslint-disable-next-line
 import { css } from "styled-components/macro";
-import { SectionHeading } from "components/misc/Headings.js";
+import { SectionHeading } from "../../components/misc/Headings.js";
 
 import defaultCardImage from "../../images/shield-icon.svg";
 
-import { ReactComponent as SvgDecoratorBlob3 } from "../../images/svg-decorator-blob-3.svg";
+import SvgDecoratorBlob3 from "../../images/svg-decorator-blob-3.svg?react";
 
-import SupportIconImage from "../../images/support-icon.svg";
-import ShieldIconImage from "../../images/shield-icon.svg";
-import CustomizeIconImage from "../../images/customize-icon.svg";
-import FastIconImage from "../../images/fast-icon.svg";
-import ReliableIconImage from "../../images/reliable-icon.svg";
-import SimpleIconImage from "../../images/simple-icon.svg";
+import SupportIconImage from "../../images/support-icon.svg?react";
+import ShieldIconImage from "../../images/shield-icon.svg?react";
+import CustomizeIconImage from "../../images/customize-icon.svg?react";
+import FastIconImage from "../../images/fast-icon.svg?react";
+import ReliableIconImage from "../../images/reliable-icon.svg?react";
+import SimpleIconImage from "../../images/simple-icon.svg?react";
 
 const Container = tw.div`relative`;
 

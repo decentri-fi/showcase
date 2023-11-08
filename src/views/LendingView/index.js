@@ -1,1 +1,1 @@
-export {default} from './LendingView.js'
+export {default} from './LendingView.jsx'

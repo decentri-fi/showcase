@@ -1,14 +1,13 @@
 import React, {useEffect} from "react";
-import AnimationRevealPage from "helpers/AnimationRevealPage.js";
 
-import Hero from "./components/BackgroundAsImage.js";
+import Hero from "./components/BackgroundAsImage.jsx";
 import Features from "./components/DashedBorderSixFeatures";
-import MainFeature from "components/features/TwoColSingleFeatureWithStats2.js";
-import OurWork from "./components/our-work.js";
-import FAQ from "components/faqs/SimpleWithSideImage.js";
-import ContactUsForm from "./components/get-in-touch.js";
-import Footer from "components/footers/MiniCenteredFooter.js";
-import customerSupportIllustrationSrc from "images/customer-support-illustration.svg";
+import MainFeature from "../../components/features/TwoColSingleFeatureWithStats2.jsx";
+import OurWork from "./components/our-work.jsx";
+import FAQ from "../../components/faqs/SimpleWithSideImage.jsx";
+import ContactUsForm from "./components/get-in-touch.jsx";
+import Footer from "../../components/footers/MiniCenteredFooter.jsx";
+import customerSupportIllustrationSrc from "../../images/customer-support-illustration.svg";
 import CustomHeader from "../../components/Header/CustomHeader";
 
 export default () => {
@@ -18,8 +17,7 @@ export default () => {
     }, []);
 
     return (
-
-        <AnimationRevealPage>
+        <>
             <CustomHeader expanded={false}/>
 
             <Hero/>
@@ -72,6 +70,6 @@ export default () => {
             <OurWork/>
             <ContactUsForm/>
             <Footer/>
-        </AnimationRevealPage>
+        </>
     );
 };

@@ -1,5 +1,4 @@
 import "tailwindcss/dist/base.css";
-import "styles/globalStyles.css";
 
 // Path: src/styles/globalStyles.css
 import React from "react";

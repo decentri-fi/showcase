@@ -1,9 +1,9 @@
 import React from "react";
 import tw from "twin.macro";
 import styled from "styled-components";
-import {ReactComponent as TwitterIcon} from "images/twitter-icon.svg";
-import {ReactComponent as GithubIcon} from "images/github-icon.svg";
-import Logo from "images/logo/namewithlogo.png";
+import TwitterIcon from "../../images/twitter-icon.svg?react";
+import GithubIcon from "../../images/github-icon.svg?react";
+import Logo from "../../images/logo/namewithlogo.png?react";
 
 const Container = styled.div`
   ${tw`relative bg-primary-500 text-gray-100 -mb-8  px-8 py-20 lg:py-24`}

@@ -2,12 +2,12 @@ import React from "react";
 import tw from "twin.macro";
 import styled from "styled-components";
 import { css } from "styled-components/macro"; //eslint-disable-line
-import { SectionHeading, Subheading as SubheadingBase } from "components/misc/Headings.js";
-import { PrimaryButton as PrimaryButtonBase } from "components/misc/Buttons.js";
-import TeamIllustrationSrc from "images/team-illustration-2.svg";
-import { ReactComponent as SvgDotPattern } from "images/dot-pattern.svg";
-import { ReactComponent as BriefcaseIcon } from "feather-icons/dist/icons/briefcase.svg";
-import { ReactComponent as MoneyIcon } from "feather-icons/dist/icons/dollar-sign.svg";
+import { SectionHeading, Subheading as SubheadingBase } from "../../components/misc/Headings.js";
+import { PrimaryButton as PrimaryButtonBase } from "../../components/misc/Buttons.js";
+import TeamIllustrationSrc from "../../images/team-illustration-2.svg";
+import SvgDotPattern from "../../images/dot-pattern.svg";
+import BriefcaseIcon from "feather-icons/dist/icons/briefcase.svg";
+import MoneyIcon from "feather-icons/dist/icons/dollar-sign.svg";
 
 const Container = tw.div`relative`;
 const TwoColumn = tw.div`flex flex-col md:flex-row justify-between max-w-screen-xl mx-auto py-20 md:py-24 items-center`;

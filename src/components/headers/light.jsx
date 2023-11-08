@@ -5,10 +5,10 @@ import styled from "styled-components";
 import { css } from "styled-components/macro"; //eslint-disable-line
 
 
-import useAnimatedNavToggler from "../../helpers/useAnimatedNavToggler.js";
+import useAnimatedNavToggler from "../../helpers/useAnimatedNavToggler.jsx";
 
-import { ReactComponent as MenuIcon } from "feather-icons/dist/icons/menu.svg";
-import { ReactComponent as CloseIcon } from "feather-icons/dist/icons/x.svg";
+import MenuIcon from "feather-icons/dist/icons/menu.svg?react";
+import CloseIcon from "feather-icons/dist/icons/x.svg";
 import NameWithlogo from "../../images/logo/namewithlogo.png";
 
 const Header = tw.header`

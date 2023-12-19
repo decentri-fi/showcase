@@ -9,8 +9,7 @@ import TwoColSingleFeatureWithStats2 from "../../components/features/TwoColSingl
 import UnicornsReading from '../../images/unicorns/uni_looking_at_charts.png'
 
 import BookkeeperUniPic from "../../images/bookkeperuni.png";
-import CodeOrDash from "../../images/code_or_dash.png";
-import OurWork from "../DefiHubView/our-work";
+import CodeOrDash from "../../images/unicorns/unicorn-pirate.png";
 import {useLandingView} from "./hooks/useLandingView";
 import ShieldIconImage from "../../images/shield-icon.svg";
 import SupportIconImage from "../../images/support-icon.svg";

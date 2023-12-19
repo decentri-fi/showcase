@@ -62,7 +62,6 @@ function Expansion({expanded}) {
                     <span>The easiest way</span>
                     <br/>
                     <SlantedBackground>to integrate DeFi</SlantedBackground><br/>
-                    <span>For Developers</span>
                 </Heading>
                 <Notification>Discover. Research. Implement.</Notification>
             </LeftColumn>
@@ -83,7 +82,7 @@ export default function CustomHeader({expanded = false}) {
                 Explore
             </NavLink>
             <NavLink target="_blank" href="https://track.decentri.fi">
-                Decentrifi Connect
+                Decentrifi Portfolio
             </NavLink>
             <NavLink target="_blank" href="https://track.decentri.fi/protocols">
                 Protocols

@@ -13,7 +13,10 @@ const Dark = tw.section`bg-defaultBackground`
 export default function DefiHubView() {
 
     useEffect(() => {
-        ReactGA.pageview(window.location.pathname + window.location.search);
+        ReactGA.send({
+            hitType: "pageview",
+            page: window.location.pathname + window.location.search
+        });
     }, [])
 
     return (
@@ -50,8 +53,12 @@ export default function DefiHubView() {
                         answer: "Yes, absolutely! You can request your implementation at https://docs.decentri.fi/general/supported-protocols#request-a-protocol."
                     },
                     {
-                        question: "Is Defitrack a decentralized application?",
-                        answer: "Defitrack is not a decentralized application. It's a gateway to web3 protocols. You don't need any blockchain or cryptocurrency knowledge to integrate with decentralized finance."
+                        question: "Is Decentrifi a decentralized application?",
+                        answer: "Decentrifi is not a decentralized application. It's a gateway to web3 protocols. You don't need any blockchain or cryptocurrency knowledge to integrate with decentralized finance."
+                    },
+                    {
+                        question: "Is Decentrifi Open Source?",
+                        answer: "Absolutely! Decentrifi is an open source project. You can find the code at https://github.com/decentri-fi/defi-hub."
                     }
                 ]
             } description={"🔥This might contain an answer to your burning questions.🔥"}/>

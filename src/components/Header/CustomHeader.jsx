@@ -82,7 +82,7 @@ export default function CustomHeader({expanded = false}) {
             <NavLink target="_blank" href="https://track.decentri.fi">
                 Decentrifi Portfolio
             </NavLink>
-            <NavLink target="_blank" href="https://track.decentri.fi/calendar">
+            <NavLink target="_blank" href="https://decentri.fi/calendar">
                 Calendar
             </NavLink>
             <NavLink target="_blank" href="https://docs.decentri.fi">

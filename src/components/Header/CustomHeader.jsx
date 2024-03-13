@@ -74,8 +74,6 @@ function Expansion({expanded}) {
 
 export default function CustomHeader({expanded = false}) {
 
-    const history = useHistory();
-
     const navLinks = [
         <NavLinks key={1}>
             <NavLink target="_blank" href="https://track.decentri.fi/explore">
@@ -84,8 +82,8 @@ export default function CustomHeader({expanded = false}) {
             <NavLink target="_blank" href="https://track.decentri.fi">
                 Decentrifi Portfolio
             </NavLink>
-            <NavLink target="_blank" href="https://track.decentri.fi/protocols">
-                Protocols
+            <NavLink target="_blank" href="https://track.decentri.fi/calendar">
+                Calendar
             </NavLink>
             <NavLink target="_blank" href="https://docs.decentri.fi">
                 API

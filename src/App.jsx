@@ -24,6 +24,7 @@ import TermsOfServiceView from "./views/TermsOfServiceView/TermsOfServiceView";
 import {QueryClient, QueryClientProvider} from "@tanstack/react-query";
 import MembershipView from "./views/MembershipView";
 import MentorshipView from "./views/MentorshipView/MentorshipView";
+import CalendarView from "./views/CalendarView";
 
 export default function App() {
     ReactGA.initialize([
@@ -38,8 +39,8 @@ export default function App() {
         <QueryClientProvider client={queryClient}>
             <Router basename="/landing">
                 <Switch>
-                    <Route path={"/mentorship"}>
-                        <MentorshipView/>
+                    <Route path={"/calendar"}>
+                        <CalendarView />
                     </Route>
                     <Route path="/membership">
                         <MembershipView/>

@@ -7,8 +7,21 @@ import {useQuery} from "@tanstack/react-query";
 import axios from "axios";
 import FooterV2 from "../components/Footer/FooterV2";
 import {SectionHeading} from "../components/misc/Headings";
+import styled from "styled-components";
 
 const Header = tw(SectionHeading)`mt-12`;
+
+const Highlight = tw.span`text-primary-500`
+
+const CalendarHolder = styled.div`
+    ${tw`flex w-full`}
+    .left {
+        ${tw`w-3/4`}
+    }
+    .right {
+        ${tw`w-1/4 border p-4 m-3 rounded`}
+    }
+`
 
 export default function CalendarView() {
 
@@ -118,13 +131,18 @@ export default function CalendarView() {
         <>
             <CustomHeader showSearch={false} showUserLink={false}/>
 
-            <Header>Web3 <span tw="text-primary-500">Event Calendar </span></Header>
+            <CalendarHolder>
+                <div className="left">
+                    <Header>Web3 <Highlight>Event Calendar </Highlight></Header>
+                </div>
+            </CalendarHolder>
 
-            <div tw="flex w-full">
-                <div tw="w-3/4">
+
+            <CalendarHolder>
+                <div className="left">
                     <Calendar renderCell={renderCell} bordered={true}/>
                 </div>
-                <div tw="w-1/4 border p-4 m-3 rounded">
+                <div className="right">
                     <Form>
                         <Form.Group>
                             <Form.ControlLabel>Filter</Form.ControlLabel>
@@ -135,7 +153,7 @@ export default function CalendarView() {
                         </Form.Group>
                     </Form>
                 </div>
-            </div>
+            </CalendarHolder>
             <FooterV2/>
         </>
     )

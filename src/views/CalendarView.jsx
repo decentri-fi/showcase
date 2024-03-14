@@ -1,14 +1,19 @@
-import React from "react";
+import React, {useState} from "react";
 import tw from "twin.macro";
 import CustomHeader from "../components/Header/CustomHeader";
-import {Badge, Calendar, Popover, Whisper} from 'rsuite';
+import {Badge, Calendar, CheckPicker, Form, Popover, Whisper} from 'rsuite';
 import 'rsuite/dist/rsuite.min.css';
 import {useQuery} from "@tanstack/react-query";
 import axios from "axios";
 import FooterV2 from "../components/Footer/FooterV2";
+import {SectionHeading} from "../components/misc/Headings";
+
+const Header = tw(SectionHeading)`mt-12`;
 
 export default function CalendarView() {
 
+
+    const [filter, setFilter] = useState([]);
 
     const query = useQuery({
         queryKey: 'calendar',
@@ -21,16 +26,44 @@ export default function CalendarView() {
 
     function getTodoList(date) {
         const elements = (query.data || []).filter((item) => {
-            const theDate = new Date(item.startDate);
-            return theDate.getDate() === date.getDate();
+            const theDate = new Date(item.date);
+            return theDate.getDate() === date.getDate() && theDate.getMonth() === date.getMonth() && theDate.getFullYear() === date.getFullYear()
         });
 
         return elements.map((item) => {
             return {
                 //time: item.startDate,
-                title: item.title
+                badge: getBadge(item),
+                title: item.title,
+                description: item.description,
+                type: item.type
             }
+        }).filter((item) => {
+            if (filter.length === 0) {
+                return true;
+            }
+            return filter.includes(item.type);
         });
+    }
+
+    const data = [
+        {label: 'Ethereum Upgrade', value: 'ethereum_upgrade'},
+        {label: 'Bitcoin Upgrade', value: 'bitcoin_upgrade'},
+        {label: 'Conference', value: 'conference'},
+    ].map(
+        item => ({label: item.label, value: item.value})
+    );
+
+
+    function getBadge(item) {
+        switch (item.type) {
+            case 'ethereum_upgrade':
+                return <Badge color={"green"}></Badge>
+            case 'bitcoin_upgrade':
+                return <Badge color={"yellow"}></Badge>
+            default:
+                return <Badge color={"orange"}/>;
+        }
     }
 
     function renderCell(date) {
@@ -62,7 +95,16 @@ export default function CalendarView() {
                 <ul className="calendar-todo-list">
                     {displayList.map((item, index) => (
                         <li key={index}>
-                            <Badge/> {item.title}
+                            <Whisper
+                                placement="top"
+                                trigger="click"
+                                speaker={
+                                    <Popover>
+                                        {item.description}
+                                    </Popover>
+                                }>
+                                <span>{item.badge} {item.title}</span>
+                            </Whisper>
                         </li>
                     ))}
                     {moreCount ? moreItem : null}
@@ -75,8 +117,24 @@ export default function CalendarView() {
     return (
         <>
             <CustomHeader showSearch={false} showUserLink={false}/>
-            <div tw="mx-4">
-                <Calendar renderCell={renderCell} bordered="true"/>
+
+            <Header>Web3 <span tw="text-primary-500">Event Calendar </span></Header>
+
+            <div tw="flex w-full">
+                <div tw="w-3/4">
+                    <Calendar renderCell={renderCell} bordered={true}/>
+                </div>
+                <div tw="w-1/4 border p-4 m-3 rounded">
+                    <Form>
+                        <Form.Group>
+                            <Form.ControlLabel>Filter</Form.ControlLabel>
+                            <CheckPicker onChange={(elements) => {
+                                setFilter(elements)
+                            }} label="Event Type" data={data} style={{width: 224}}/>
+                            <Form.HelpText>using no filter returns all data</Form.HelpText>
+                        </Form.Group>
+                    </Form>
+                </div>
             </div>
             <FooterV2/>
         </>

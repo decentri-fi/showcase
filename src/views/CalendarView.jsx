@@ -18,10 +18,13 @@ const CalendarHolder = styled.div`
     .left {
         ${tw`w-3/4`}
     }
+
     .right {
         ${tw`w-1/4 border p-4 m-3 rounded`}
     }
 `
+
+const PopoverHolder = tw.div`w-1/3`
 
 export default function CalendarView() {
 
@@ -112,7 +115,7 @@ export default function CalendarView() {
                                 placement="top"
                                 trigger="click"
                                 speaker={
-                                    <Popover>
+                                    <Popover tw="w-1/3">
                                         {item.description}
                                     </Popover>
                                 }>
